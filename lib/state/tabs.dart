@@ -30,9 +30,12 @@ class Tabs extends _$Tabs {
     return [Tab(id: 0)];
   }
 
-  void newTab(Server? server) {
+  void newTab({Server? server, bool setCurrent = true}) {
     final newTabId = state.isEmpty ? 0 : state.last.id + 1;
     state = [...state, Tab(id: newTabId, server: server)];
+    if (setCurrent) {
+      ref.read(currentTabProvider.notifier).selectTab(newTabId);
+    }
   }
 }
 

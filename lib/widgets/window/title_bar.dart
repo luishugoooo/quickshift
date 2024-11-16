@@ -17,10 +17,12 @@ class TitleBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: MoveWindow(
-              child: const TitleTabBar(),
-            ),
-          ),
+              child: Stack(
+            children: [
+              MoveWindow(),
+              const TitleTabBar(),
+            ],
+          )),
           const WindowButtons(),
         ],
       ),

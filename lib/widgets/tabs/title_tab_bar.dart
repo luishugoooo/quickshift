@@ -17,21 +17,35 @@ class TitleTabBar extends ConsumerWidget {
         children: [
           SizedBox(
             height: constraints.maxHeight * 0.75,
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              ...tabs.map(
-                (e) {
-                  return TitleTab(
-                      title: e.server?.name ?? "Tab ${e.id}",
-                      icon: DynamicIcons.server,
-                      isSelected: currentTab.id == e.id);
-                },
-              ),
-              Icon(
-                DynamicIcons.add,
-                size: 16,
-              )
-            ]),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                ...tabs.map(
+                  (e) {
+                    return TitleTab(
+                        onTap: () => ref
+                            .read(currentTabProvider.notifier)
+                            .selectTab(e.id),
+                        title: e.server?.name ?? "Tab ${e.id}",
+                        icon: DynamicIcons.server,
+                        isSelected: currentTab.id == e.id);
+                  },
+                ),
+                IconButton(
+                  onPressed: () =>
+                      ref.read(tabsProvider.notifier).newTab(setCurrent: true),
+                  //splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  iconSize: 16,
+                  icon: Icon(
+                    DynamicIcons.add,
+                    size: 16,
+                  ),
+                )
+              ]),
+            ),
           ),
         ],
       );
