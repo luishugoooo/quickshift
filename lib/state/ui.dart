@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+/* // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:quickshift/models/torrent_filter.dart';
@@ -32,3 +32,4 @@ class UIStateNotifier extends _$UIStateNotifier {
     state = state.copyWith(selectedFilter: filter);
   }
 }
+ */

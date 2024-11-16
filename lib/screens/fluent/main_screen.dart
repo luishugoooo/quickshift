@@ -1,7 +1,8 @@
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/extensions/theme.dart';
+import 'package:quickshift/widgets/toolbar/toolbar.dart';
+import 'package:quickshift/widgets/window/title_bar.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -9,34 +10,9 @@ class MainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = context.theme;
-    return Scaffold(
+    return const Scaffold(
       body: Column(
-        children: [
-          WindowTitleBarBox(
-            child: Row(
-              children: [
-                Expanded(child: MoveWindow()),
-                WindowButton(
-                  onPressed: appWindow.minimize,
-                  iconBuilder: (buttonContext) => MinimizeIcon(
-                    color: theme.colorScheme.secondary,
-                  ),
-                ),
-                WindowButton(
-                  onPressed: appWindow.maximize,
-                  iconBuilder: (buttonContext) =>
-                      MaximizeIcon(color: theme.colorScheme.secondary),
-                ),
-                WindowButton(
-                  onPressed: appWindow.close,
-                  colors: WindowButtonColors(mouseOver: Colors.red),
-                  iconBuilder: (buttonContext) =>
-                      CloseIcon(color: theme.colorScheme.secondary),
-                )
-              ],
-            ),
-          )
-        ],
+        children: [TitleBar(), Toolbar()],
       ),
     );
   }

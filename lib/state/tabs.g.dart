@@ -6,27 +6,26 @@ part of 'tabs.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tabsNotifierHash() => r'e381cf6d2a9eef0f3b6039f3b1beda4919a88a5f';
+String _$tabsHash() => r'1b2bc42aa0c242d7df8781579a08cb227c55ed6b';
 
-/// See also [TabsNotifier].
-@ProviderFor(TabsNotifier)
-final tabsNotifierProvider =
-    AutoDisposeNotifierProvider<TabsNotifier, List<Tab>>.internal(
-  TabsNotifier.new,
-  name: r'tabsNotifierProvider',
+/// See also [Tabs].
+@ProviderFor(Tabs)
+final tabsProvider = AutoDisposeNotifierProvider<Tabs, List<Tab>>.internal(
+  Tabs.new,
+  name: r'tabsProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$tabsNotifierHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$tabsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$TabsNotifier = AutoDisposeNotifier<List<Tab>>;
-String _$currentTabHash() => r'94f2f9b16a287f50d25fba59dfbec68177ce245a';
+typedef _$Tabs = AutoDisposeNotifier<List<Tab>>;
+String _$currentTabHash() => r'e0705c68581e2c378d2ef4076e72e33f0abed979';
 
 /// See also [CurrentTab].
 @ProviderFor(CurrentTab)
 final currentTabProvider =
-    AutoDisposeNotifierProvider<CurrentTab, int>.internal(
+    AutoDisposeNotifierProvider<CurrentTab, Tab>.internal(
   CurrentTab.new,
   name: r'currentTabProvider',
   debugGetCreateSourceHash:
@@ -35,6 +34,6 @@ final currentTabProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentTab = AutoDisposeNotifier<int>;
+typedef _$CurrentTab = AutoDisposeNotifier<Tab>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -24,7 +24,7 @@ class Tab {
 }
 
 @riverpod
-class TabsNotifier extends _$TabsNotifier {
+class Tabs extends _$Tabs {
   @override
   List<Tab> build() {
     return [Tab(id: 0)];
@@ -39,12 +39,13 @@ class TabsNotifier extends _$TabsNotifier {
 @riverpod
 class CurrentTab extends _$CurrentTab {
   @override
-  int build() {
-    return 0;
+  Tab build() {
+    return ref.read(tabsProvider).first;
   }
 
   void selectTab(int i) {
-    assert(i >= 0 && i < ref.read(tabsNotifierProvider).length);
-    state = i;
+    assert(i >= 0 && i < ref.read(tabsProvider).length);
+
+    state = ref.read(tabsProvider)[i];
   }
 }
