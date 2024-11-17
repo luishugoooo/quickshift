@@ -24,4 +24,11 @@ class DynamicIcons {
     }
     return Icons.add;
   }
+
+  static IconData get close {
+    if (Platform.isWindows) {
+      return FluentIcons.dismiss_24_regular;
+    }
+    return Icons.close;
+  }
 }

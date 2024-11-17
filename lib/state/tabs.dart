@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:quickshift/models/server.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,10 +34,21 @@ class Tabs extends _$Tabs {
 
   void newTab({Server? server, bool setCurrent = true}) {
     final newTabId = state.isEmpty ? 0 : state.last.id + 1;
-    state = [...state, Tab(id: newTabId, server: server)];
+    final newTab = Tab(id: newTabId, server: server);
+    state = [...state, newTab];
     if (setCurrent) {
-      ref.read(currentTabProvider.notifier).selectTab(newTabId);
+      ref.read(currentTabProvider.notifier).selectTab(newTab);
     }
+  }
+
+  void closeTab(Tab t) {
+    print("Removing tab ${t.id}");
+    if (t == ref.read(currentTabProvider)) {
+      ref
+          .read(currentTabProvider.notifier)
+          .selectTab(state[max(state.indexOf(t) - 1, 0)]);
+    }
+    state = [...state..remove(t)];
   }
 }
 
@@ -46,9 +59,9 @@ class CurrentTab extends _$CurrentTab {
     return ref.read(tabsProvider).first;
   }
 
-  void selectTab(int i) {
-    assert(i >= 0 && i < ref.read(tabsProvider).length);
-
-    state = ref.read(tabsProvider)[i];
+  void selectTab(Tab t) {
+    state = ref.read(tabsProvider).firstWhere(
+          (element) => element == t,
+        );
   }
 }

@@ -14,8 +14,8 @@ class TitleTabBar extends ConsumerWidget {
     final tabs = ref.watch(tabsProvider);
     final currentTab = ref.watch(currentTabProvider);
     return Shortcuts(
-      shortcuts:  {
-        const SingleActivator(LogicalKeyboardKey.keyW, control: true):
+      shortcuts: const {
+        SingleActivator(LogicalKeyboardKey.keyW, control: true):
             CloseTabIntent()
       },
       child: LayoutBuilder(builder: (context, constraints) {
@@ -31,13 +31,17 @@ class TitleTabBar extends ConsumerWidget {
                     children: [
                       ...tabs.map(
                         (e) {
-                          return TitleTab(
-                              onTap: () => ref
-                                  .read(currentTabProvider.notifier)
-                                  .selectTab(e.id),
-                              title: e.server?.name ?? "Tab ${e.id + 1}",
-                              icon: DynamicIcons.server,
-                              isSelected: currentTab.id == e.id);
+                          return Focus(
+                            child: TitleTab(
+                                key: UniqueKey(),
+                                tab: e,
+                                onTap: () => ref
+                                    .read(currentTabProvider.notifier)
+                                    .selectTab(e),
+                                title: e.server?.name ?? "Tab ${e.id}",
+                                icon: DynamicIcons.server,
+                                isSelected: currentTab.id == e.id),
+                          );
                         },
                       ),
                       IconButton(

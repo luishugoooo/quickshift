@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/extensions/theme.dart';
+import 'package:quickshift/icons/dynamic_icons.dart';
+import 'package:quickshift/state/tabs.dart' as tabs;
 
-class TitleTab extends StatefulWidget {
+class TitleTab extends ConsumerStatefulWidget {
   final bool isSelected;
+  final tabs.Tab tab;
   final IconData icon;
   final String title;
   final VoidCallback? onTap;
@@ -13,15 +17,15 @@ class TitleTab extends StatefulWidget {
       this.isSelected = false,
       required this.title,
       required this.icon,
+      required this.tab,
       this.onTap});
 
   @override
-  State<TitleTab> createState() => _TitleTabState();
+  ConsumerState<TitleTab> createState() => _TitleTabState();
 }
 
-class _TitleTabState extends State<TitleTab> {
+class _TitleTabState extends ConsumerState<TitleTab> {
   bool hovering = false;
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;
@@ -59,7 +63,16 @@ class _TitleTabState extends State<TitleTab> {
             Text(
               widget.title,
               style: const TextStyle(),
-            )
+            ),
+            const Expanded(child: SizedBox()),
+            IconButton(
+                onPressed: () {
+                  ref.read(tabs.tabsProvider.notifier).closeTab(widget.tab);
+                },
+                icon: Icon(
+                  DynamicIcons.close,
+                  size: 16,
+                ))
           ],
         ),
       ),

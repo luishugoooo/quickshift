@@ -12,7 +12,7 @@ class TitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme;
     return Container(
-      height: 50,
+      height: 45,
       decoration: const BoxDecoration(color: titleBarColorDark),
       child: Row(
         children: [
