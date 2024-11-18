@@ -6,14 +6,14 @@ import 'package:quickshift/models/torrent_filter.dart';
 part 'ui.g.dart';
 
 class UIState {
-  final TorrentFilter selectedFilter;
+  final TorrentStatus selectedFilter;
 
   UIState({
     required this.selectedFilter,
   });
 
   UIState copyWith({
-    TorrentFilter? selectedFilter,
+    TorrentStatus? selectedFilter,
   }) {
     return UIState(
       selectedFilter: selectedFilter ?? this.selectedFilter,
@@ -25,10 +25,10 @@ class UIState {
 class UIStateNotifier extends _$UIStateNotifier {
   @override
   UIState build(int serverId) {
-    return UIState(selectedFilter: TorrentFilter.all);
+    return UIState(selectedFilter: TorrentStatus.all);
   }
 
-  void setSelectedFilter(TorrentFilter filter) {
+  void setSelectedFilter(TorrentStatus filter) {
     state = state.copyWith(selectedFilter: filter);
   }
 }

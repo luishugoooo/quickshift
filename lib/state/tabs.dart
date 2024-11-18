@@ -23,6 +23,16 @@ class Tab {
       server: server ?? this.server,
     );
   }
+
+  @override
+  bool operator ==(covariant Tab other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id && other.server == server;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ server.hashCode;
 }
 
 @riverpod

@@ -6,7 +6,7 @@ part of 'tabs.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tabsHash() => r'ed07fba976f3ab8831bdff25e670461452066210';
+String _$tabsHash() => r'050f60ea6a0d2227f5ff3ecb3149853065f2c325';
 
 /// See also [Tabs].
 @ProviderFor(Tabs)
@@ -20,7 +20,7 @@ final tabsProvider = AutoDisposeNotifierProvider<Tabs, List<Tab>>.internal(
 );
 
 typedef _$Tabs = AutoDisposeNotifier<List<Tab>>;
-String _$currentTabHash() => r'e0705c68581e2c378d2ef4076e72e33f0abed979';
+String _$currentTabHash() => r'808c363438a97b5cff1606b9e9ae725c31c6a739';
 
 /// See also [CurrentTab].
 @ProviderFor(CurrentTab)

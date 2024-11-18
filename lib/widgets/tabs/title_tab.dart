@@ -70,7 +70,7 @@ class _TitleTabState extends ConsumerState<TitleTab> {
                   ref.read(tabs.tabsProvider.notifier).closeTab(widget.tab);
                 },
                 icon: Icon(
-                  DynamicIcons.close,
+                  DynamicIcons.close.getIconData(),
                   size: 16,
                 ))
           ],

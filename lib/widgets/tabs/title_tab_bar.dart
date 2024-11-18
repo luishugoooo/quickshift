@@ -39,7 +39,7 @@ class TitleTabBar extends ConsumerWidget {
                                     .read(currentTabProvider.notifier)
                                     .selectTab(e),
                                 title: e.server?.name ?? "Tab ${e.id}",
-                                icon: DynamicIcons.server,
+                                icon: DynamicIcons.server.getIconData(),
                                 isSelected: currentTab.id == e.id),
                           );
                         },
@@ -53,7 +53,7 @@ class TitleTabBar extends ConsumerWidget {
                         highlightColor: Colors.transparent,
                         iconSize: 16,
                         icon: Icon(
-                          DynamicIcons.add,
+                          DynamicIcons.add.getIconData(),
                           size: 16,
                         ),
                       )
