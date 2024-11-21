@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/filter_panel.dart';
-import 'package:quickshift/widgets/areas/main_area/panels/main_panel.dart';
+import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel.dart';
 
 class MainArea extends ConsumerWidget {
   const MainArea({super.key});
@@ -17,7 +17,8 @@ class MainArea extends ConsumerWidget {
             children: [
               ResizableChild(
                   child: FilterPanel(), size: ResizableSize.ratio(0.22)),
-              ResizableChild(child: MainPanel(), size: ResizableSize.expand())
+              ResizableChild(
+                  child: TorrentsPanel(), size: ResizableSize.expand())
             ],
             direction: Axis.horizontal),
       ),

@@ -10,7 +10,7 @@ class FilterPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //TODO: add a setting to synchronize filters across tabs
+    //TODO: add a setting to synchronize filters across tabs, maybe set tab to null
     final tab = ref.watch(currentTabProvider);
     return ListView.builder(
       itemCount: tf.TorrentStatus.values.length,

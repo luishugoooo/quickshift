@@ -1,16 +1,25 @@
 import 'dart:convert';
 
+import 'package:dart_transmission_rpc/model.dart';
+import 'package:dart_transmission_rpc/utils.dart' as transmission_utils;
+import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/models/torrent_status.dart';
+import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_data_field.dart';
+import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_eta_field.dart';
+import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_speed_field.dart';
+
+import '../../widgets/areas/main_area/widgets/torrent_data_fields/torrent_progress_field.dart';
+import '../../widgets/areas/main_area/widgets/torrent_data_fields/torrent_string_field.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class TorrentData {
-  final String name;
+  final String? name;
   final int size;
   final TorrentStatus status;
   final int downloadSpeed;
   final int uploadSpeed;
-  final DateTime eta;
+  final DateTime? eta;
   final double progress;
   const TorrentData({
     required this.name,
@@ -22,15 +31,36 @@ class TorrentData {
     required this.progress,
   });
 
-  List<TorrentField> get fields => [
-        TorrentField<String>("Name", name),
-        TorrentField<int>("Size", size),
-        TorrentField<TorrentStatus>("Status", status),
-        TorrentField<int>("Download Speed", downloadSpeed),
-        TorrentField<int>("Upload Speed", uploadSpeed),
-        TorrentField<DateTime>("ETA", eta),
-        TorrentField<double>("Progress", progress),
+  ///How to add a new field:
+  ///1. Create a new field widget class in widgets/areas/main_area/widgets/torrent_data_fields or use an existing one
+  ///2. Add the data property to the TorrentData [this] class
+  ///3. Add a corresponding Column to the TorrentColumn enum
+  ///4. Add the field to the fields getter
+  List<TorrentDataField> get fields => [
+        TorrentStringField(column: TorrentColumn.name, value: name),
+        TorrentStringField(column: TorrentColumn.size, value: size.toString()),
+        TorrentProgressField(column: TorrentColumn.progress, value: progress),
+        TorrentStringField(column: TorrentColumn.status, value: status.label),
+        TorrentSpeedField(
+            column: TorrentColumn.downloadSpeed, value: downloadSpeed),
+        TorrentEtaField(column: TorrentColumn.eta, value: eta),
+        TorrentSpeedField(
+            column: TorrentColumn.uploadSpeed, value: uploadSpeed),
       ];
+
+  factory TorrentData.fromTransmissionTorrentInfo(TorrentInfo torrent) {
+    return TorrentData(
+        name: torrent.name,
+        size: torrent.totalSize as int? ?? 0,
+        status: TorrentStatus.fromTransmissionStatus(
+            torrent.status ?? transmission_utils.TorrentStatus.unknown),
+        downloadSpeed: torrent.rateDownload as int? ?? 0,
+        uploadSpeed: torrent.rateUpload as int? ?? 0,
+        eta: torrent.eta != null
+            ? DateTime.now().add(Duration(seconds: torrent.eta as int))
+            : null,
+        progress: torrent.percentDone as double? ?? 0);
+  }
 
   TorrentData copyWith({
     String? name,
@@ -59,19 +89,21 @@ class TorrentData {
       'status': status.toMap(),
       'downloadSpeed': downloadSpeed,
       'uploadSpeed': uploadSpeed,
-      'eta': eta.millisecondsSinceEpoch,
+      'eta': eta?.millisecondsSinceEpoch,
       'progress': progress,
     };
   }
 
   factory TorrentData.fromMap(Map<String, dynamic> map) {
     return TorrentData(
-      name: map['name'] as String,
+      name: map['name'] != null ? map['name'] as String : null,
       size: map['size'] as int,
       status: TorrentStatus.fromMap(map['status'] as Map<String, dynamic>),
       downloadSpeed: map['downloadSpeed'] as int,
       uploadSpeed: map['uploadSpeed'] as int,
-      eta: DateTime.fromMillisecondsSinceEpoch(map['eta'] as int),
+      eta: map['eta'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['eta'] as int)
+          : null,
       progress: map['progress'] as double,
     );
   }
@@ -109,10 +141,4 @@ class TorrentData {
         eta.hashCode ^
         progress.hashCode;
   }
-}
-
-class TorrentField<T> {
-  final String label;
-  final T value;
-  const TorrentField(this.label, this.value);
 }
