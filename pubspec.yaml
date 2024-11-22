@@ -44,6 +44,9 @@ dependencies:
   flutter_resizable_container: ^3.0.0
   dart_transmission_rpc: ^0.1.1
 
+#dependency_overrides:
+  #dio: ^5.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

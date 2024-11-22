@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
+import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/server.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,11 +36,20 @@ class Tab {
   int get hashCode => id.hashCode ^ server.hashCode;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Tabs extends _$Tabs {
   @override
   List<Tab> build() {
-    return [Tab(id: 0)];
+    return [
+      Tab(
+          id: 0,
+          server: const Server(
+              name: "VPS Trans",
+              host: "178.18.247.62",
+              username: "transmission",
+              password: "vn78540934255898vmvdas98434f234lkjhgfcdxbv10",
+              clientType: TorrentClientType.transmission))
+    ];
   }
 
   void newTab({Server? server, bool setCurrent = true}) {
@@ -62,7 +72,7 @@ class Tabs extends _$Tabs {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CurrentTab extends _$CurrentTab {
   @override
   Tab build() {

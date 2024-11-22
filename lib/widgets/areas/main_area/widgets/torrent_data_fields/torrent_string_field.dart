@@ -18,6 +18,12 @@ class TorrentStringField extends StatelessWidget
     if (value == null) {
       return const NotAvailableText();
     }
-    return Text(value!);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Text(
+        value!,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
   }
 }

@@ -49,17 +49,18 @@ class TorrentData {
       ];
 
   factory TorrentData.fromTransmissionTorrentInfo(TorrentInfo torrent) {
+    print("TorrentData.fromTransmissionTorrentInfo");
     return TorrentData(
         name: torrent.name,
-        size: torrent.totalSize as int? ?? 0,
+        size: torrent.totalSize?.toInt() ?? 0,
         status: TorrentStatus.fromTransmissionStatus(
             torrent.status ?? transmission_utils.TorrentStatus.unknown),
-        downloadSpeed: torrent.rateDownload as int? ?? 0,
-        uploadSpeed: torrent.rateUpload as int? ?? 0,
+        downloadSpeed: torrent.rateDownload?.toInt() ?? 0,
+        uploadSpeed: torrent.rateUpload?.toInt() ?? 0,
         eta: torrent.eta != null
             ? DateTime.now().add(Duration(seconds: torrent.eta as int))
             : null,
-        progress: torrent.percentDone as double? ?? 0);
+        progress: torrent.percentDone?.toDouble() ?? 0);
   }
 
   TorrentData copyWith({

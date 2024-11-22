@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_string_field.dart';
 
 import '../../../../const/consts.dart';
 
-class TorrentsPanel extends StatefulWidget {
+class TorrentsPanel extends ConsumerStatefulWidget {
   const TorrentsPanel({super.key});
 
   @override
-  State<TorrentsPanel> createState() => _TorrentsPanelState();
+  ConsumerState<TorrentsPanel> createState() => _TorrentsPanelState();
 }
 
-class _TorrentsPanelState extends State<TorrentsPanel> {
+class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
   //TODO: Use multiple listviews for individual columns
   late Map<TorrentColumn, ScrollController> scrollControllers = {};
 
@@ -99,15 +101,28 @@ class _TorrentsPanelState extends State<TorrentsPanel> {
                                           ? colorScheme.primary.withOpacity(0.1)
                                           : colorScheme.primaryContainer
                                               .withOpacity(0.1),
-                                  child: Center(
-                                    child: MOCK_TORRENTS[index]
-                                        .fields
-                                        .firstWhere((element) {
-                                      return element.column == e;
-                                    },
-                                            orElse: () => TorrentStringField(
-                                                column: e, value: "null")),
-                                  ),
+                                  child: ref.watch(torrentsProvider).when(
+                                        data: (torrents) {
+                                          if (torrents == null) {
+                                            return const Center(
+                                              child: Text("No torrents"),
+                                            );
+                                          }
+                                          final torrent = torrents[index];
+                                          return Center(
+                                            child: torrent.fields.firstWhere(
+                                              (element) => element.column == e,
+                                              orElse: () => TorrentStringField(
+                                                  column: e, value: null),
+                                            ),
+                                          );
+                                        },
+                                        loading: () => const Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                        error: (error, stackTrace) =>
+                                            throw error,
+                                      ),
                                 ),
                               );
                             },
