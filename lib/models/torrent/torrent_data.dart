@@ -49,7 +49,6 @@ class TorrentData {
       ];
 
   factory TorrentData.fromTransmissionTorrentInfo(TorrentInfo torrent) {
-    print("TorrentData.fromTransmissionTorrentInfo");
     return TorrentData(
         name: torrent.name,
         size: torrent.totalSize?.toInt() ?? 0,

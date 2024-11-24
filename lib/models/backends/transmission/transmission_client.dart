@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:dart_transmission_rpc/client.dart';
@@ -9,6 +10,12 @@ class TransmissionClient implements TorrentClientInterface {
   late final TransmissionRpcClient _client;
   @override
   bool get isInitialized => _client.isInited();
+
+  TransmissionClient._({
+    required TransmissionRpcClient client,
+  }) {
+    _client = client;
+  }
 
   TransmissionClient({
     required String host,
@@ -26,10 +33,10 @@ class TransmissionClient implements TorrentClientInterface {
   Future<void> init() async {
     await _client.init();
   } */
-  TransmissionClient._create(this._client);
+  //TransmissionClient._create(this._client);
 
   //didnt like this pattern with regards to providing the client
-  static Future<TorrentClientInterface> create({
+  /* static Future<TorrentClientInterface> create({
     required String host,
     required String username,
     required String password,
@@ -41,7 +48,7 @@ class TransmissionClient implements TorrentClientInterface {
     );
     await client.init();
     return TransmissionClient._create(client);
-  }
+  } */
 
   @override
   void addTorrent(String torrentPath) {
@@ -51,6 +58,7 @@ class TransmissionClient implements TorrentClientInterface {
 
   @override
   Future<List<TorrentData>> getTorrents() async {
+    print("FETCHING");
     final resp = await _client.torrentGet([
       TorrentGetArgument.name,
       TorrentGetArgument.status,
@@ -74,5 +82,29 @@ class TransmissionClient implements TorrentClientInterface {
   @override
   void removeTorrent(String torrentHash) {
     // TODO: implement removeTorrent
+  }
+
+  @override
+  Future<void> init() async {
+    return await _client.init();
+  }
+
+  @override
+  bool operator ==(covariant TransmissionClient other) {
+    if (identical(this, other)) return true;
+
+    return other._client == _client && other.isInitialized == isInitialized;
+  }
+
+  @override
+  int get hashCode => _client.hashCode ^ isInitialized.hashCode;
+
+  @override
+  TransmissionClient copyWith({
+    TransmissionRpcClient? client,
+  }) {
+    return TransmissionClient._(
+      client: client ?? _client,
+    );
   }
 }

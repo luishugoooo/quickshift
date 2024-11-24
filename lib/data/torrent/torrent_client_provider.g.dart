@@ -6,23 +6,7 @@ part of 'torrent_client_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$torrentsHash() => r'731c71d63a84efebdbaeaa2ccf8989e2a07c1d07';
-
-/// See also [torrents].
-@ProviderFor(torrents)
-final torrentsProvider = FutureProvider<List<TorrentData>?>.internal(
-  torrents,
-  name: r'torrentsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$torrentsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef TorrentsRef = FutureProviderRef<List<TorrentData>?>;
-String _$torrentClientHash() => r'4131c49181aa00cba282a9e880308b76bcafab45';
+String _$torrentsHash() => r'ed6aeb135693b7b774776fe53789fd00e9e86d52';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -45,11 +29,140 @@ class _SystemHash {
   }
 }
 
+/// See also [torrents].
+@ProviderFor(torrents)
+const torrentsProvider = TorrentsFamily();
+
+/// See also [torrents].
+class TorrentsFamily extends Family<AsyncValue<List<TorrentData>>> {
+  /// See also [torrents].
+  const TorrentsFamily();
+
+  /// See also [torrents].
+  TorrentsProvider call(
+    Tab tab,
+  ) {
+    return TorrentsProvider(
+      tab,
+    );
+  }
+
+  @override
+  TorrentsProvider getProviderOverride(
+    covariant TorrentsProvider provider,
+  ) {
+    return call(
+      provider.tab,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'torrentsProvider';
+}
+
+/// See also [torrents].
+class TorrentsProvider extends FutureProvider<List<TorrentData>> {
+  /// See also [torrents].
+  TorrentsProvider(
+    Tab tab,
+  ) : this._internal(
+          (ref) => torrents(
+            ref as TorrentsRef,
+            tab,
+          ),
+          from: torrentsProvider,
+          name: r'torrentsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$torrentsHash,
+          dependencies: TorrentsFamily._dependencies,
+          allTransitiveDependencies: TorrentsFamily._allTransitiveDependencies,
+          tab: tab,
+        );
+
+  TorrentsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.tab,
+  }) : super.internal();
+
+  final Tab tab;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<TorrentData>> Function(TorrentsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TorrentsProvider._internal(
+        (ref) => create(ref as TorrentsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        tab: tab,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<List<TorrentData>> createElement() {
+    return _TorrentsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TorrentsProvider && other.tab == tab;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, tab.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin TorrentsRef on FutureProviderRef<List<TorrentData>> {
+  /// The parameter `tab` of this provider.
+  Tab get tab;
+}
+
+class _TorrentsProviderElement extends FutureProviderElement<List<TorrentData>>
+    with TorrentsRef {
+  _TorrentsProviderElement(super.provider);
+
+  @override
+  Tab get tab => (origin as TorrentsProvider).tab;
+}
+
+String _$torrentClientHash() => r'40f3d05229daecaa317693a7108ed292ba8fcaf8';
+
 abstract class _$TorrentClient
-    extends BuildlessAsyncNotifier<TorrentClientInterface?> {
+    extends BuildlessNotifier<TorrentClientInterface?> {
   late final Tab tab;
 
-  FutureOr<TorrentClientInterface?> build(
+  TorrentClientInterface? build(
     Tab tab,
   );
 }
@@ -59,7 +172,7 @@ abstract class _$TorrentClient
 const torrentClientProvider = TorrentClientFamily();
 
 /// See also [TorrentClient].
-class TorrentClientFamily extends Family<AsyncValue<TorrentClientInterface?>> {
+class TorrentClientFamily extends Family<TorrentClientInterface?> {
   /// See also [TorrentClient].
   const TorrentClientFamily();
 
@@ -98,7 +211,7 @@ class TorrentClientFamily extends Family<AsyncValue<TorrentClientInterface?>> {
 
 /// See also [TorrentClient].
 class TorrentClientProvider
-    extends AsyncNotifierProviderImpl<TorrentClient, TorrentClientInterface?> {
+    extends NotifierProviderImpl<TorrentClient, TorrentClientInterface?> {
   /// See also [TorrentClient].
   TorrentClientProvider(
     Tab tab,
@@ -129,7 +242,7 @@ class TorrentClientProvider
   final Tab tab;
 
   @override
-  FutureOr<TorrentClientInterface?> runNotifierBuild(
+  TorrentClientInterface? runNotifierBuild(
     covariant TorrentClient notifier,
   ) {
     return notifier.build(
@@ -154,7 +267,7 @@ class TorrentClientProvider
   }
 
   @override
-  AsyncNotifierProviderElement<TorrentClient, TorrentClientInterface?>
+  NotifierProviderElement<TorrentClient, TorrentClientInterface?>
       createElement() {
     return _TorrentClientProviderElement(this);
   }
@@ -175,13 +288,13 @@ class TorrentClientProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TorrentClientRef on AsyncNotifierProviderRef<TorrentClientInterface?> {
+mixin TorrentClientRef on NotifierProviderRef<TorrentClientInterface?> {
   /// The parameter `tab` of this provider.
   Tab get tab;
 }
 
 class _TorrentClientProviderElement
-    extends AsyncNotifierProviderElement<TorrentClient, TorrentClientInterface?>
+    extends NotifierProviderElement<TorrentClient, TorrentClientInterface?>
     with TorrentClientRef {
   _TorrentClientProviderElement(super.provider);
 

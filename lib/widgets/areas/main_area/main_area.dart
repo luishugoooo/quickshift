@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/filter_panel.dart';
-import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel.dart';
+import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrents_panel.dart';
 
 class MainArea extends ConsumerWidget {
   const MainArea({super.key});

@@ -43,6 +43,7 @@ dependencies:
   fluentui_system_icons: ^1.1.264
   flutter_resizable_container: ^3.0.0
   dart_transmission_rpc: ^0.1.1
+  flutter_context_menu: ^0.2.0
 
 #dependency_overrides:
   #dio: ^5.0.6

@@ -12,6 +12,7 @@ class _DynamicIconGetters {
   }
 
   static const Map<DynamicIcons, IconData> _windowsIcons = {
+    DynamicIcons.refresh: FluentIcons.arrow_clockwise_48_regular,
     DynamicIcons.addSquare: FluentIcons.add_square_48_regular,
     DynamicIcons.server: FluentIcons.server_24_regular,
     DynamicIcons.add: FluentIcons.add_24_regular,
@@ -21,6 +22,7 @@ class _DynamicIconGetters {
     DynamicIcons.verify: FluentIcons.fingerprint_48_regular,
     DynamicIcons.download: FluentIcons.arrow_download_48_regular,
     DynamicIcons.seeding: FluentIcons.arrow_upload_32_regular,
+    DynamicIcons.play: FluentIcons.play_48_regular,
   };
 
   static const Map<DynamicIcons, IconData> _defaultIcons = {
@@ -33,6 +35,8 @@ class _DynamicIconGetters {
     DynamicIcons.verify: Icons.fingerprint,
     DynamicIcons.download: Icons.download,
     DynamicIcons.seeding: Icons.arrow_upward,
+    DynamicIcons.refresh: Icons.refresh,
+    DynamicIcons.play: Icons.play_arrow_rounded,
   };
 }
 
@@ -45,6 +49,8 @@ enum DynamicIcons {
   stop,
   verify,
   download,
+  refresh,
+  play,
   seeding;
 
   IconData getIconData() {

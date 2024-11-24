@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickshift/exceptions/torrent/client_not_initalized.dart';
+import 'package:quickshift/exceptions/torrent/no_server_provided.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
@@ -10,32 +12,35 @@ part 'torrent_client_provider.g.dart';
 @Riverpod(keepAlive: true)
 class TorrentClient extends _$TorrentClient {
   @override
-  FutureOr<TorrentClientInterface?> build(Tab tab) async {
+  TorrentClientInterface? build(Tab tab) {
     switch (tab.server?.clientType) {
       case null:
-        return null;
+        null;
       case TorrentClientType.transmission:
-        return await TransmissionClient.create(
+        return TransmissionClient(
             host: tab.server!.host,
-            username: tab.server!.username,
-            password: tab.server!.password);
+            password: tab.server!.password,
+            username: tab.server!.username);
     }
+    return null;
+  }
+
+  Future<void> init() async {
+    if (state == null) {
+      throw NoServerProvidedException();
+    }
+    await state!.init();
+    state = state!.copyWith();
   }
 }
 
 @Riverpod(keepAlive: true)
-FutureOr<List<TorrentData>?> torrents(Ref ref) {
-  final tab = ref.watch(currentTabProvider);
-  final client = ref
-      .watch(torrentClientProvider(tab))
-      .whenData(
-        (value) => value,
-      )
-      .value;
+FutureOr<List<TorrentData>> torrents(Ref ref, Tab tab) async {
+  final client = ref.watch(torrentClientProvider(tab));
+
   if (client == null) {
-    print("client is null");
-    return null;
+    throw ClientNotInitalized();
   }
-  print("client: $client");
-  return client.getTorrents();
+  final res = await client.getTorrents();
+  return res;
 }

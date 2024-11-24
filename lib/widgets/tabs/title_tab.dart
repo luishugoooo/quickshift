@@ -12,14 +12,14 @@ class TitleTab extends ConsumerStatefulWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
-  const TitleTab(
-      {super.key,
-      this.isSelected = false,
-      required this.title,
-      required this.icon,
-      required this.tab,
-      required this.onTap,
-      });
+  const TitleTab({
+    super.key,
+    this.isSelected = false,
+    required this.title,
+    required this.icon,
+    required this.tab,
+    required this.onTap,
+  });
 
   @override
   ConsumerState<TitleTab> createState() => _TitleTabState();
@@ -36,39 +36,36 @@ class _TitleTabState extends ConsumerState<TitleTab> {
     super.didChangeDependencies();
   }
 
-  //FocusNode focusNode = FocusNode();
   bool hovering = false;
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.theme.colorScheme;
-    return SizedBox(
-      width: 200,
-      child: InkWell(
-        mouseCursor: SystemMouseCursors.basic,
-        onHover: (value) {
-          setState(() {
-            hovering = value;
-          });
-        },
-        onTap: () {
-          widget.onTap();
-          //FocusScope.of(context).requestFocus(focusNode);
-        },
-        child: Container(
-          //width: 200,
-          height: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 6),
-          margin: const EdgeInsets.symmetric(horizontal: 2),
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  topRight: Radius.circular(8),
-                  bottomRight: Radius.circular(-10)),
-              color: widget.isSelected
-                  ? tabColorDark
-                  : hovering
-                      ? tabColorDark.withOpacity(0.5)
-                      : null),
+    return Flexible(
+      child: Container(
+        height: double.infinity,
+        constraints: const BoxConstraints(minWidth: 100, maxWidth: 250),
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+                bottomRight: Radius.circular(-10)),
+            color: widget.isSelected
+                ? tabColorDark
+                : hovering
+                    ? tabColorDark.withOpacity(0.5)
+                    : null),
+        child: InkWell(
+          mouseCursor: SystemMouseCursors.basic,
+          onHover: (value) {
+            setState(() {
+              hovering = value;
+            });
+          },
+          onTap: () {
+            widget.onTap();
+          },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
