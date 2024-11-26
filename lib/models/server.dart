@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:quickshift/models/backends/torrent_client_interface.dart';
+import 'package:quickshift/models/backends/torrent_client_type.dart';
 
 class Server {
   final int? id;
@@ -36,5 +36,10 @@ class Server {
         username.hashCode ^
         password.hashCode ^
         clientType.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'Server(id: $id, name: $name, host: $host, username: $username, password: $password, clientType: $clientType)';
   }
 }

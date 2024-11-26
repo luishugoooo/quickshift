@@ -1,51 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quickshift/const/color.dart';
+import 'package:quickshift/const/consts.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
-import 'package:quickshift/icons/dynamic_icons.dart';
 import 'package:quickshift/state/tabs.dart';
+import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
+import 'package:quickshift/widgets/toolbar/toolbar_quick_connect_dropdown_icon_button.dart';
 
-class Toolbar extends ConsumerWidget {
+class Toolbar extends ConsumerStatefulWidget {
   const Toolbar({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Toolbar> createState() => _ToolbarState();
+}
+
+class _ToolbarState extends ConsumerState<Toolbar> {
+  Offset mousePosition = const Offset(0, 0);
+
+  @override
+  Widget build(BuildContext context) {
     //final colorScheme = context.theme.colorScheme;
+
     final currentTab = ref.watch(currentTabProvider);
     return Container(
       color: tabColorDark,
       height: 50,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(
-              DynamicIcons.refresh.getIconData(),
-              size: 20,
-            ),
-            onPressed: () {
-              ref.invalidate(torrentsProvider);
-            },
+          ToolbarIconButton(
+            icon: FontAwesomeIcons.server,
+            tooltip: "Server Manager",
+            onPressed: () {},
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                DynamicIcons.close.getIconData(),
-                size: 20,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                DynamicIcons.add.getIconData(),
-                size: 20,
-              )),
-          IconButton(
-              onPressed: () {
-                ref.read(torrentClientProvider(currentTab).notifier).init();
+          ToolbarQuickConnectDropdownIconButton(
+              onServerSelected: (server) async {
+                ref.read(tabsProvider.notifier).setServer(currentTab, server);
               },
-              icon: Icon(
-                DynamicIcons.play.getIconData(),
-                size: 20,
-              )),
+              icon: FontAwesomeIcons.plug,
+              tooltip: "Quick connect",
+              servers: MOCK_SERVERS),
+          ToolbarIconButton(
+            onPressed: !(ref
+                        .watch(torrentClientProvider(currentTab))
+                        ?.isInitialized ??
+                    false)
+                ? () {
+                    ref.read(torrentClientProvider(currentTab).notifier).init();
+                  }
+                : null,
+            icon: FontAwesomeIcons.play,
+          ),
           Text(ref
                   .watch(torrentClientProvider(currentTab))
                   ?.isInitialized

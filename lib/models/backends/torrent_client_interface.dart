@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 
 abstract interface class TorrentClientInterface {
@@ -12,5 +11,3 @@ abstract interface class TorrentClientInterface {
   TorrentClientInterface copyWith();
   //TorrentClientInterface.create();
 }
-
-enum TorrentClientType { transmission }

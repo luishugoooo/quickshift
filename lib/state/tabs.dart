@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
-import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/server.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -30,27 +29,21 @@ class Tab {
   bool operator ==(covariant Tab other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.server == server;
+    return other.id == id;
   }
 
   @override
-  int get hashCode => id.hashCode ^ server.hashCode;
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() => 'Tab(id: $id, server: $server)';
 }
 
 @Riverpod(keepAlive: true)
 class Tabs extends _$Tabs {
   @override
   List<Tab> build() {
-    return [
-      Tab(
-          id: 0,
-          server: const Server(
-              name: "VPS Trans",
-              host: "178.18.247.62",
-              username: "transmission",
-              password: "vn78540934255898vmvdas98434f234lkjhgfcdxbv10",
-              clientType: TorrentClientType.transmission))
-    ];
+    return [Tab(id: 0)];
   }
 
   void newTab({Server? server, bool setCurrent = true}) {
@@ -73,14 +66,17 @@ class Tabs extends _$Tabs {
     state = [...state..remove(t)];
   }
 
-/*   void connect(Tab t, Server s) {
+  void setServer(Tab t, Server s) {
     state = [
       for (final tab in state)
         if (tab == t) tab.copyWith(server: s) else tab
     ];
-    ref.invalidate(torrentClientProvider(t));
+    ref.refresh(torrentClientProvider(t));
+    print(ref.read(torrentClientProvider(t).notifier).tab);
+    //state.forEach(print);
+    return;
   }
-
+/*
   void disconnect(Tab t) {
     state = [
       for (final tab in state)

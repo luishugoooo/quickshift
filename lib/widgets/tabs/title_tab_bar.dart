@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/icons/dynamic_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/tabs/title_tab.dart';
 
@@ -43,11 +43,12 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                                   .selectTab(e);
                             },
                             title: e.server?.name ?? "Tab ${e.id}",
-                            icon: DynamicIcons.server.getIconData(),
+                            icon: FontAwesomeIcons.server,
                             isSelected: currentTab.id == e.id);
                       },
                     ),
                     IconButton(
+                      key: UniqueKey(),
                       onPressed: () {
                         ref
                             .read(tabsProvider.notifier)
@@ -58,8 +59,8 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       iconSize: 16,
-                      icon: Icon(
-                        DynamicIcons.add.getIconData(),
+                      icon: const FaIcon(
+                        FontAwesomeIcons.plus,
                         size: 16,
                       ),
                     )

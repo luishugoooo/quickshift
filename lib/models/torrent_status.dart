@@ -1,15 +1,16 @@
 import 'package:dart_transmission_rpc/utils.dart' as transmission_utils;
-import 'package:quickshift/icons/dynamic_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum TorrentStatus {
-  all('All', DynamicIcons.list),
-  stopped('Stopped', DynamicIcons.stop),
-  verifying('Verifying', DynamicIcons.verify),
-  downloading('Downloading', DynamicIcons.download),
-  seeding('Seeding', DynamicIcons.seeding);
+  all('All', FontAwesomeIcons.list),
+  stopped('Stopped', FontAwesomeIcons.stop),
+  verifying('Verifying', FontAwesomeIcons.fingerprint),
+  downloading('Downloading', FontAwesomeIcons.download),
+  seeding('Seeding', FontAwesomeIcons.upload);
 
   final String label;
-  final DynamicIcons icon;
+  final IconData icon;
 
   const TorrentStatus(this.label, this.icon);
 

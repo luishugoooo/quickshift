@@ -156,7 +156,7 @@ class _TorrentsProviderElement extends FutureProviderElement<List<TorrentData>>
   Tab get tab => (origin as TorrentsProvider).tab;
 }
 
-String _$torrentClientHash() => r'40f3d05229daecaa317693a7108ed292ba8fcaf8';
+String _$torrentClientHash() => r'1b9f64e9b1a3da5fcad28d12f791a052aa53f488';
 
 abstract class _$TorrentClient
     extends BuildlessNotifier<TorrentClientInterface?> {

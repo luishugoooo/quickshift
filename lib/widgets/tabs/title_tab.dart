@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/extensions/theme.dart';
-import 'package:quickshift/icons/dynamic_icons.dart';
 import 'package:quickshift/state/tabs.dart' as tabs;
 
 class TitleTab extends ConsumerStatefulWidget {
@@ -69,11 +69,12 @@ class _TitleTabState extends ConsumerState<TitleTab> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
+              FaIcon(
+                size: 20,
                 widget.icon,
                 color: colorScheme.secondary,
               ),
-              const Gap(5),
+              const Gap(10),
               Expanded(
                 child: Text(
                   overflow: TextOverflow.ellipsis,
@@ -86,8 +87,8 @@ class _TitleTabState extends ConsumerState<TitleTab> {
                   onPressed: () {
                     ref.read(tabs.tabsProvider.notifier).closeTab(widget.tab);
                   },
-                  icon: Icon(
-                    DynamicIcons.close.getIconData(),
+                  icon: const FaIcon(
+                    FontAwesomeIcons.xmark,
                     size: 16,
                   ))
             ],

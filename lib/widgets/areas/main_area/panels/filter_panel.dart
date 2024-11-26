@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent_status.dart' as tf;
 import 'package:quickshift/state/tabs.dart';
@@ -25,8 +26,8 @@ class FilterPanel extends ConsumerWidget {
               ref.read(torrentStatusProvider(tab).notifier).setFilter(filter),
           selectedTileColor: context.theme.colorScheme.primaryContainer,
           selected: ref.watch(torrentStatusProvider(tab)) == filter,
-          trailing: Icon(
-            filter.icon.getIconData(),
+          trailing: FaIcon(
+            filter.icon,
             size: 22,
           ),
           title: Text(
