@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
-import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrent_column.dart';
@@ -15,7 +14,6 @@ class TorrentsPanel extends ConsumerStatefulWidget {
 }
 
 class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
-  //TODO: Use multiple listviews for individual columns
   late Map<TorrentColumn, ScrollController> scrollControllers = {};
 
   @override
@@ -30,57 +28,55 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
+    final currentTabId = ref.watch(currentTabIdProvider);
     final currentTab = ref.watch(currentTabProvider);
-    final client = ref.watch(torrentClientProvider(currentTab));
+    //ref.watch(tabsProvider);
+    final torrentClient = currentTab.client;
+    print("CLIENT INIT: ${torrentClient?.isInitialized}");
+
+    print("REBUILDING TOR");
     return Center(
-        child: currentTab.server == null
-            ? const Text("Not connected, please select a server to connect to.")
-            : !(client!.isInitialized)
+        child: torrentClient == null
+            ? const Text("No server selected")
+            : !torrentClient.isInitialized
                 ? const CircularProgressIndicator()
-                : ref.watch(torrentsProvider(currentTab)).when(
-                      data: (torrents) {
-                        if (torrents.isEmpty) {
-                          return const Text("No torrents");
-                        }
-                        return ResizableContainer(
-                          divider: ResizableDivider(color: Colors.grey[900]),
-                          direction: Axis.horizontal,
-                          children: TorrentColumn.values.map(
-                            (e) {
-                              return ResizableChild(
-                                  minSize: 60,
-                                  size: e == TorrentColumn.name
-                                      ? const ResizableSize.ratio(0.3)
-                                      : const ResizableSize.expand(),
-                                  child: TorrentColumnWidget(
-                                    e: e,
-                                    scrollController: scrollControllers[e]!,
-                                    torrents: torrents,
-                                    selectedRow: selectedRow,
-                                    onSelected: (torrentIndex) {
-                                      setState(
-                                          () => selectedRow = torrentIndex);
-                                      print("Selected row: $selectedRow");
-                                    },
-                                    onScrollEvent: (torrentColumn, controller) {
-                                      for (final key
-                                          in scrollControllers.keys) {
-                                        if (key != torrentColumn) {
-                                          scrollControllers[key]!
-                                              .jumpTo(controller.offset);
-                                        }
+                : ref.watch(torrentsProvider(currentTabId)).when(
+                    data: (data) {
+                      return ResizableContainer(
+                        divider: ResizableDivider(color: Colors.grey[900]),
+                        direction: Axis.horizontal,
+                        children: TorrentColumn.values.map(
+                          (e) {
+                            return ResizableChild(
+                                minSize: 60,
+                                size: e == TorrentColumn.name
+                                    ? const ResizableSize.ratio(0.3)
+                                    : const ResizableSize.expand(),
+                                child: TorrentColumnWidget(
+                                  e: e,
+                                  scrollController: scrollControllers[e]!,
+                                  torrents: data,
+                                  selectedRow: selectedRow,
+                                  onSelected: (torrentIndex) {
+                                    setState(() => selectedRow = torrentIndex);
+                                    print("Selected row: $selectedRow");
+                                  },
+                                  onScrollEvent: (torrentColumn, controller) {
+                                    for (final key in scrollControllers.keys) {
+                                      if (key != torrentColumn) {
+                                        scrollControllers[key]!
+                                            .jumpTo(controller.offset);
                                       }
-                                    },
-                                  ));
-                            },
-                          ).toList(),
-                        );
-                      },
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      error: (error, stackTrace) => throw error,
-                    ));
+                                    }
+                                  },
+                                ));
+                          },
+                        ).toList(),
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return Text("Error: $error");
+                    },
+                    loading: () => const CircularProgressIndicator()));
   }
 }

@@ -12,20 +12,22 @@ class FilterPanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //TODO: add a setting to synchronize filters across tabs, maybe set tab to null
-    final tab = ref.watch(currentTabProvider);
+    final currentTab = ref.watch(currentTabProvider);
+
     return ListView.builder(
       itemCount: tf.TorrentStatus.values.length,
       itemBuilder: (context, index) {
         final filter = tf.TorrentStatus.values[index];
-        final selected = ref.watch(torrentStatusProvider(tab)) == filter;
+        final selected = ref.watch(torrentStatusProvider(currentTab)) == filter;
         return ListTile(
           splashColor: Colors.transparent,
           focusColor:
               selected ? context.theme.colorScheme.primaryContainer : null,
-          onTap: () =>
-              ref.read(torrentStatusProvider(tab).notifier).setFilter(filter),
+          onTap: () => ref
+              .read(torrentStatusProvider(currentTab).notifier)
+              .setFilter(filter),
           selectedTileColor: context.theme.colorScheme.primaryContainer,
-          selected: ref.watch(torrentStatusProvider(tab)) == filter,
+          selected: ref.watch(torrentStatusProvider(currentTab)) == filter,
           trailing: FaIcon(
             filter.icon,
             size: 22,

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:dart_transmission_rpc/model.dart';
-import 'package:dart_transmission_rpc/utils.dart' as transmission_utils;
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/models/torrent_status.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_data_field.dart';
@@ -48,18 +46,18 @@ class TorrentData {
             column: TorrentColumn.uploadSpeed, value: uploadSpeed),
       ];
 
-  factory TorrentData.fromTransmissionTorrentInfo(TorrentInfo torrent) {
+  factory TorrentData.fromRawTransmissionData(Map<String, dynamic> data) {
     return TorrentData(
-        name: torrent.name,
-        size: torrent.totalSize?.toInt() ?? 0,
-        status: TorrentStatus.fromTransmissionStatus(
-            torrent.status ?? transmission_utils.TorrentStatus.unknown),
-        downloadSpeed: torrent.rateDownload?.toInt() ?? 0,
-        uploadSpeed: torrent.rateUpload?.toInt() ?? 0,
-        eta: torrent.eta != null
-            ? DateTime.now().add(Duration(seconds: torrent.eta as int))
-            : null,
-        progress: torrent.percentDone?.toDouble() ?? 0);
+      name: data['name'] as String,
+      size: data['totalSize'] as int,
+      status: TorrentStatus.fromTransmissionStatus(data["status"] ?? -1),
+      downloadSpeed: data['rateDownload'] as int,
+      uploadSpeed: data['rateUpload'] as int,
+      eta: data['eta'] != -1
+          ? DateTime.now().add(Duration(seconds: data['eta'] as int))
+          : null,
+      progress: data['percentDone'] as double,
+    );
   }
 
   TorrentData copyWith({

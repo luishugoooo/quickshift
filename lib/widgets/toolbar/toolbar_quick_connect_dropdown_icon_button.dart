@@ -52,7 +52,13 @@ class _ToolbarQuickConnectDropdownIconButtonState
                         height: 30,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(2),
-                          onTap: () => widget.onServerSelected(e),
+                          onTap: () {
+                            widget.onServerSelected(e);
+                            _closeOverlay(context);
+                            setState(() {
+                              overlayIsVisible = false;
+                            });
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Row(

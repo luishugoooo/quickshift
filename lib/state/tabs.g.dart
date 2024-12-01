@@ -6,7 +6,23 @@ part of 'tabs.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tabsHash() => r'375558b0479fa72ac7ad4edb6562140ec9080a83';
+String _$currentTabHash() => r'bd81de736df7e29d6999135fa2518d801ac5c702';
+
+/// See also [currentTab].
+@ProviderFor(currentTab)
+final currentTabProvider = AutoDisposeProvider<Tab>.internal(
+  currentTab,
+  name: r'currentTabProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentTabHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef CurrentTabRef = AutoDisposeProviderRef<Tab>;
+String _$tabsHash() => r'd1db8e578b64d9b4ddb0d588ca53237ebfb3d6aa';
 
 /// See also [Tabs].
 @ProviderFor(Tabs)
@@ -20,20 +36,19 @@ final tabsProvider = NotifierProvider<Tabs, List<Tab>>.internal(
 );
 
 typedef _$Tabs = Notifier<List<Tab>>;
-String _$currentTabHash() => r'dedce7b94cecb89e63169355f4a4b9ba270f1171';
+String _$currentTabIdHash() => r'9ba1cfb3aa166c6b473b1ee252545f5f88c2d8fd';
 
-/// See also [CurrentTab].
-@ProviderFor(CurrentTab)
-final currentTabProvider =
-    AutoDisposeNotifierProvider<CurrentTab, Tab>.internal(
-  CurrentTab.new,
-  name: r'currentTabProvider',
+/// See also [CurrentTabId].
+@ProviderFor(CurrentTabId)
+final currentTabIdProvider = NotifierProvider<CurrentTabId, int>.internal(
+  CurrentTabId.new,
+  name: r'currentTabIdProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$currentTabHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentTabIdHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentTab = AutoDisposeNotifier<Tab>;
+typedef _$CurrentTabId = Notifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

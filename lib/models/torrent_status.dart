@@ -1,4 +1,3 @@
-import 'package:dart_transmission_rpc/utils.dart' as transmission_utils;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,25 +20,14 @@ enum TorrentStatus {
     };
   }
 
-  factory TorrentStatus.fromTransmissionStatus(
-      transmission_utils.TorrentStatus status) {
-    switch (status) {
-      case transmission_utils.TorrentStatus.unknown:
-        return TorrentStatus.all;
-      case transmission_utils.TorrentStatus.stopped:
-        return TorrentStatus.stopped;
-      case transmission_utils.TorrentStatus.queuedToVerify:
-      case transmission_utils.TorrentStatus.verifyLocalData:
-        return TorrentStatus.verifying;
-      case transmission_utils.TorrentStatus.queuedToDownload:
-      case transmission_utils.TorrentStatus.downloading:
-        return TorrentStatus.downloading;
-      case transmission_utils.TorrentStatus.queuedToSeed:
-      case transmission_utils.TorrentStatus.seeding:
-        return TorrentStatus.seeding;
-      default:
-        throw Exception('Invalid TransmissionStatus');
-    }
+  factory TorrentStatus.fromTransmissionStatus(int status) {
+    return switch (status) {
+      0 => TorrentStatus.stopped,
+      1 || 2 => TorrentStatus.verifying,
+      3 || 4 => TorrentStatus.downloading,
+      5 || 6 => TorrentStatus.seeding,
+      _ => TorrentStatus.all
+    };
   }
 
   factory TorrentStatus.fromMap(Map<String, dynamic> map) {

@@ -26,16 +26,6 @@ class TitleTab extends ConsumerStatefulWidget {
 }
 
 class _TitleTabState extends ConsumerState<TitleTab> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
   bool hovering = false;
   @override
   Widget build(BuildContext context) {

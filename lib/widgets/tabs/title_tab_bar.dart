@@ -39,8 +39,8 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                             tab: e,
                             onTap: () {
                               ref
-                                  .read(currentTabProvider.notifier)
-                                  .selectTab(e);
+                                  .read(currentTabIdProvider.notifier)
+                                  .selectTab(e.id);
                             },
                             title: e.server?.name ?? "Tab ${e.id}",
                             icon: FontAwesomeIcons.server,

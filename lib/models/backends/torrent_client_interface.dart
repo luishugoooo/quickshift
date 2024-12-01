@@ -7,7 +7,6 @@ abstract interface class TorrentClientInterface {
   void addTorrent(String torrentPath);
   void removeTorrent(String torrentHash);
   bool get isInitialized;
-  Future<void> init();
-  TorrentClientInterface copyWith();
+  Future<TorrentClientInterface> init();
   //TorrentClientInterface.create();
 }
