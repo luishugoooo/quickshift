@@ -7,8 +7,8 @@ import 'package:quickshift/models/server.dart';
 class ToolbarQuickConnectDropdownIconButton<T> extends StatefulWidget {
   final IconData icon;
   final String? tooltip;
-  final List<Server> servers;
-  final Function(Server server) onServerSelected;
+  final List<ServerConfig> servers;
+  final Function(ServerConfig server) onServerSelected;
 
   const ToolbarQuickConnectDropdownIconButton({
     super.key,

@@ -42,7 +42,8 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                                   .read(currentTabIdProvider.notifier)
                                   .selectTab(e.id);
                             },
-                            title: e.server?.name ?? "Tab ${e.id}",
+                            //TODO: use proper title
+                            title: "PROVISIONAL CHANGE",
                             icon: FontAwesomeIcons.server,
                             isSelected: currentTab.id == e.id);
                       },

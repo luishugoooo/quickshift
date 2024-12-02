@@ -36,10 +36,7 @@ class _ToolbarState extends ConsumerState<Toolbar> {
             onPressed: () {},
           ),
           ToolbarQuickConnectDropdownIconButton(
-              onServerSelected: (server) async {
-                ref.read(tabsProvider.notifier).setServer(currentTab, server);
-                ref.read(tabsProvider.notifier).initClient(currentTabId);
-              },
+              onServerSelected: (server) async {},
               icon: FontAwesomeIcons.plug,
               tooltip: "Quick connect",
               servers: MOCK_SERVERS),
@@ -53,8 +50,7 @@ class _ToolbarState extends ConsumerState<Toolbar> {
             onPressed: () {},
           ),
           const Gap(5),
-          Text(currentTab.server?.name ?? "null"),
-          const Gap(5),
+
           //Text(ref.watch(torrentClientProvider(currentTab)).toString())
         ],
       ),

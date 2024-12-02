@@ -28,7 +28,7 @@ class TorrentClient extends _$TorrentClient {
   }
 } */
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+/* import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/exceptions/torrent/client_not_initalized.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 import 'package:quickshift/state/tabs.dart';
@@ -45,3 +45,4 @@ FutureOr<List<TorrentData>> torrents(Ref ref, int tabId) async {
   final res = await (client.getTorrents());
   return res;
 }
+ */
