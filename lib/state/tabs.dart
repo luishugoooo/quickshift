@@ -1,30 +1,43 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/models/backends/torrent_client_interface.dart';
+import 'package:quickshift/models/server.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part "tabs.g.dart";
 
 class Tab {
   final int id;
-  final TorrentClientInterface? client;
+  final ServerConfig? config;
   Tab({
     required this.id,
-    this.client,
+    this.config,
   });
 
   Tab copyWith({
     int? id,
-    TorrentClientInterface? client,
+    ServerConfig? config,
   }) {
     return Tab(
       id: id ?? this.id,
-      client: client ?? this.client,
+      config: config ?? this.config,
     );
   }
+
+  @override
+  String toString() => 'Tab(id: $id, client: $config)';
+
+  @override
+  bool operator ==(covariant Tab other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id && other.config == config;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ config.hashCode;
 }
 
-@Riverpod(keepAlive: false)
+@Riverpod(keepAlive: true)
 class Tabs extends _$Tabs {
   @override
   List<Tab> build() {
@@ -59,9 +72,19 @@ class Tabs extends _$Tabs {
     }
     state = [...state..remove(t)];
   }
+
+  Tab setConfig(Tab t, ServerConfig config) {
+    t = t.copyWith(config: config);
+
+    state = [
+      for (final tab in state)
+        if (tab.id == t.id) t else tab
+    ];
+    return t;
+  }
 }
 
-@Riverpod(keepAlive: false)
+@Riverpod(keepAlive: true)
 class CurrentTabId extends _$CurrentTabId {
   @override
   int build() {

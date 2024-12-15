@@ -1,12 +1,21 @@
-import 'dart:async';
-
+import 'package:quickshift/models/backends/torrent_client_type.dart';
+import 'package:quickshift/models/backends/transmission/transmission_client.dart';
+import 'package:quickshift/models/backends/transmission/transmission_server_config.dart';
+import 'package:quickshift/models/server.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 
-abstract interface class TorrentClientInterface {
-  FutureOr<List<TorrentData>> getTorrents();
-  void addTorrent(String torrentPath);
-  void removeTorrent(String torrentHash);
-  bool get isInitialized;
-  Future<TorrentClientInterface> init();
-  //TorrentClientInterface.create();
+abstract interface class TorrentClient {
+  abstract final ServerConfig config;
+  Future<List<TorrentData>> getTorrents();
+  bool get isInit;
+  String get name;
+  Future<TorrentClient> init();
+  static TorrentClient fromConfig(ServerConfig config) {
+    switch (config.clientType) {
+      case TorrentClientType.transmission:
+        return TransmissionClient(config as TransmissionServerConfig);
+      default:
+        throw UnimplementedError();
+    }
+  }
 }

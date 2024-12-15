@@ -346,7 +346,7 @@ class RawTransmissionTorrentData {
           ? map['percentComplete'] as double
           : null,
       percentDone:
-          map['percentDone'] != null ? map['percentDone'] as double : null,
+          map['percentDone'] != null ? map['percentDone'].toDouble() as double : null,
       pieces: map['pieces'] != null ? map['pieces'] as String : null,
       pieceCount: map['pieceCount'] != null ? map['pieceCount'] as int : null,
       pieceSize: map['pieceSize'] != null ? map['pieceSize'] as int : null,
@@ -429,6 +429,11 @@ class RawTransmissionTorrentData {
   factory RawTransmissionTorrentData.fromJson(String source) =>
       RawTransmissionTorrentData.fromMap(
           json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return "RawTransmissionTorrentData: Name: $name, Status: $status";
+  }
 }
 
 class TrackerStat {
@@ -844,7 +849,7 @@ class FileData {
       FileData.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
-enum QsTransmissionTorrentField {
+enum TransmissionTorrentField {
   activityDate('activityDate'),
   addedDate('addedDate'),
   availability('availability'),
@@ -925,5 +930,5 @@ enum QsTransmissionTorrentField {
 
   final String value;
 
-  const QsTransmissionTorrentField(this.value);
+  const TransmissionTorrentField(this.value);
 }

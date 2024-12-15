@@ -1,30 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
+import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/models/server.dart';
+import 'package:quickshift/state/tabs.dart' as t;
 
-class ToolbarQuickConnectDropdownIconButton<T> extends StatefulWidget {
+class ToolbarQuickConnectDropdownIconButton<T> extends ConsumerStatefulWidget {
   final IconData icon;
   final String? tooltip;
   final List<ServerConfig> servers;
+  final ServerConfig? selectedConfig;
+  final t.Tab currentTab;
   final Function(ServerConfig server) onServerSelected;
 
-  const ToolbarQuickConnectDropdownIconButton({
-    super.key,
-    required this.icon,
-    this.tooltip,
-    required this.servers,
-    required this.onServerSelected,
-  });
+  const ToolbarQuickConnectDropdownIconButton(
+      {super.key,
+      required this.icon,
+      this.tooltip,
+      required this.servers,
+      required this.onServerSelected,
+      required this.currentTab,
+      this.selectedConfig});
 
   @override
-  State<ToolbarQuickConnectDropdownIconButton> createState() =>
+  ConsumerState<ToolbarQuickConnectDropdownIconButton> createState() =>
       _ToolbarQuickConnectDropdownIconButtonState();
 }
 
 class _ToolbarQuickConnectDropdownIconButtonState
-    extends State<ToolbarQuickConnectDropdownIconButton> {
+    extends ConsumerState<ToolbarQuickConnectDropdownIconButton> {
   OverlayEntry? _overlayEntry;
   _showOverlay(BuildContext context) {
     OverlayState? state = Overlay.of(context);
@@ -75,7 +81,22 @@ class _ToolbarQuickConnectDropdownIconButtonState
                                     "${e.name} (${e.host})",
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                )
+                                ),
+                                const Spacer(),
+                                if (widget.selectedConfig == e)
+                                  FaIcon(
+                                    switch (ref
+                                        .watch(torrentClientProvider(
+                                            widget.currentTab.config!))
+                                        .isInit) {
+                                      false => FontAwesomeIcons.spinner,
+                                      // TODO: Handle this case.
+                                      true => FontAwesomeIcons.plugCircleCheck,
+                                    },
+                                    size: 18,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  )
                               ],
                             ),
                           ),

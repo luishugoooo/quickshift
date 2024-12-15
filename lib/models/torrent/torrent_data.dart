@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:quickshift/models/backends/transmission/raw_transmission_torrent_data.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/models/torrent_status.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_data_field.dart';
@@ -15,19 +16,24 @@ class TorrentData {
   final String? name;
   final int size;
   final TorrentStatus status;
-  final int downloadSpeed;
-  final int uploadSpeed;
+
   final DateTime? eta;
   final double progress;
   const TorrentData({
     required this.name,
     required this.size,
     required this.status,
-    required this.downloadSpeed,
-    required this.uploadSpeed,
     required this.eta,
     required this.progress,
   });
+
+  int get downloadSpeed {
+    return (size * progress).toInt();
+  }
+
+  int get uploadSpeed {
+    return (size * progress).toInt();
+  }
 
   ///How to add a new field:
   ///1. Create a new field widget class in widgets/areas/main_area/widgets/torrent_data_fields or use an existing one
@@ -46,26 +52,19 @@ class TorrentData {
             column: TorrentColumn.uploadSpeed, value: uploadSpeed),
       ];
 
-  factory TorrentData.fromRawTransmissionData(Map<String, dynamic> data) {
+  factory TorrentData.fromRawTransmissionData(RawTransmissionTorrentData data) {
     return TorrentData(
-      name: data['name'] as String,
-      size: data['totalSize'] as int,
-      status: TorrentStatus.fromTransmissionStatus(data["status"] ?? -1),
-      downloadSpeed: data['rateDownload'] as int,
-      uploadSpeed: data['rateUpload'] as int,
-      eta: data['eta'] != -1
-          ? DateTime.now().add(Duration(seconds: data['eta'] as int))
-          : null,
-      progress: data['percentDone'] as double,
-    );
+        name: data.name,
+        size: data.totalSize ?? 0,
+        status: TorrentStatus.fromTransmissionStatus(data.status ?? -1),
+        eta: DateTime.fromMillisecondsSinceEpoch(data.eta ?? 0),
+        progress: data.percentDone ?? 0);
   }
 
   TorrentData copyWith({
     String? name,
     int? size,
     TorrentStatus? status,
-    int? downloadSpeed,
-    int? uploadSpeed,
     DateTime? eta,
     double? progress,
   }) {
@@ -73,8 +72,6 @@ class TorrentData {
       name: name ?? this.name,
       size: size ?? this.size,
       status: status ?? this.status,
-      downloadSpeed: downloadSpeed ?? this.downloadSpeed,
-      uploadSpeed: uploadSpeed ?? this.uploadSpeed,
       eta: eta ?? this.eta,
       progress: progress ?? this.progress,
     );
@@ -97,8 +94,6 @@ class TorrentData {
       name: map['name'] != null ? map['name'] as String : null,
       size: map['size'] as int,
       status: TorrentStatus.fromMap(map['status'] as Map<String, dynamic>),
-      downloadSpeed: map['downloadSpeed'] as int,
-      uploadSpeed: map['uploadSpeed'] as int,
       eta: map['eta'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['eta'] as int)
           : null,

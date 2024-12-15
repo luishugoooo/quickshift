@@ -12,6 +12,7 @@ class TitleTab extends ConsumerStatefulWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
+  final bool isOnly;
   const TitleTab({
     super.key,
     this.isSelected = false,
@@ -19,6 +20,7 @@ class TitleTab extends ConsumerStatefulWidget {
     required this.icon,
     required this.tab,
     required this.onTap,
+    this.isOnly = false,
   });
 
   @override
@@ -74,9 +76,13 @@ class _TitleTabState extends ConsumerState<TitleTab> {
               ),
               //const Expanded(child: SizedBox()),
               IconButton(
-                  onPressed: () {
-                    ref.read(tabs.tabsProvider.notifier).closeTab(widget.tab);
-                  },
+                  onPressed: !widget.isOnly
+                      ? () {
+                          ref
+                              .read(tabs.tabsProvider.notifier)
+                              .closeTab(widget.tab);
+                        }
+                      : null,
                   icon: const FaIcon(
                     FontAwesomeIcons.xmark,
                     size: 16,

@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
-import 'package:quickshift/models/backends/transmission/qs_transmission_torrent_data.dart';
+import 'package:quickshift/models/backends/transmission/raw_transmission_torrent_data.dart';
 import 'package:quickshift/models/backends/transmission/transmission_server_config.dart';
 
 Future<String> init(TransmissionServerConfig config) async {
   final res = await _initConnection(config);
   final sessionId = res.headers["x-transmission-session-id"];
   if (res.statusCode == 409) {
-    final res2 = await _initConnection(config.copyWith(sessionId: sessionId));
+    final res2 = await _initConnection(config, sessionId: sessionId);
     if (res2.statusCode == 200) {
       Logger().d("Session Established with ID: $sessionId");
       return sessionId!;
@@ -34,6 +34,7 @@ Future<Response> _requestBuilder({
   required _ClientMethods method,
   Map<String, dynamic>? arguments,
   required TransmissionServerConfig config,
+  String? sessionId,
   Duration timeout = const Duration(seconds: 5),
 }) async {
   return await post(
@@ -48,34 +49,37 @@ Future<Response> _requestBuilder({
       }),
       headers: {
         ..._buildAuthHeader(config: config),
-        "X-Transmission-Session-Id": config.sessionId ?? ""
-      }).timeout(timeout);
+        "X-Transmission-Session-Id": sessionId ?? ""
+      }).timeout(timeout).catchError((error) => throw error);
 }
 
-Future<Response> _initConnection(TransmissionServerConfig config) async {
+Future<Response> _initConnection(TransmissionServerConfig config,
+    {String? sessionId}) async {
   return await _requestBuilder(
       method: _ClientMethods.sessionGet,
       config: config,
+      sessionId: sessionId,
       arguments: {
         "fields": ["version"]
       });
 }
 
 Future<List<RawTransmissionTorrentData>> getTorrents(
-    {List<QsTransmissionTorrentField> fields = const [],
-    required TransmissionServerConfig config}) async {
+    {required List<TransmissionTorrentField> fields,
+    required TransmissionServerConfig config,
+    required String? sessionId}) async {
   final res = await _requestBuilder(
       method: _ClientMethods.torrentGet,
       config: config,
+      sessionId: sessionId,
       arguments: {
         "fields": [...fields.map((e) => e.value)]
       });
   final decoded = jsonDecode(res.body)["arguments"]["torrents"] as List;
-
-  return decoded
-      .map((e) => e as Map<String, dynamic>)
-      .map((e) => RawTransmissionTorrentData.fromMap(e))
-      .toList();
+  
+  return decoded.map((e) => e as Map<String, dynamic>).map((e) {
+    return RawTransmissionTorrentData.fromMap(e);
+  }).toList();
 }
 
 enum _ClientMethods {

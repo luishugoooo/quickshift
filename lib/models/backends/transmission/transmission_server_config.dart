@@ -20,8 +20,6 @@ class TransmissionServerConfig implements ServerConfig {
   @override
   final TorrentClientType clientType = TorrentClientType.transmission;
 
-  final String? sessionId;
-
   const TransmissionServerConfig({
     required this.name,
     required this.host,
@@ -30,7 +28,6 @@ class TransmissionServerConfig implements ServerConfig {
     this.username,
     this.password,
     this.https = false,
-    this.sessionId,
   });
 
   TransmissionServerConfig copyWith({
@@ -41,7 +38,6 @@ class TransmissionServerConfig implements ServerConfig {
     String? username,
     String? password,
     bool? https,
-    String? sessionId,
   }) {
     return TransmissionServerConfig(
       name: name ?? this.name,
@@ -51,7 +47,35 @@ class TransmissionServerConfig implements ServerConfig {
       username: username ?? this.username,
       password: password ?? this.password,
       https: https ?? this.https,
-      sessionId: sessionId ?? this.sessionId,
     );
+  }
+
+  @override
+  bool operator ==(covariant TransmissionServerConfig other) {
+    if (identical(this, other)) return true;
+
+    return other.name == name &&
+        other.host == host &&
+        other.port == port &&
+        other.path == path &&
+        other.username == username &&
+        other.password == password &&
+        other.https == https;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        host.hashCode ^
+        port.hashCode ^
+        path.hashCode ^
+        username.hashCode ^
+        password.hashCode ^
+        https.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'TransmissionServerConfig(name: $name, host: $host, port: $port, path: $path, username: $username, password: $password, https: $https)';
   }
 }

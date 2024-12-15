@@ -37,13 +37,14 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                         return TitleTab(
                             key: ValueKey(e.id),
                             tab: e,
+                            isOnly: ref.watch(tabsProvider).length <= 1,
                             onTap: () {
                               ref
                                   .read(currentTabIdProvider.notifier)
                                   .selectTab(e.id);
                             },
                             //TODO: use proper title
-                            title: "PROVISIONAL CHANGE",
+                            title: "Tab ${e.id}",
                             icon: FontAwesomeIcons.server,
                             isSelected: currentTab.id == e.id);
                       },

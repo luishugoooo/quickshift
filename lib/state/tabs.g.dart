@@ -22,11 +22,11 @@ final currentTabProvider = AutoDisposeProvider<Tab>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CurrentTabRef = AutoDisposeProviderRef<Tab>;
-String _$tabsHash() => r'bdd9fb1e50c60a2c171169b5193107895b9983c8';
+String _$tabsHash() => r'11000300e84568326ba7daf12342f00f4b5e3238';
 
 /// See also [Tabs].
 @ProviderFor(Tabs)
-final tabsProvider = AutoDisposeNotifierProvider<Tabs, List<Tab>>.internal(
+final tabsProvider = NotifierProvider<Tabs, List<Tab>>.internal(
   Tabs.new,
   name: r'tabsProvider',
   debugGetCreateSourceHash:
@@ -35,13 +35,12 @@ final tabsProvider = AutoDisposeNotifierProvider<Tabs, List<Tab>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$Tabs = AutoDisposeNotifier<List<Tab>>;
-String _$currentTabIdHash() => r'34287c71b75211015ed5c59dc63040ad06326e10';
+typedef _$Tabs = Notifier<List<Tab>>;
+String _$currentTabIdHash() => r'9ba1cfb3aa166c6b473b1ee252545f5f88c2d8fd';
 
 /// See also [CurrentTabId].
 @ProviderFor(CurrentTabId)
-final currentTabIdProvider =
-    AutoDisposeNotifierProvider<CurrentTabId, int>.internal(
+final currentTabIdProvider = NotifierProvider<CurrentTabId, int>.internal(
   CurrentTabId.new,
   name: r'currentTabIdProvider',
   debugGetCreateSourceHash:
@@ -50,6 +49,6 @@ final currentTabIdProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$CurrentTabId = AutoDisposeNotifier<int>;
+typedef _$CurrentTabId = Notifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
+import 'package:quickshift/data/torrent/torrent_provider.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrent_column.dart';
@@ -28,19 +29,17 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final currentTabId = ref.watch(currentTabIdProvider);
     final currentTab = ref.watch(currentTabProvider);
-    //ref.watch(tabsProvider);
-    final torrentClient = currentTab.client;
-    print("CLIENT INIT: ${torrentClient?.isInitialized}");
-
+    final client = currentTab.config == null
+        ? null
+        : ref.watch(torrentClientProvider(currentTab.config!));
     print("REBUILDING TOR");
     return Center(
-        child: torrentClient == null
+        child: client == null
             ? const Text("No server selected")
-            : !torrentClient.isInitialized
+            : !client.isInit
                 ? const CircularProgressIndicator()
-                : ref.watch(torrentsProvider(currentTabId)).when(
+                : ref.watch(torrentsProvider).when(
                     data: (data) {
                       return ResizableContainer(
                         divider: ResizableDivider(color: Colors.grey[900]),
