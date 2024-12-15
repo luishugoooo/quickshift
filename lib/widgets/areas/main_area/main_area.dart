@@ -3,14 +3,15 @@ import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/filter_panel.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrents_panel.dart';
+import 'package:quickshift/widgets/util/logging.dart';
 
 class MainArea extends ConsumerWidget {
   const MainArea({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const ResizableContainer(direction: Axis.vertical, children: [
-      ResizableChild(
+    return ResizableContainer(direction: Axis.vertical, children: [
+      const ResizableChild(
         child: ResizableContainer(
             divider:
                 ResizableDivider(thickness: 2, length: ResizableSize.expand()),
@@ -22,7 +23,18 @@ class MainArea extends ConsumerWidget {
             ],
             direction: Axis.horizontal),
       ),
-      ResizableChild(size: ResizableSize.ratio(0.3), child: Placeholder())
+      ResizableChild(
+          size: const ResizableSize.ratio(0.3),
+          child: Builder(builder: (context) {
+            final logs = ref.watch(loggingProvider);
+
+            return ListView.builder(
+              itemCount: logs.length,
+              itemBuilder: (context, index) {
+                return Text(logs[index]);
+              },
+            );
+          }))
     ]);
   }
 }

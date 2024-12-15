@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/const/consts.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
+import 'package:quickshift/data/torrent/torrent_provider.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
@@ -25,6 +26,9 @@ class _ToolbarState extends ConsumerState<Toolbar> {
     //final colorScheme = context.theme.colorScheme;
 
     final currentTab = ref.watch(currentTabProvider);
+    final currentClient = ref.watch(currentClientProvider);
+
+    final clientIsInit = currentClient.isInit;
     return Container(
       color: tabColorDark,
       height: 50,
@@ -41,31 +45,31 @@ class _ToolbarState extends ConsumerState<Toolbar> {
                 final tab = ref
                     .read(tabsProvider.notifier)
                     .setConfig(currentTab, server);
-                ref.read(torrentClientProvider(tab.config!).notifier).init();
+                ref.read(torrentClientsProvider(tab.config).notifier).init();
               },
               currentTab: currentTab,
               icon: FontAwesomeIcons.plug,
               tooltip: "Quick connect",
               selectedConfig: currentTab.config,
               servers: MOCK_SERVERS),
-          const ToolbarIconButton(
-            onPressed: null,
-            icon: FontAwesomeIcons.play,
-          ),
+          ToolbarIconButton(
+              icon: FontAwesomeIcons.plus,
+              onPressed: !clientIsInit
+                  ? null
+                  : () => ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
+                      "magnet:?xt=urn:btih:265863cbbb5ed9ef39e7c891ebebdf1623b09d5e&dn=archlinux-2024.12.01-x86_64.iso ")),
           const Spacer(),
+          Text(currentClient.isInit.toString()),
           ToolbarIconButton(
             icon: FontAwesomeIcons.arrowsRotate,
             onPressed: () {},
           ),
           const Gap(5),
           //Text((currentTab.client?.isInit.toString()) ?? "Null"),
-
-          Text(currentTab.config == null
-              ? "No config"
-              : (ref.watch(torrentClientProvider(currentTab.config!))
-                          as TransmissionClient?)
-                      ?.sessionId ??
-                  "No session id")
+          Text((currentClient is TransmissionClient)
+              ? currentClient.sessionId ?? "No session"
+              : "lol"),
+          const Gap(5),
         ],
       ),
     );

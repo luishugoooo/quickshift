@@ -86,11 +86,10 @@ class _ToolbarQuickConnectDropdownIconButtonState
                                 if (widget.selectedConfig == e)
                                   FaIcon(
                                     switch (ref
-                                        .watch(torrentClientProvider(
-                                            widget.currentTab.config!))
+                                        .watch(torrentClientsProvider(
+                                            widget.currentTab.config))
                                         .isInit) {
                                       false => FontAwesomeIcons.spinner,
-                                      // TODO: Handle this case.
                                       true => FontAwesomeIcons.plugCircleCheck,
                                     },
                                     size: 18,

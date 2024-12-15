@@ -71,17 +71,18 @@ class TorrentColumnWidget extends StatelessWidget {
                       );
                     },
                     child: Container(
-                        color: isSelected
-                            ? colorScheme.primary.withOpacity(0.2)
-                            : index.isEven
-                                ? colorScheme.primary.withOpacity(0.1)
-                                : colorScheme.primaryContainer.withOpacity(0.1),
-                        child: Center(
-                          child: torrent.fields.firstWhere(
-                            (element) => element.column == e,
-                            orElse: () =>
-                                TorrentStringField(column: e, value: null),
-                          ),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? colorScheme.primary.withOpacity(0.2)
+                              : index.isEven
+                                  ? colorScheme.primary.withOpacity(0.1)
+                                  : colorScheme.primaryContainer
+                                      .withOpacity(0.1),
+                        ),
+                        child: torrent.fields.firstWhere(
+                          (element) => element.column == e,
+                          orElse: () =>
+                              TorrentStringField(column: e, value: null),
                         )),
                   ),
                 );

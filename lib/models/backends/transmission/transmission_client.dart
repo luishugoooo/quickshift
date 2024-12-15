@@ -29,17 +29,8 @@ class TransmissionClient implements TorrentClient {
   String get name => config.name;
 
   @override
-  bool operator ==(covariant TransmissionClient other) {
-    if (identical(this, other)) return true;
-
-    return other.config == config;
-  }
-
-  @override
-  int get hashCode => config.hashCode;
-
-  @override
-  String toString() => 'TransmissionClient(config: $config)';
+  String toString() =>
+      'TransmissionClient(config: $config), sessionId: $sessionId, isInit: $isInit';
 
   @override
   Future<TorrentClient> init() {
@@ -50,4 +41,13 @@ class TransmissionClient implements TorrentClient {
 
   @override
   bool get isInit => sessionId != null;
+
+  @override
+  Future<TorrentData> addTorrentFromMagnet(String link) async {
+    return TorrentData.fromRawTransmissionData(await lib.addTorrentFromMagnet(
+        config: config, sessionId: sessionId, magnetLink: link));
+  }
+
+  @override
+  bool get isConfigured => true;
 }

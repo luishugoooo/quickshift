@@ -44,7 +44,9 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                                   .selectTab(e.id);
                             },
                             //TODO: use proper title
-                            title: "Tab ${e.id}",
+                            title: e.config != null
+                                ? e.config!.name
+                                : " Tab ${e.id}",
                             icon: FontAwesomeIcons.server,
                             isSelected: currentTab.id == e.id);
                       },

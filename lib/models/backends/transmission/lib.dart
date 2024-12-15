@@ -34,7 +34,7 @@ Future<Response> _requestBuilder({
   required _ClientMethods method,
   Map<String, dynamic>? arguments,
   required TransmissionServerConfig config,
-  String? sessionId,
+  required String? sessionId,
   Duration timeout = const Duration(seconds: 5),
 }) async {
   return await post(
@@ -76,14 +76,30 @@ Future<List<RawTransmissionTorrentData>> getTorrents(
         "fields": [...fields.map((e) => e.value)]
       });
   final decoded = jsonDecode(res.body)["arguments"]["torrents"] as List;
-  
+
   return decoded.map((e) => e as Map<String, dynamic>).map((e) {
     return RawTransmissionTorrentData.fromMap(e);
   }).toList();
 }
 
+Future<RawTransmissionTorrentData> addTorrentFromMagnet({
+  required TransmissionServerConfig config,
+  required String? sessionId,
+  required String magnetLink,
+}) async {
+  final res = await _requestBuilder(
+      method: _ClientMethods.torrentAdd,
+      config: config,
+      sessionId: sessionId,
+      arguments: {"filename": magnetLink});
+  final decode = jsonDecode(res.body);
+  print(decode);
+  return RawTransmissionTorrentData.fromMap(decode);
+}
+
 enum _ClientMethods {
   sessionGet("session-get"),
+  torrentAdd("torrent-add"),
   torrentGet("torrent-get");
 
   final String value;

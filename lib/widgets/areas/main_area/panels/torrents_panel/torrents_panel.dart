@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/data/torrent/torrent_provider.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
-import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrent_column.dart';
 
 class TorrentsPanel extends ConsumerStatefulWidget {
@@ -29,14 +28,12 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final currentTab = ref.watch(currentTabProvider);
-    final client = currentTab.config == null
-        ? null
-        : ref.watch(torrentClientProvider(currentTab.config!));
-    print("REBUILDING TOR");
+    final client = ref.watch(currentClientProvider);
+    print("Client REBUILD: $client");
+
     return Center(
-        child: client == null
-            ? const Text("No server selected")
+        child: !client.isConfigured
+            ? const Text("Select a server")
             : !client.isInit
                 ? const CircularProgressIndicator()
                 : ref.watch(torrentsProvider).when(
@@ -58,7 +55,6 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
                                   selectedRow: selectedRow,
                                   onSelected: (torrentIndex) {
                                     setState(() => selectedRow = torrentIndex);
-                                    print("Selected row: $selectedRow");
                                   },
                                   onScrollEvent: (torrentColumn, controller) {
                                     for (final key in scrollControllers.keys) {

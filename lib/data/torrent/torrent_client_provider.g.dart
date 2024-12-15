@@ -6,7 +6,24 @@ part of 'torrent_client_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$torrentClientHash() => r'17953905e73953417882c6d64ccddcac3c05b7b3';
+String _$currentClientHash() => r'5e4abfdeab2511473405508a5cbfb0357718d613';
+
+/// See also [currentClient].
+@ProviderFor(currentClient)
+final currentClientProvider = AutoDisposeProvider<TorrentClient>.internal(
+  currentClient,
+  name: r'currentClientProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentClientHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef CurrentClientRef = AutoDisposeProviderRef<TorrentClient>;
+String _$torrentClientsHash() => r'66d67f38ddba410ad6b9808a4ea24d586468b46b';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +46,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$TorrentClient extends BuildlessNotifier<client.TorrentClient> {
-  late final ServerConfig c;
+abstract class _$TorrentClients
+    extends BuildlessNotifier<client.TorrentClient> {
+  late final ServerConfig? c;
 
   client.TorrentClient build(
-    ServerConfig c,
+    ServerConfig? c,
   );
 }
 
-/// See also [TorrentClient].
-@ProviderFor(TorrentClient)
-const torrentClientProvider = TorrentClientFamily();
+/// See also [TorrentClients].
+@ProviderFor(TorrentClients)
+const torrentClientsProvider = TorrentClientsFamily();
 
-/// See also [TorrentClient].
-class TorrentClientFamily extends Family<client.TorrentClient> {
-  /// See also [TorrentClient].
-  const TorrentClientFamily();
+/// See also [TorrentClients].
+class TorrentClientsFamily extends Family<client.TorrentClient> {
+  /// See also [TorrentClients].
+  const TorrentClientsFamily();
 
-  /// See also [TorrentClient].
-  TorrentClientProvider call(
-    ServerConfig c,
+  /// See also [TorrentClients].
+  TorrentClientsProvider call(
+    ServerConfig? c,
   ) {
-    return TorrentClientProvider(
+    return TorrentClientsProvider(
       c,
     );
   }
 
   @override
-  TorrentClientProvider getProviderOverride(
-    covariant TorrentClientProvider provider,
+  TorrentClientsProvider getProviderOverride(
+    covariant TorrentClientsProvider provider,
   ) {
     return call(
       provider.c,
@@ -76,30 +94,30 @@ class TorrentClientFamily extends Family<client.TorrentClient> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'torrentClientProvider';
+  String? get name => r'torrentClientsProvider';
 }
 
-/// See also [TorrentClient].
-class TorrentClientProvider
-    extends NotifierProviderImpl<TorrentClient, client.TorrentClient> {
-  /// See also [TorrentClient].
-  TorrentClientProvider(
-    ServerConfig c,
+/// See also [TorrentClients].
+class TorrentClientsProvider
+    extends NotifierProviderImpl<TorrentClients, client.TorrentClient> {
+  /// See also [TorrentClients].
+  TorrentClientsProvider(
+    ServerConfig? c,
   ) : this._internal(
-          () => TorrentClient()..c = c,
-          from: torrentClientProvider,
-          name: r'torrentClientProvider',
+          () => TorrentClients()..c = c,
+          from: torrentClientsProvider,
+          name: r'torrentClientsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$torrentClientHash,
-          dependencies: TorrentClientFamily._dependencies,
+                  : _$torrentClientsHash,
+          dependencies: TorrentClientsFamily._dependencies,
           allTransitiveDependencies:
-              TorrentClientFamily._allTransitiveDependencies,
+              TorrentClientsFamily._allTransitiveDependencies,
           c: c,
         );
 
-  TorrentClientProvider._internal(
+  TorrentClientsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -109,11 +127,11 @@ class TorrentClientProvider
     required this.c,
   }) : super.internal();
 
-  final ServerConfig c;
+  final ServerConfig? c;
 
   @override
   client.TorrentClient runNotifierBuild(
-    covariant TorrentClient notifier,
+    covariant TorrentClients notifier,
   ) {
     return notifier.build(
       c,
@@ -121,10 +139,10 @@ class TorrentClientProvider
   }
 
   @override
-  Override overrideWith(TorrentClient Function() create) {
+  Override overrideWith(TorrentClients Function() create) {
     return ProviderOverride(
       origin: this,
-      override: TorrentClientProvider._internal(
+      override: TorrentClientsProvider._internal(
         () => create()..c = c,
         from: from,
         name: null,
@@ -137,13 +155,14 @@ class TorrentClientProvider
   }
 
   @override
-  NotifierProviderElement<TorrentClient, client.TorrentClient> createElement() {
-    return _TorrentClientProviderElement(this);
+  NotifierProviderElement<TorrentClients, client.TorrentClient>
+      createElement() {
+    return _TorrentClientsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TorrentClientProvider && other.c == c;
+    return other is TorrentClientsProvider && other.c == c;
   }
 
   @override
@@ -157,18 +176,18 @@ class TorrentClientProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TorrentClientRef on NotifierProviderRef<client.TorrentClient> {
+mixin TorrentClientsRef on NotifierProviderRef<client.TorrentClient> {
   /// The parameter `c` of this provider.
-  ServerConfig get c;
+  ServerConfig? get c;
 }
 
-class _TorrentClientProviderElement
-    extends NotifierProviderElement<TorrentClient, client.TorrentClient>
-    with TorrentClientRef {
-  _TorrentClientProviderElement(super.provider);
+class _TorrentClientsProviderElement
+    extends NotifierProviderElement<TorrentClients, client.TorrentClient>
+    with TorrentClientsRef {
+  _TorrentClientsProviderElement(super.provider);
 
   @override
-  ServerConfig get c => (origin as TorrentClientProvider).c;
+  ServerConfig? get c => (origin as TorrentClientsProvider).c;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

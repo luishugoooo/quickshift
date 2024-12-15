@@ -6,10 +6,15 @@ import 'package:quickshift/models/torrent/torrent_data.dart';
 
 abstract interface class TorrentClient {
   abstract final ServerConfig config;
-  Future<List<TorrentData>> getTorrents();
   bool get isInit;
-  String get name;
+  bool get isConfigured;
+  String? get name;
+
   Future<TorrentClient> init();
+
+  Future<List<TorrentData>> getTorrents();
+  Future<TorrentData> addTorrentFromMagnet(String link);
+
   static TorrentClient fromConfig(ServerConfig config) {
     switch (config.clientType) {
       case TorrentClientType.transmission:
@@ -18,4 +23,14 @@ abstract interface class TorrentClient {
         throw UnimplementedError();
     }
   }
+
+  @override
+  bool operator ==(covariant TorrentClient other) {
+    if (identical(this, other)) return true;
+
+    return other.config == config && other.isInit == isInit;
+  }
+
+  @override
+  int get hashCode => config.hashCode ^ isInit.hashCode;
 }
