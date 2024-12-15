@@ -7,7 +7,7 @@ Quickshift is a powerful and easy-to-use remote torrenting client that aims to s
 Either download a precompiled binary or installer from the [releases](https://github.com/transmission-remote-gui/transgui/releases/latest) page or [build the project yourself](#Build yourself).
 
 ## Integrations
-Quickshift supports the following torrent software (🟢 = Stable, 🔵 = in Development, 🟡 = planned, 🔴 = Not planned):
+Quickshift supports the following torrent software (🟢 = stable, 🔵 = in development, 🟡 = planned, 🔴 = not planned):
 - 🔵 Transmission
 - 🟡 qBittorrent
 - 🟡 Deluge
