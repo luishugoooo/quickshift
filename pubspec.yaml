@@ -53,6 +53,8 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   logger: ^2.5.0
   http: ^1.2.2
+  auto_scroll: ^0.2.0
+  intl: ^0.20.1
 
 #dependency_overrides:
   #dio: ^5.0.6

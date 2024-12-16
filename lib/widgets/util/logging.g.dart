@@ -6,12 +6,12 @@ part of 'logging.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loggingHash() => r'd16d7a5cd5c64054a358644a430086f6fc42dd5b';
+String _$loggingHash() => r'b55d62d42951cff8b83794ca8ebc5d12e7827c4c';
 
 /// See also [Logging].
 @ProviderFor(Logging)
 final loggingProvider =
-    AutoDisposeNotifierProvider<Logging, List<String>>.internal(
+    AutoDisposeNotifierProvider<Logging, List<Log>>.internal(
   Logging.new,
   name: r'loggingProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final loggingProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Logging = AutoDisposeNotifier<List<String>>;
+typedef _$Logging = AutoDisposeNotifier<List<Log>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

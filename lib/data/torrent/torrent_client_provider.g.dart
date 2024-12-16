@@ -6,7 +6,7 @@ part of 'torrent_client_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentClientHash() => r'5e4abfdeab2511473405508a5cbfb0357718d613';
+String _$currentClientHash() => r'46c00d7a396ecacafd83fa6d19e4d0b16557a6fa';
 
 /// See also [currentClient].
 @ProviderFor(currentClient)
@@ -23,7 +23,7 @@ final currentClientProvider = AutoDisposeProvider<TorrentClient>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CurrentClientRef = AutoDisposeProviderRef<TorrentClient>;
-String _$torrentClientsHash() => r'66d67f38ddba410ad6b9808a4ea24d586468b46b';
+String _$torrentClientsHash() => r'eeae06b8b02b49c5fb442e7a63513508b1d1af73';
 
 /// Copied from Dart SDK
 class _SystemHash {

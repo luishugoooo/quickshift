@@ -26,9 +26,13 @@ class TorrentClients extends _$TorrentClients {
   }
 
   Future<void> init() async {
-    ref.read(loggingProvider.notifier).addLog("initing client");
-    state = await state.init();
-    ref.read(loggingProvider.notifier).addLog("inited client");
+    if (state.isInit) {
+      ref.invalidateSelf();
+    }
+    print(state);
+    ref.read(loggingProvider.notifier).log("initing client");
+    state = await state.init().catchError((error) => state);
+    ref.read(loggingProvider.notifier).log("inited client");
   }
 }
 

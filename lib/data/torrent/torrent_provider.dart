@@ -1,5 +1,6 @@
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
+import 'package:quickshift/widgets/util/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'torrent_provider.g.dart';
@@ -24,12 +25,10 @@ part 'torrent_provider.g.dart';
 class Torrents extends _$Torrents {
   @override
   Stream<List<TorrentData>> build() async* {
-    ref.watch(currentClientProvider.select(
-      (value) => value.config,
-    ));
-    final client = ref.read(currentClientProvider);
+    final client = ref.watch(currentClientProvider);
 
     while (true) {
+      ref.read(loggingProvider.notifier).log("Refresh");
       yield await client.getTorrents();
       await Future.delayed(const Duration(milliseconds: 10000));
     }
@@ -40,6 +39,4 @@ class Torrents extends _$Torrents {
     client.addTorrentFromMagnet(link);
     ref.invalidateSelf();
   }
-
-
 }

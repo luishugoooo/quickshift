@@ -1,6 +1,8 @@
+import 'package:auto_scroll/auto_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/filter_panel.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrents_panel.dart';
 import 'package:quickshift/widgets/util/logging.dart';
@@ -27,11 +29,16 @@ class MainArea extends ConsumerWidget {
           size: const ResizableSize.ratio(0.3),
           child: Builder(builder: (context) {
             final logs = ref.watch(loggingProvider);
-            return ListView.builder(
-              itemCount: logs.length,
-              itemBuilder: (context, index) {
-                return Text(logs[index]);
-              },
+            return AutoScroller(
+              lengthIdentifier: logs.length,
+              builder: (context, controller) => ListView.builder(
+                itemCount: logs.length,
+                controller: controller,
+                itemBuilder: (context, index) {
+                  return Text(
+                      "${DateFormat("hh:mm:ss").format(logs[index].time)}: ${logs[index].log}");
+                },
+              ),
             );
           }))
     ]);
