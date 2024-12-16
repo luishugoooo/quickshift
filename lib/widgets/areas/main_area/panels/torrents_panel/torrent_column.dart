@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_context_menu/flutter_context_menu.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickshift/data/torrent/torrent_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrent_context_menu.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_string_field.dart';
 
-class TorrentColumnWidget extends StatelessWidget {
+class TorrentColumnWidget extends ConsumerWidget {
   final TorrentColumn e;
   final ScrollController scrollController;
   final List<TorrentData> torrents;
@@ -24,7 +26,7 @@ class TorrentColumnWidget extends StatelessWidget {
       required this.onScrollEvent});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = context.theme.colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,6 +68,14 @@ class TorrentColumnWidget extends StatelessWidget {
                         context,
                         contextMenu: buildTorrentContextMenu(torrent,
                             onStop: () {},
+                            onRemove: () => ref
+                                .read(torrentsProvider.notifier)
+                                .removeTorrents([torrent],
+                                    deleteLocalData: false),
+                            onRemoveWithLocalData: () => ref
+                                .read(torrentsProvider.notifier)
+                                .removeTorrents([torrent],
+                                    deleteLocalData: true),
                             positon: mousePosition,
                             colorScheme: colorScheme),
                       );

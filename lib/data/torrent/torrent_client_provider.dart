@@ -1,9 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickshift/data/torrent/current_server_config_provider.dart';
 import "package:quickshift/models/backends/torrent_client_interface.dart"
     as client;
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/server.dart';
-import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/util/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,18 +21,42 @@ class TorrentClients extends _$TorrentClients {
     }
     state = state.updateClientStatus(const TorrentClientStatusLoading());
     ref.read(loggingProvider.notifier).log("initing client");
-    state = await state.init().catchError((error) =>
-        state.updateClientStatus(TorrentClientStatusError(error.toString())));
+    state = await state
+        .init()
+        .catchError((error) => state
+            .updateClientStatus(TorrentClientStatusError(error.toString())))
+        .timeout(
+          const Duration(seconds: 5),
+          onTimeout: () => state.updateClientStatus(TorrentClientStatusError(
+              "Timeout while trying to connect to ${c?.host}")),
+        );
     ref.read(loggingProvider.notifier).log("inited client");
+  }
+
+  Future<void> disconnect() async {
+    ref.invalidateSelf();
   }
 }
 
 @riverpod
-TorrentClient currentClient(Ref ref) {
-  final c = ref.watch(currentTabProvider.select(
-    (value) => value.config,
-  ));
+class CurrentClient extends _$CurrentClient {
+  @override
+  TorrentClient build() {
+    final c = ref.watch(currentServerConfigProvider);
 
-  final client = ref.watch(torrentClientsProvider(c));
-  return client;
+    final client = ref.watch(torrentClientsProvider(c));
+    return client;
+  }
+
+  Future<void> init() async {
+    final client = ref.read(
+        torrentClientsProvider(ref.read(currentServerConfigProvider)).notifier);
+    await client.init();
+  }
+
+  Future<void> disconnect() async {
+    final client = ref.read(
+        torrentClientsProvider(ref.read(currentServerConfigProvider)).notifier);
+    await client.disconnect();
+  }
 }

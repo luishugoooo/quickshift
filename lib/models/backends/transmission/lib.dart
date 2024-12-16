@@ -38,11 +38,14 @@ Future<Response> _requestBuilder({
   Map<String, dynamic>? arguments,
   required TransmissionServerConfig config,
   required String? sessionId,
-  Duration timeout = const Duration(seconds: 5),
 }) async {
+  print(json.encode({
+    "arguments": arguments,
+    "method": method.value,
+  }));
   final res = await post(
       Uri(
-          scheme: !config.https ? "http" : "https",
+          scheme: config.https ? "https" : "http",
           host: config.host,
           port: config.port,
           path: config.path),
@@ -53,7 +56,7 @@ Future<Response> _requestBuilder({
       headers: {
         ..._buildAuthHeader(config: config),
         "X-Transmission-Session-Id": sessionId ?? ""
-      }).timeout(timeout).catchError((error) => throw error);
+      });
 
   if (res.statusCode == 409 && sessionId != null) {
     throw InvalidTransmissionSessionId();
@@ -85,6 +88,7 @@ Future<List<RawTransmissionTorrentData>> getTorrents(
       });
   final decoded = jsonDecode(res.body)["arguments"]["torrents"] as List;
   return decoded.map((e) => e as Map<String, dynamic>).map((e) {
+    print(e);
     return RawTransmissionTorrentData.fromMap(e);
   }).toList();
 }
@@ -107,9 +111,9 @@ Future<void> removeTorrent(
     {required TransmissionServerConfig config,
     required String? sessionId,
     required List<TorrentData> torrents,
-    bool deleteLocalData = false}) async {
+    required bool deleteLocalData}) async {
   await _requestBuilder(
-      method: _ClientMethods.torrentStop,
+      method: _ClientMethods.torrentRemove,
       config: config,
       sessionId: sessionId,
       arguments: {
@@ -128,6 +132,7 @@ enum _ClientMethods {
   sessionGet("session-get"),
   torrentAdd("torrent-add"),
   torrentStop("torrent-stop"),
+  torrentRemove("torrent-remove"),
   torrentGet("torrent-get");
 
   final String value;

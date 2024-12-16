@@ -6,24 +6,7 @@ part of 'torrent_client_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentClientHash() => r'46c00d7a396ecacafd83fa6d19e4d0b16557a6fa';
-
-/// See also [currentClient].
-@ProviderFor(currentClient)
-final currentClientProvider = AutoDisposeProvider<TorrentClient>.internal(
-  currentClient,
-  name: r'currentClientProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$currentClientHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef CurrentClientRef = AutoDisposeProviderRef<TorrentClient>;
-String _$torrentClientsHash() => r'eeae06b8b02b49c5fb442e7a63513508b1d1af73';
+String _$torrentClientsHash() => r'59304bdaa2955c1735fb2c5b391eb5d3536e827c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -189,5 +172,22 @@ class _TorrentClientsProviderElement
   @override
   ServerConfig? get c => (origin as TorrentClientsProvider).c;
 }
+
+String _$currentClientHash() => r'89c7976e06b58726e1273b1cb927a6cfb0563661';
+
+/// See also [CurrentClient].
+@ProviderFor(CurrentClient)
+final currentClientProvider =
+    AutoDisposeNotifierProvider<CurrentClient, TorrentClient>.internal(
+  CurrentClient.new,
+  name: r'currentClientProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentClientHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$CurrentClient = AutoDisposeNotifier<TorrentClient>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

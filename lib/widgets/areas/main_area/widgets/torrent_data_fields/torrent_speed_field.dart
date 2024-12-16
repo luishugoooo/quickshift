@@ -27,6 +27,6 @@ class TorrentSpeedField extends StatelessWidget
     if (value == null) {
       return const NotAvailableText();
     }
-    return Text(buildString());
+    return Center(child: Text(buildString()));
   }
 }

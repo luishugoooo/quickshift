@@ -42,10 +42,8 @@ class _ToolbarState extends ConsumerState<Toolbar> {
           ),
           ToolbarQuickConnectDropdownIconButton(
               onServerSelected: (server) async {
-                final tab = ref
-                    .read(tabsProvider.notifier)
-                    .setConfig(currentTab, server);
-                ref.read(torrentClientsProvider(tab.config).notifier).init();
+                ref.read(tabsProvider.notifier).setConfig(currentTab, server);
+                ref.read(currentClientProvider.notifier).init();
               },
               currentTab: currentTab,
               icon: FontAwesomeIcons.plug,
@@ -53,12 +51,21 @@ class _ToolbarState extends ConsumerState<Toolbar> {
               selectedConfig: currentTab.config,
               servers: MOCK_SERVERS),
           ToolbarIconButton(
+              icon: FontAwesomeIcons.plugCircleMinus,
+              onPressed:
+                  (currentClient.clientStatus is TorrentClientStatusInitialized)
+                      ? () {
+                          ref.read(currentClientProvider.notifier).disconnect();
+                        }
+                      : null),
+          ToolbarIconButton(
               icon: FontAwesomeIcons.plus,
               onPressed: currentClient.clientStatus
                       is! TorrentClientStatusInitialized
                   ? null
                   : () => ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
                       "magnet:?xt=urn:btih:265863cbbb5ed9ef39e7c891ebebdf1623b09d5e&dn=archlinux-2024.12.01-x86_64.iso ")),
+
           const Spacer(),
           Text(currentClient.clientStatus.toString()),
           ToolbarIconButton(

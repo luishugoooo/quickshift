@@ -33,4 +33,10 @@ class UnconfiguredTorrentClient implements TorrentClient {
   TorrentClient updateClientStatus(TorrentClientStatus value) {
     throw UnsupportedError("Cannot update status of unconfigured client");
   }
+
+  @override
+  Future<void> removeTorrents(List<TorrentData> torrent,
+      {required bool deleteLocalData}) {
+    throw UnsupportedError("Cannot remove torrents from unconfigured client");
+  }
 }

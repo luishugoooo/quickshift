@@ -56,4 +56,14 @@ class TransmissionClient implements TorrentClient {
     return TransmissionClient(config,
         sessionId: sessionId, clientStatus: value ?? clientStatus);
   }
+
+  @override
+  Future<void> removeTorrents(List<TorrentData> torrents,
+      {required bool deleteLocalData}) async {
+    return await lib.removeTorrent(
+        config: config,
+        sessionId: sessionId,
+        torrents: torrents,
+        deleteLocalData: deleteLocalData);
+  }
 }

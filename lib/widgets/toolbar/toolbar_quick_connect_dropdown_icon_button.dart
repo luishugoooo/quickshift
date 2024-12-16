@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
-import 'package:quickshift/data/torrent/torrent_provider.dart';
+import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
+import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/server.dart';
 import 'package:quickshift/state/tabs.dart' as t;
 
@@ -33,7 +34,7 @@ class ToolbarQuickConnectDropdownIconButton<T> extends ConsumerStatefulWidget {
 class _ToolbarQuickConnectDropdownIconButtonState
     extends ConsumerState<ToolbarQuickConnectDropdownIconButton> {
   OverlayEntry? _overlayEntry;
-  _showOverlay(BuildContext context, AsyncValue torrentState) {
+  _showOverlay(BuildContext context) {
     final theme = context.theme;
     OverlayState? state = Overlay.of(context);
     final RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
@@ -86,24 +87,37 @@ class _ToolbarQuickConnectDropdownIconButtonState
                                 ),
                                 const Spacer(),
                                 if (widget.selectedConfig == e)
-                                  torrentState.when(
-                                      data: (_) => FaIcon(
+                                  IconTheme(
+                                    data: IconThemeData(
+                                        size: 18,
+                                        color: theme.colorScheme.secondary),
+                                    child: switch (ref
+                                        .watch(currentClientProvider)
+                                        .clientStatus) {
+                                      TorrentClientStatusUnconfigured() =>
+                                        const SizedBox(),
+                                      TorrentClientStatusConfigured() =>
+                                        const FaIcon(
+                                          FontAwesomeIcons.plugCircleMinus,
+                                        ),
+                                      TorrentClientStatusInitialized() =>
+                                        const FaIcon(
                                           FontAwesomeIcons.plugCircleCheck,
-                                          size: 18,
-                                          color: theme.colorScheme.primary),
-                                      error: (_, __) => FaIcon(
-                                          FontAwesomeIcons.plugCircleXmark,
-                                          size: 18,
-                                          color: theme.colorScheme.error),
-                                      loading: () => const Center(
-                                            child: SizedBox(
-                                                width: 20,
-                                                height: 20,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                )),
-                                          ))
+                                        ),
+                                      TorrentClientStatusError() =>
+                                        const FaIcon(
+                                            FontAwesomeIcons.plugCircleXmark),
+                                      TorrentClientStatusLoading() =>
+                                        const Center(
+                                          child: SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                              )),
+                                        )
+                                    },
+                                  )
                               ],
                             ),
                           ),
@@ -125,13 +139,13 @@ class _ToolbarQuickConnectDropdownIconButtonState
 
   void _closeOverlay(BuildContext context) {
     _overlayEntry?.remove();
+    _overlayEntry = null;
   }
 
   final GlobalKey key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    final torrentState = ref.watch(torrentsProvider);
     return Tooltip(
       key: key,
       message: overlayIsVisible ? "" : widget.tooltip ?? "",
@@ -146,7 +160,7 @@ class _ToolbarQuickConnectDropdownIconButtonState
           if (overlayIsVisible) {
             _closeOverlay(context);
           } else {
-            _showOverlay(context, torrentState);
+            _showOverlay(context);
           }
           setState(() {
             overlayIsVisible = !overlayIsVisible;

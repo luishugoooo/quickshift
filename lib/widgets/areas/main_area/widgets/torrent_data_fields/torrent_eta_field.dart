@@ -24,6 +24,6 @@ class TorrentEtaField extends StatelessWidget
         ? Duration.zero
         : value!.difference(DateTime.now());
 
-    return Text(formatDuration(diff));
+    return Center(child: Text(formatDuration(diff)));
   }
 }

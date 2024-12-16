@@ -57,7 +57,7 @@ class TorrentData {
 
   factory TorrentData.fromRawTransmissionData(RawTransmissionTorrentData data) {
     return TorrentData(
-        id: data.id!,
+        id: data.id ?? -1,
         name: data.name,
         size: data.totalSize ?? 0,
         status: TorrentStatus.fromTransmissionStatus(data.status ?? -1),
