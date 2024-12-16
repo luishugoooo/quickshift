@@ -27,7 +27,6 @@ class MainArea extends ConsumerWidget {
           size: const ResizableSize.ratio(0.3),
           child: Builder(builder: (context) {
             final logs = ref.watch(loggingProvider);
-
             return ListView.builder(
               itemCount: logs.length,
               itemBuilder: (context, index) {

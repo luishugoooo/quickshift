@@ -1,4 +1,5 @@
 enum TorrentColumn {
+  id("Id"),
   name('Name'),
   size('Size'),
   progress('Progress'),

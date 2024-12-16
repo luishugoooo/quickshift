@@ -40,4 +40,6 @@ class Torrents extends _$Torrents {
     client.addTorrentFromMagnet(link);
     ref.invalidateSelf();
   }
+
+
 }

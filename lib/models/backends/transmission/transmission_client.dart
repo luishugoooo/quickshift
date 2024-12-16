@@ -15,6 +15,7 @@ class TransmissionClient implements TorrentClient {
   @override
   Future<List<TorrentData>> getTorrents() {
     return lib.getTorrents(config: config, sessionId: sessionId, fields: [
+      TransmissionTorrentField.id,
       TransmissionTorrentField.name,
       TransmissionTorrentField.status,
       TransmissionTorrentField.percentDone
@@ -45,7 +46,7 @@ class TransmissionClient implements TorrentClient {
   @override
   Future<TorrentData> addTorrentFromMagnet(String link) async {
     return TorrentData.fromRawTransmissionData(await lib.addTorrentFromMagnet(
-        config: config, sessionId: sessionId, magnetLink: link));
+        config: config, sessionId: sessionId!, magnetLink: link));
   }
 
   @override

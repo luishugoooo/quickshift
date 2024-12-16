@@ -13,6 +13,7 @@ import '../../widgets/areas/main_area/widgets/torrent_data_fields/torrent_string
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class TorrentData {
+  final int id;
   final String? name;
   final int size;
   final TorrentStatus status;
@@ -20,6 +21,7 @@ class TorrentData {
   final DateTime? eta;
   final double progress;
   const TorrentData({
+    required this.id,
     required this.name,
     required this.size,
     required this.status,
@@ -41,6 +43,7 @@ class TorrentData {
   ///3. Add a corresponding Column to the TorrentColumn enum
   ///4. Add the field to the fields getter
   List<TorrentDataField> get fields => [
+        TorrentStringField(column: TorrentColumn.id, value: id.toString()),
         TorrentStringField(column: TorrentColumn.name, value: name),
         TorrentStringField(column: TorrentColumn.size, value: size.toString()),
         TorrentProgressField(column: TorrentColumn.progress, value: progress),
@@ -54,6 +57,7 @@ class TorrentData {
 
   factory TorrentData.fromRawTransmissionData(RawTransmissionTorrentData data) {
     return TorrentData(
+        id: data.id!,
         name: data.name,
         size: data.totalSize ?? 0,
         status: TorrentStatus.fromTransmissionStatus(data.status ?? -1),
@@ -62,6 +66,7 @@ class TorrentData {
   }
 
   TorrentData copyWith({
+    int? id,
     String? name,
     int? size,
     TorrentStatus? status,
@@ -69,6 +74,7 @@ class TorrentData {
     double? progress,
   }) {
     return TorrentData(
+      id: id ?? this.id,
       name: name ?? this.name,
       size: size ?? this.size,
       status: status ?? this.status,
@@ -79,6 +85,7 @@ class TorrentData {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'size': size,
       'status': status.toMap(),
@@ -91,6 +98,7 @@ class TorrentData {
 
   factory TorrentData.fromMap(Map<String, dynamic> map) {
     return TorrentData(
+      id: map['id'] as int,
       name: map['name'] != null ? map['name'] as String : null,
       size: map['size'] as int,
       status: TorrentStatus.fromMap(map['status'] as Map<String, dynamic>),
@@ -108,7 +116,7 @@ class TorrentData {
 
   @override
   String toString() {
-    return 'TorrentData(name: $name, size: $size, status: $status, downloadSpeed: $downloadSpeed, uploadSpeed: $uploadSpeed, eta: $eta, progress: $progress)';
+    return 'TorrentData(id: $id, name: $name, size: $size, status: $status, downloadSpeed: $downloadSpeed, uploadSpeed: $uploadSpeed, eta: $eta, progress: $progress)';
   }
 
   @override
@@ -121,6 +129,7 @@ class TorrentData {
         other.downloadSpeed == downloadSpeed &&
         other.uploadSpeed == uploadSpeed &&
         other.eta == eta &&
+        other.id == id &&
         other.progress == progress;
   }
 
@@ -132,6 +141,7 @@ class TorrentData {
         downloadSpeed.hashCode ^
         uploadSpeed.hashCode ^
         eta.hashCode ^
+        id.hashCode ^
         progress.hashCode;
   }
 }

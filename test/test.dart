@@ -19,7 +19,6 @@ void main() {
               TransmissionTorrentField.name,
               TransmissionTorrentField.status
             ]);
-        torrents.forEach(print);
       },
     );
   });

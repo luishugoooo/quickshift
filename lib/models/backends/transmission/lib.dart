@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
+import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
 import 'package:quickshift/models/backends/transmission/raw_transmission_torrent_data.dart';
 import 'package:quickshift/models/backends/transmission/transmission_server_config.dart';
+
+import '../../torrent/torrent_data.dart';
 
 Future<String> init(TransmissionServerConfig config) async {
   final res = await _initConnection(config);
@@ -37,7 +40,7 @@ Future<Response> _requestBuilder({
   required String? sessionId,
   Duration timeout = const Duration(seconds: 5),
 }) async {
-  return await post(
+  final res = await post(
       Uri(
           scheme: !config.https ? "http" : "https",
           host: config.host,
@@ -51,6 +54,11 @@ Future<Response> _requestBuilder({
         ..._buildAuthHeader(config: config),
         "X-Transmission-Session-Id": sessionId ?? ""
       }).timeout(timeout).catchError((error) => throw error);
+
+  if (res.statusCode == 409 && sessionId != null) {
+    throw InvalidTransmissionSessionId();
+  }
+  return res;
 }
 
 Future<Response> _initConnection(TransmissionServerConfig config,
@@ -76,7 +84,6 @@ Future<List<RawTransmissionTorrentData>> getTorrents(
         "fields": [...fields.map((e) => e.value)]
       });
   final decoded = jsonDecode(res.body)["arguments"]["torrents"] as List;
-
   return decoded.map((e) => e as Map<String, dynamic>).map((e) {
     return RawTransmissionTorrentData.fromMap(e);
   }).toList();
@@ -93,13 +100,34 @@ Future<RawTransmissionTorrentData> addTorrentFromMagnet({
       sessionId: sessionId,
       arguments: {"filename": magnetLink});
   final decode = jsonDecode(res.body);
-  print(decode);
   return RawTransmissionTorrentData.fromMap(decode);
+}
+
+Future<void> removeTorrent(
+    {required TransmissionServerConfig config,
+    required String? sessionId,
+    required List<TorrentData> torrents,
+    bool deleteLocalData = false}) async {
+  await _requestBuilder(
+      method: _ClientMethods.torrentStop,
+      config: config,
+      sessionId: sessionId,
+      arguments: {
+        "ids": [
+          ...torrents.map(
+            (e) => e.id,
+          )
+        ],
+        "delete-local-data": deleteLocalData
+      });
+
+  return;
 }
 
 enum _ClientMethods {
   sessionGet("session-get"),
   torrentAdd("torrent-add"),
+  torrentStop("torrent-stop"),
   torrentGet("torrent-get");
 
   final String value;

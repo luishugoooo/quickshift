@@ -39,6 +39,5 @@ TorrentClient currentClient(Ref ref) {
   ));
 
   final client = ref.watch(torrentClientsProvider(c));
-  print("currentClient $client");
   return client;
 }

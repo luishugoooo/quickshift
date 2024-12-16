@@ -29,7 +29,6 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(currentClientProvider);
-    print("Client REBUILD: $client");
 
     return Center(
         child: !client.isConfigured
