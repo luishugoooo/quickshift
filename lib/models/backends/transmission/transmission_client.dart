@@ -10,7 +10,10 @@ class TransmissionClient implements TorrentClient {
   @override
   final TransmissionServerConfig config;
   final String? sessionId;
-  const TransmissionClient(this.config, {this.sessionId});
+  @override
+  final TorrentClientStatus clientStatus;
+  const TransmissionClient(this.config,
+      {this.sessionId, required this.clientStatus});
 
   @override
   Future<List<TorrentData>> getTorrents() {
@@ -31,17 +34,16 @@ class TransmissionClient implements TorrentClient {
 
   @override
   String toString() =>
-      'TransmissionClient(config: $config), sessionId: $sessionId, isInit: $isInit';
+      'TransmissionClient(config: $config), sessionId: $sessionId, clientStatus: $clientStatus';
 
   @override
   Future<TorrentClient> init() {
     return lib.init(config).then(
-          (value) => TransmissionClient(config, sessionId: value),
+          (value) => TransmissionClient(config,
+              sessionId: value,
+              clientStatus: const TorrentClientStatusInitialized()),
         );
   }
-
-  @override
-  bool get isInit => sessionId != null;
 
   @override
   Future<TorrentData> addTorrentFromMagnet(String link) async {
@@ -50,5 +52,8 @@ class TransmissionClient implements TorrentClient {
   }
 
   @override
-  bool get isConfigured => true;
+  TorrentClient updateClientStatus(TorrentClientStatus? value) {
+    return TransmissionClient(config,
+        sessionId: sessionId, clientStatus: value ?? clientStatus);
+  }
 }

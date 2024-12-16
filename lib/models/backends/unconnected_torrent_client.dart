@@ -23,11 +23,14 @@ class UnconfiguredTorrentClient implements TorrentClient {
   }
 
   @override
-  bool get isInit => false;
-
-  @override
   String get name => "Not connected";
 
   @override
-  bool get isConfigured => false;
+  TorrentClientStatus get clientStatus =>
+      const TorrentClientStatusUnconfigured();
+
+  @override
+  TorrentClient updateClientStatus(TorrentClientStatus value) {
+    throw UnsupportedError("Cannot update status of unconfigured client");
+  }
 }

@@ -20,7 +20,7 @@ part 'torrent_provider.g.dart';
 //     await Future.delayed(const Duration(milliseconds: 1000));
 //   }
 // }
-
+//TODO: IDEA: make this the only interface for the ui, TorrentClientProvider becomes async and just pipes through its asnycstate
 @Riverpod(keepAlive: true)
 class Torrents extends _$Torrents {
   @override

@@ -6,6 +6,7 @@ import 'package:quickshift/const/color.dart';
 import 'package:quickshift/const/consts.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/data/torrent/torrent_provider.dart';
+import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
@@ -28,7 +29,6 @@ class _ToolbarState extends ConsumerState<Toolbar> {
     final currentTab = ref.watch(currentTabProvider);
     final currentClient = ref.watch(currentClientProvider);
 
-    final clientIsInit = currentClient.isInit;
     return Container(
       color: tabColorDark,
       height: 50,
@@ -54,12 +54,13 @@ class _ToolbarState extends ConsumerState<Toolbar> {
               servers: MOCK_SERVERS),
           ToolbarIconButton(
               icon: FontAwesomeIcons.plus,
-              onPressed: !clientIsInit
+              onPressed: currentClient.clientStatus
+                      is! TorrentClientStatusInitialized
                   ? null
                   : () => ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
                       "magnet:?xt=urn:btih:265863cbbb5ed9ef39e7c891ebebdf1623b09d5e&dn=archlinux-2024.12.01-x86_64.iso ")),
           const Spacer(),
-          Text(currentClient.isInit.toString()),
+          Text(currentClient.clientStatus.toString()),
           ToolbarIconButton(
             icon: FontAwesomeIcons.arrowsRotate,
             onPressed: () {},
