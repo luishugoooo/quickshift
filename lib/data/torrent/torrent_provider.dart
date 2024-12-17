@@ -1,3 +1,5 @@
+import 'package:circular_buffer/circular_buffer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
@@ -30,5 +32,13 @@ class Torrents extends _$Torrents {
     final client = ref.read(currentClientProvider);
     await client.removeTorrents(torrent, deleteLocalData: deleteLocalData);
     ref.invalidateSelf();
+  }
+}
+
+@riverpod
+class TorrentDownloadSpeedHistory extends _$TorrentDownloadSpeedHistory {
+  @override
+  CircularBuffer<int> build() {
+    return CircularBuffer(10);
   }
 }

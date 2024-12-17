@@ -18,13 +18,13 @@ ContextMenu buildTorrentContextMenu(TorrentData torrent,
           onSelected: onStop,
         ),
         MenuItem(
-          icon: FontAwesomeIcons.trash,
+          icon: FontAwesomeIcons.minus,
           label: 'Remove',
           onSelected: onRemove,
         ),
         MenuItem(
           icon: FontAwesomeIcons.trash,
-          label: 'Remove with local data',
+          label: 'Remove (with local data)',
           onSelected: onRemoveWithLocalData,
         )
       ],

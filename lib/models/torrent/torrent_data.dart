@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:quickshift/models/backends/transmission/raw_transmission_torrent_data.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/models/torrent_status.dart';
@@ -17,7 +15,8 @@ class TorrentData {
   final String? name;
   final int size;
   final TorrentStatus status;
-
+  final int? downloadSpeed;
+  final int? uploadSpeed;
   final DateTime? eta;
   final double progress;
   const TorrentData({
@@ -26,16 +25,10 @@ class TorrentData {
     required this.size,
     required this.status,
     required this.eta,
+    required this.downloadSpeed,
+    required this.uploadSpeed,
     required this.progress,
   });
-
-  int get downloadSpeed {
-    return (size * progress).toInt();
-  }
-
-  int get uploadSpeed {
-    return (size * progress).toInt();
-  }
 
   ///How to add a new field:
   ///1. Create a new field widget class in widgets/areas/main_area/widgets/torrent_data_fields or use an existing one
@@ -59,6 +52,8 @@ class TorrentData {
     return TorrentData(
         id: data.id ?? -1,
         name: data.name,
+        downloadSpeed: data.rateDownload,
+        uploadSpeed: data.rateUpload,
         size: data.totalSize ?? 0,
         status: TorrentStatus.fromTransmissionStatus(data.status ?? -1),
         eta: DateTime.fromMillisecondsSinceEpoch(data.eta ?? 0),
@@ -72,12 +67,16 @@ class TorrentData {
     TorrentStatus? status,
     DateTime? eta,
     double? progress,
+    int? downloadSpeed,
+    int? uploadSpeed,
   }) {
     return TorrentData(
       id: id ?? this.id,
       name: name ?? this.name,
       size: size ?? this.size,
       status: status ?? this.status,
+      downloadSpeed: downloadSpeed ?? this.downloadSpeed,
+      uploadSpeed: uploadSpeed ?? this.uploadSpeed,
       eta: eta ?? this.eta,
       progress: progress ?? this.progress,
     );
@@ -96,27 +95,9 @@ class TorrentData {
     };
   }
 
-  factory TorrentData.fromMap(Map<String, dynamic> map) {
-    return TorrentData(
-      id: map['id'] as int,
-      name: map['name'] != null ? map['name'] as String : null,
-      size: map['size'] as int,
-      status: TorrentStatus.fromMap(map['status'] as Map<String, dynamic>),
-      eta: map['eta'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['eta'] as int)
-          : null,
-      progress: map['progress'] as double,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory TorrentData.fromJson(String source) =>
-      TorrentData.fromMap(json.decode(source) as Map<String, dynamic>);
-
   @override
   String toString() {
-    return 'TorrentData(id: $id, name: $name, size: $size, status: $status, downloadSpeed: $downloadSpeed, uploadSpeed: $uploadSpeed, eta: $eta, progress: $progress)';
+    return 'TorrentData(id: $id, name: $name, size: $size, status: $status,  eta: $eta, progress: $progress, downloadSpeed: $downloadSpeed, uploadSpeed: $uploadSpeed)';
   }
 
   @override
@@ -138,9 +119,9 @@ class TorrentData {
     return name.hashCode ^
         size.hashCode ^
         status.hashCode ^
+        eta.hashCode ^
         downloadSpeed.hashCode ^
         uploadSpeed.hashCode ^
-        eta.hashCode ^
         id.hashCode ^
         progress.hashCode;
   }

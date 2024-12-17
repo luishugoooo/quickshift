@@ -6,7 +6,7 @@ part of 'torrent_client_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$torrentClientsHash() => r'59304bdaa2955c1735fb2c5b391eb5d3536e827c';
+String _$torrentClientsHash() => r'3eb1b65b9b2029d4f26d956c1c90c403a18116d4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -173,7 +173,7 @@ class _TorrentClientsProviderElement
   ServerConfig? get c => (origin as TorrentClientsProvider).c;
 }
 
-String _$currentClientHash() => r'89c7976e06b58726e1273b1cb927a6cfb0563661';
+String _$currentClientHash() => r'19ab12c45da74e4f7ff5150ec4b67246888078a6';
 
 /// See also [CurrentClient].
 @ProviderFor(CurrentClient)

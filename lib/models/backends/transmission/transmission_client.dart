@@ -21,7 +21,9 @@ class TransmissionClient implements TorrentClient {
       TransmissionTorrentField.id,
       TransmissionTorrentField.name,
       TransmissionTorrentField.status,
-      TransmissionTorrentField.percentDone
+      TransmissionTorrentField.percentDone,
+      TransmissionTorrentField.rateDownload,
+      TransmissionTorrentField.rateUpload,
     ]).then((value) => value
         .map(
           (e) => TorrentData.fromRawTransmissionData(e),
