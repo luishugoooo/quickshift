@@ -6,7 +6,8 @@ part of 'torrent_status.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$torrentStatusHash() => r'13f0592ee8351e6d6b53a75ec6b277098a315638';
+String _$torrentStatusFilterHash() =>
+    r'4aa99ed0be94f95e74aed1902201a46f78e50aac';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +30,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$TorrentStatus extends BuildlessNotifier<tf.TorrentStatus> {
-  late final Tab tab;
+abstract class _$TorrentStatusFilter
+    extends BuildlessNotifier<tf.TorrentStatus> {
+  late final Tab? tab;
 
   tf.TorrentStatus build(
-    Tab tab,
+    Tab? tab,
   );
 }
 
-/// See also [TorrentStatus].
-@ProviderFor(TorrentStatus)
-const torrentStatusProvider = TorrentStatusFamily();
+/// See also [TorrentStatusFilter].
+@ProviderFor(TorrentStatusFilter)
+const torrentStatusFilterProvider = TorrentStatusFilterFamily();
 
-/// See also [TorrentStatus].
-class TorrentStatusFamily extends Family<tf.TorrentStatus> {
-  /// See also [TorrentStatus].
-  const TorrentStatusFamily();
+/// See also [TorrentStatusFilter].
+class TorrentStatusFilterFamily extends Family<tf.TorrentStatus> {
+  /// See also [TorrentStatusFilter].
+  const TorrentStatusFilterFamily();
 
-  /// See also [TorrentStatus].
-  TorrentStatusProvider call(
-    Tab tab,
+  /// See also [TorrentStatusFilter].
+  TorrentStatusFilterProvider call(
+    Tab? tab,
   ) {
-    return TorrentStatusProvider(
+    return TorrentStatusFilterProvider(
       tab,
     );
   }
 
   @override
-  TorrentStatusProvider getProviderOverride(
-    covariant TorrentStatusProvider provider,
+  TorrentStatusFilterProvider getProviderOverride(
+    covariant TorrentStatusFilterProvider provider,
   ) {
     return call(
       provider.tab,
@@ -76,30 +78,30 @@ class TorrentStatusFamily extends Family<tf.TorrentStatus> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'torrentStatusProvider';
+  String? get name => r'torrentStatusFilterProvider';
 }
 
-/// See also [TorrentStatus].
-class TorrentStatusProvider
-    extends NotifierProviderImpl<TorrentStatus, tf.TorrentStatus> {
-  /// See also [TorrentStatus].
-  TorrentStatusProvider(
-    Tab tab,
+/// See also [TorrentStatusFilter].
+class TorrentStatusFilterProvider
+    extends NotifierProviderImpl<TorrentStatusFilter, tf.TorrentStatus> {
+  /// See also [TorrentStatusFilter].
+  TorrentStatusFilterProvider(
+    Tab? tab,
   ) : this._internal(
-          () => TorrentStatus()..tab = tab,
-          from: torrentStatusProvider,
-          name: r'torrentStatusProvider',
+          () => TorrentStatusFilter()..tab = tab,
+          from: torrentStatusFilterProvider,
+          name: r'torrentStatusFilterProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$torrentStatusHash,
-          dependencies: TorrentStatusFamily._dependencies,
+                  : _$torrentStatusFilterHash,
+          dependencies: TorrentStatusFilterFamily._dependencies,
           allTransitiveDependencies:
-              TorrentStatusFamily._allTransitiveDependencies,
+              TorrentStatusFilterFamily._allTransitiveDependencies,
           tab: tab,
         );
 
-  TorrentStatusProvider._internal(
+  TorrentStatusFilterProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -109,11 +111,11 @@ class TorrentStatusProvider
     required this.tab,
   }) : super.internal();
 
-  final Tab tab;
+  final Tab? tab;
 
   @override
   tf.TorrentStatus runNotifierBuild(
-    covariant TorrentStatus notifier,
+    covariant TorrentStatusFilter notifier,
   ) {
     return notifier.build(
       tab,
@@ -121,10 +123,10 @@ class TorrentStatusProvider
   }
 
   @override
-  Override overrideWith(TorrentStatus Function() create) {
+  Override overrideWith(TorrentStatusFilter Function() create) {
     return ProviderOverride(
       origin: this,
-      override: TorrentStatusProvider._internal(
+      override: TorrentStatusFilterProvider._internal(
         () => create()..tab = tab,
         from: from,
         name: null,
@@ -137,13 +139,14 @@ class TorrentStatusProvider
   }
 
   @override
-  NotifierProviderElement<TorrentStatus, tf.TorrentStatus> createElement() {
-    return _TorrentStatusProviderElement(this);
+  NotifierProviderElement<TorrentStatusFilter, tf.TorrentStatus>
+      createElement() {
+    return _TorrentStatusFilterProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TorrentStatusProvider && other.tab == tab;
+    return other is TorrentStatusFilterProvider && other.tab == tab;
   }
 
   @override
@@ -157,18 +160,18 @@ class TorrentStatusProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin TorrentStatusRef on NotifierProviderRef<tf.TorrentStatus> {
+mixin TorrentStatusFilterRef on NotifierProviderRef<tf.TorrentStatus> {
   /// The parameter `tab` of this provider.
-  Tab get tab;
+  Tab? get tab;
 }
 
-class _TorrentStatusProviderElement
-    extends NotifierProviderElement<TorrentStatus, tf.TorrentStatus>
-    with TorrentStatusRef {
-  _TorrentStatusProviderElement(super.provider);
+class _TorrentStatusFilterProviderElement
+    extends NotifierProviderElement<TorrentStatusFilter, tf.TorrentStatus>
+    with TorrentStatusFilterRef {
+  _TorrentStatusFilterProviderElement(super.provider);
 
   @override
-  Tab get tab => (origin as TorrentStatusProvider).tab;
+  Tab? get tab => (origin as TorrentStatusFilterProvider).tab;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

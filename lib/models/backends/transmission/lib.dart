@@ -39,10 +39,6 @@ Future<Response> _requestBuilder({
   required TransmissionServerConfig config,
   required String? sessionId,
 }) async {
-  print(json.encode({
-    "arguments": arguments,
-    "method": method.value,
-  }));
   final res = await post(
       Uri(
           scheme: config.https ? "https" : "http",
@@ -88,7 +84,6 @@ Future<List<RawTransmissionTorrentData>> getTorrents(
       });
   final decoded = jsonDecode(res.body)["arguments"]["torrents"] as List;
   return decoded.map((e) => e as Map<String, dynamic>).map((e) {
-    print(e);
     return RawTransmissionTorrentData.fromMap(e);
   }).toList();
 }

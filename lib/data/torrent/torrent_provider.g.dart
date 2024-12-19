@@ -6,7 +6,7 @@ part of 'torrent_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$torrentsHash() => r'aaad1981a1f5a118e4af06400c56af0715c29685';
+String _$torrentsHash() => r'93b7f9320c00ced516ac941afdc1c8df5f092939';
 
 /// See also [Torrents].
 @ProviderFor(Torrents)

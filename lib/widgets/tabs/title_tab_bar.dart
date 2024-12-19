@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/tabs/title_tab.dart';
 
@@ -43,11 +44,18 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                                   .read(currentTabIdProvider.notifier)
                                   .selectTab(e.id);
                             },
-                            //TODO: use proper title
                             title: e.config != null
                                 ? e.config!.name
-                                : " Tab ${e.id}",
-                            icon: FontAwesomeIcons.server,
+                                : "Tab ${e.id}",
+                            icon: e.config == null
+                                ? FaIcon(
+                                    FontAwesomeIcons.server,
+                                    color: context.theme.colorScheme.secondary,
+                                    size: 18,
+                                  )
+                                : SizedBox(
+                                    width: 25,
+                                    child: e.config!.clientType.icon),
                             isSelected: currentTab.id == e.id);
                       },
                     ),

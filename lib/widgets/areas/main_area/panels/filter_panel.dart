@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quickshift/data/drift/settings_notifier.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent_status.dart' as tf;
 import 'package:quickshift/state/tabs.dart';
@@ -11,23 +12,28 @@ class FilterPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //TODO: add a setting to synchronize filters across tabs, maybe set tab to null
     final currentTab = ref.watch(currentTabProvider);
+    //This is safe because the value is always set
+    final syncFiltersAcrossTabs =
+        ref.watch(settingsProvider).synchronizeFiltersAcrossTabs;
 
+    final filterProvider =
+        torrentStatusFilterProvider(syncFiltersAcrossTabs ? null : currentTab);
+
+    final selectedFilter = ref.watch(filterProvider);
+    final filterNotifier = ref.watch(filterProvider.notifier);
     return ListView.builder(
       itemCount: tf.TorrentStatus.values.length,
       itemBuilder: (context, index) {
         final filter = tf.TorrentStatus.values[index];
-        final selected = ref.watch(torrentStatusProvider(currentTab)) == filter;
+        final selected = selectedFilter == filter;
         return ListTile(
           splashColor: Colors.transparent,
           focusColor:
               selected ? context.theme.colorScheme.primaryContainer : null,
-          onTap: () => ref
-              .read(torrentStatusProvider(currentTab).notifier)
-              .setFilter(filter),
+          onTap: () => filterNotifier.setFilter(filter),
           selectedTileColor: context.theme.colorScheme.primaryContainer,
-          selected: ref.watch(torrentStatusProvider(currentTab)) == filter,
+          selected: selected,
           trailing: FaIcon(
             filter.icon,
             size: 22,

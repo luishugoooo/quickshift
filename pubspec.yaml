@@ -59,6 +59,10 @@ dependencies:
   circular_buffer: ^0.12.0
   drift: ^2.22.1
   drift_flutter: ^0.2.2
+  path_provider: ^2.1.5
+  floating_dialog: ^1.1.1+1
+  flutter_spinbox: ^0.13.1
+  hold_down_button: ^1.1.0
 
 #dependency_overrides:
   #dio: ^5.0.6
@@ -123,3 +127,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+targets:
+  $default:
+    builders:
+      mockito:mockBuilder:
+        enabled: false

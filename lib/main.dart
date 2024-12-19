@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/router.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  appWindow.title = "QuickShift";
   runApp(const ProviderScope(child: MyApp()));
 
   doWhenWindowReady(() {

@@ -382,6 +382,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.69.2"
+  floating_dialog:
+    dependency: "direct main"
+    description:
+      name: floating_dialog
+      sha256: "2a0cfea23784dd1e2aab509466ca82b852dec5b702b86c8e749de19692cb7124"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1+1"
   fluentui_system_icons:
     dependency: "direct main"
     description:
@@ -435,6 +443,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
+  flutter_spinbox:
+    dependency: "direct main"
+    description:
+      name: flutter_spinbox
+      sha256: "38d8c1a3a39f0fa72823d4470785f5e165f2deb53531ca7803b54ba45e4dbd46"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -501,6 +517,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  hold_down_button:
+    dependency: "direct main"
+    description:
+      name: hold_down_button
+      sha256: a6849473860ae3eef9c078cfc12eb62cc677a72eb90debcb2861558ae15df914
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   hotreloader:
     dependency: transitive
     description:
@@ -678,7 +702,7 @@ packages:
     source: hosted
     version: "1.9.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"

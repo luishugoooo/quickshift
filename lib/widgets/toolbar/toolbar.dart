@@ -4,11 +4,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/const/consts.dart';
+import 'package:quickshift/data/drift/settings_notifier.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/data/torrent/torrent_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/state/tabs.dart';
+import 'package:quickshift/widgets/areas/settings/settings_dialog.dart';
+import 'package:quickshift/widgets/dialog/default_dialog_frame.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_quick_connect_dropdown_icon_button.dart';
 
@@ -28,6 +31,8 @@ class _ToolbarState extends ConsumerState<Toolbar> {
 
     final currentTab = ref.watch(currentTabProvider);
     final currentClient = ref.watch(currentClientProvider);
+
+    final globalSettings = ref.watch(settingsProvider);
 
     return Container(
       color: tabColorDark,
@@ -65,6 +70,23 @@ class _ToolbarState extends ConsumerState<Toolbar> {
                   ? null
                   : () => ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
                       "magnet:?xt=urn:btih:265863cbbb5ed9ef39e7c891ebebdf1623b09d5e&dn=archlinux-2024.12.01-x86_64.iso ")),
+          ToolbarIconButton(
+            icon: FontAwesomeIcons.gear,
+            onPressed: () => showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => SettingsDialog(
+                settings: globalSettings,
+              ),
+            ),
+          ),
+          ToolbarIconButton(
+            icon: FontAwesomeIcons.accusoft,
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const DefaultDialogFrame(body: SizedBox()),
+            ),
+          ),
 
           const Spacer(),
           Text(currentClient.clientStatus.toString()),

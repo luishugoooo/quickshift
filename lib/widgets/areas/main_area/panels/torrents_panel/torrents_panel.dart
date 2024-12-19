@@ -85,7 +85,6 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
         }, error: (error, stackTrace) {
           return Text("Error: $error");
         }, loading: () {
-          print("loadstate");
           return const CircularProgressIndicator();
         }),
     });

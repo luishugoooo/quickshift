@@ -6,9 +6,9 @@ import '../models/torrent_status.dart' as tf;
 part 'torrent_status.g.dart';
 
 @Riverpod(keepAlive: true)
-class TorrentStatus extends _$TorrentStatus {
+class TorrentStatusFilter extends _$TorrentStatusFilter {
   @override
-  tf.TorrentStatus build(Tab tab) {
+  tf.TorrentStatus build(Tab? tab) {
     return tf.TorrentStatus.all;
   }
 

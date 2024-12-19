@@ -9,7 +9,7 @@ import 'package:quickshift/state/tabs.dart' as tabs;
 class TitleTab extends ConsumerStatefulWidget {
   final bool isSelected;
   final tabs.Tab tab;
-  final IconData icon;
+  final Widget icon;
   final String title;
   final VoidCallback onTap;
   final bool isOnly;
@@ -61,11 +61,7 @@ class _TitleTabState extends ConsumerState<TitleTab> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FaIcon(
-                size: 20,
-                widget.icon,
-                color: colorScheme.secondary,
-              ),
+              SizedBox(width: 25, child: Center(child: widget.icon)),
               const Gap(10),
               Expanded(
                 child: Text(
