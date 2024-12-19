@@ -11,7 +11,6 @@ import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/state/tabs.dart';
 import 'package:quickshift/widgets/areas/settings/settings_dialog.dart';
-import 'package:quickshift/widgets/dialog/default_dialog_frame.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_quick_connect_dropdown_icon_button.dart';
 
@@ -78,13 +77,6 @@ class _ToolbarState extends ConsumerState<Toolbar> {
               builder: (context) => SettingsDialog(
                 settings: globalSettings,
               ),
-            ),
-          ),
-          ToolbarIconButton(
-            icon: FontAwesomeIcons.accusoft,
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => const DefaultDialogFrame(body: SizedBox()),
             ),
           ),
 
