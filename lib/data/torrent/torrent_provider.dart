@@ -1,4 +1,4 @@
-import 'package:circular_buffer/circular_buffer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/drift/settings_notifier.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
@@ -39,9 +39,25 @@ class Torrents extends _$Torrents {
 }
 
 @riverpod
-class TorrentDownloadSpeedHistory extends _$TorrentDownloadSpeedHistory {
+class SelectedTorrentId extends _$SelectedTorrentId {
   @override
-  CircularBuffer<int> build() {
-    return CircularBuffer(10);
+  int? build() {
+    return null;
   }
+
+  void select(int t) {
+    state = t;
+  }
+}
+
+@riverpod
+TorrentData? selectedTorrent(Ref ref) {
+  final torrents = ref.watch(torrentsProvider).value;
+  if (torrents == null || torrents.isEmpty) return null;
+  final selectedId = ref.watch(selectedTorrentIdProvider);
+  return torrents
+      .where(
+        (element) => element.id == selectedId,
+      )
+      .firstOrNull;
 }

@@ -4,6 +4,7 @@ import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/filter_panel.dart';
+import 'package:quickshift/widgets/areas/main_area/panels/stats_panel/download_speed_histogram.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrents_panel.dart';
 import 'package:quickshift/widgets/util/logging.dart';
 
@@ -27,20 +28,27 @@ class MainArea extends ConsumerWidget {
       ),
       ResizableChild(
           size: const ResizableSize.ratio(0.3),
-          child: Builder(builder: (context) {
-            final logs = ref.watch(loggingProvider);
-            return AutoScroller(
-              lengthIdentifier: logs.length,
-              builder: (context, controller) => ListView.builder(
-                itemCount: logs.length,
-                controller: controller,
-                itemBuilder: (context, index) {
-                  return Text(
-                      "${DateFormat("hh:mm:ss").format(logs[index].time)}: ${logs[index].log}");
-                },
+          child: Row(
+            children: [
+              Expanded(
+                child: Builder(builder: (context) {
+                  final logs = ref.watch(loggingProvider);
+                  return AutoScroller(
+                    lengthIdentifier: logs.length,
+                    builder: (context, controller) => ListView.builder(
+                      itemCount: logs.length,
+                      controller: controller,
+                      itemBuilder: (context, index) {
+                        return Text(
+                            "${DateFormat("hh:mm:ss").format(logs[index].time)}: ${logs[index].log}");
+                      },
+                    ),
+                  );
+                }),
               ),
-            );
-          }))
+              const Expanded(child: DownloadSpeedHistogram())
+            ],
+          ))
     ]);
   }
 }

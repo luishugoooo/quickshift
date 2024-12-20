@@ -46,7 +46,7 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                             },
                             title: e.config != null
                                 ? e.config!.name
-                                : "Tab ${e.id}",
+                                : "Tab ${e.id + 1}",
                             icon: e.config == null
                                 ? FaIcon(
                                     FontAwesomeIcons.server,

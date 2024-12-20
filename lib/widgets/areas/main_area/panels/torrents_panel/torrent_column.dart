@@ -12,8 +12,8 @@ class TorrentColumnWidget extends ConsumerWidget {
   final TorrentColumn e;
   final ScrollController scrollController;
   final List<TorrentData> torrents;
-  final int? selectedRow;
-  final Function(int torrentIndex) onSelected;
+  final int? selectedTorrentId;
+  final Function(int torrentId) onSelected;
   final Function(TorrentColumn torrentColumn, ScrollController controller)
       onScrollEvent;
   const TorrentColumnWidget(
@@ -21,7 +21,7 @@ class TorrentColumnWidget extends ConsumerWidget {
       required this.e,
       required this.scrollController,
       required this.torrents,
-      required this.selectedRow,
+      required this.selectedTorrentId,
       required this.onSelected,
       required this.onScrollEvent});
 
@@ -53,16 +53,17 @@ class TorrentColumnWidget extends ConsumerWidget {
               itemCount: torrents.length,
               itemBuilder: (context, index) {
                 final torrent = torrents[index];
-                final isSelected = selectedRow == index;
+                final isSelected = torrent.id == selectedTorrentId;
+
                 Offset mousePosition = Offset.zero;
                 return Listener(
                   onPointerDown: (event) {
                     mousePosition = event.position;
                   },
                   child: GestureDetector(
-                    onTap: () => onSelected(index),
+                    onTap: () => onSelected(torrent.id),
                     onSecondaryTap: () {
-                      onSelected(index);
+                      onSelected(torrent.id);
                       showContextMenu(
                         opaque: false,
                         context,

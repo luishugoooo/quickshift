@@ -6,6 +6,23 @@ part of 'torrent_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$selectedTorrentHash() => r'abe914e9defdbe68e3667293e7d4c31f3e2f78d6';
+
+/// See also [selectedTorrent].
+@ProviderFor(selectedTorrent)
+final selectedTorrentProvider = AutoDisposeProvider<TorrentData?>.internal(
+  selectedTorrent,
+  name: r'selectedTorrentProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedTorrentHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef SelectedTorrentRef = AutoDisposeProviderRef<TorrentData?>;
 String _$torrentsHash() => r'93b7f9320c00ced516ac941afdc1c8df5f092939';
 
 /// See also [Torrents].
@@ -21,23 +38,21 @@ final torrentsProvider =
 );
 
 typedef _$Torrents = StreamNotifier<List<TorrentData>>;
-String _$torrentDownloadSpeedHistoryHash() =>
-    r'ef6e8b5864acfc3c3fc09408fcee99ad5832f7bf';
+String _$selectedTorrentIdHash() => r'44bcbe4a6bbb6b5fee1e00e8bae1876a02a74e38';
 
-/// See also [TorrentDownloadSpeedHistory].
-@ProviderFor(TorrentDownloadSpeedHistory)
-final torrentDownloadSpeedHistoryProvider = AutoDisposeNotifierProvider<
-    TorrentDownloadSpeedHistory, CircularBuffer<int>>.internal(
-  TorrentDownloadSpeedHistory.new,
-  name: r'torrentDownloadSpeedHistoryProvider',
+/// See also [SelectedTorrentId].
+@ProviderFor(SelectedTorrentId)
+final selectedTorrentIdProvider =
+    AutoDisposeNotifierProvider<SelectedTorrentId, int?>.internal(
+  SelectedTorrentId.new,
+  name: r'selectedTorrentIdProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$torrentDownloadSpeedHistoryHash,
+      : _$selectedTorrentIdHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$TorrentDownloadSpeedHistory
-    = AutoDisposeNotifier<CircularBuffer<int>>;
+typedef _$SelectedTorrentId = AutoDisposeNotifier<int?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
