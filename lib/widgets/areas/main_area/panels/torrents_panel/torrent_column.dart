@@ -67,6 +67,8 @@ class TorrentColumnWidget extends ConsumerWidget {
                     onSecondaryTap: () {
                       onSelected(torrent.id);
                       showContextMenu(
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
                         opaque: false,
                         context,
                         contextMenu: buildTorrentContextMenu(torrent,
