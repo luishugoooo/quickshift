@@ -27,6 +27,8 @@ class TorrentColumnWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final torrentNotifier = ref.watch(torrentsProvider.notifier);
+
     final colorScheme = context.theme.colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,15 +70,19 @@ class TorrentColumnWidget extends ConsumerWidget {
                         opaque: false,
                         context,
                         contextMenu: buildTorrentContextMenu(torrent,
-                            onStop: () {},
-                            onRemove: () => ref
-                                .read(torrentsProvider.notifier)
-                                .removeTorrents([torrent],
-                                    deleteLocalData: false),
-                            onRemoveWithLocalData: () => ref
-                                .read(torrentsProvider.notifier)
+                            onStop: () =>
+                                torrentNotifier.stopTorrents([torrent]),
+                            onRemove: () => torrentNotifier.removeTorrents(
+                                [torrent], deleteLocalData: false),
+                            onRemoveWithLocalData: () => torrentNotifier
                                 .removeTorrents([torrent],
                                     deleteLocalData: true),
+                            onForceStart: () =>
+                                torrentNotifier.forceStartTorrents([torrent]),
+                            onVerify: () =>
+                                torrentNotifier.verifyTorrents([torrent]),
+                            onStart: () =>
+                                torrentNotifier.startTorrents([torrent]),
                             positon: mousePosition,
                             colorScheme: colorScheme),
                       );

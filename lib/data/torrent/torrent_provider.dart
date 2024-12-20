@@ -36,6 +36,30 @@ class Torrents extends _$Torrents {
     await client.removeTorrents(torrent, deleteLocalData: deleteLocalData);
     ref.invalidateSelf();
   }
+
+  void stopTorrents(List<TorrentData> torrent) async {
+    final client = ref.read(currentClientProvider);
+    await client.stopTorrents(torrent);
+    ref.invalidateSelf();
+  }
+
+  void verifyTorrents(List<TorrentData> torrent) async {
+    final client = ref.read(currentClientProvider);
+    await client.verifyTorrents(torrent);
+    ref.invalidateSelf();
+  }
+
+  void forceStartTorrents(List<TorrentData> torrent) async {
+    final client = ref.read(currentClientProvider);
+    await client.forceStartTorrents(torrent);
+    ref.invalidateSelf();
+  }
+
+  void startTorrents(List<TorrentData> torrent) async {
+    final client = ref.read(currentClientProvider);
+    await client.startTorrents(torrent);
+    ref.invalidateSelf();
+  }
 }
 
 @riverpod
@@ -52,7 +76,11 @@ class SelectedTorrentId extends _$SelectedTorrentId {
 
 @riverpod
 TorrentData? selectedTorrent(Ref ref) {
-  final torrents = ref.watch(torrentsProvider).value;
+  final torrents = ref.watch(torrentsProvider).when(
+        data: (data) => data,
+        error: (error, stackTrace) => null,
+        loading: () => null,
+      );
   if (torrents == null || torrents.isEmpty) return null;
   final selectedId = ref.watch(selectedTorrentIdProvider);
   return torrents

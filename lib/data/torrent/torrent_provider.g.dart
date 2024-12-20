@@ -6,7 +6,7 @@ part of 'torrent_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedTorrentHash() => r'abe914e9defdbe68e3667293e7d4c31f3e2f78d6';
+String _$selectedTorrentHash() => r'a5c1e09514e5047e336642e089a7d0d1fe219716';
 
 /// See also [selectedTorrent].
 @ProviderFor(selectedTorrent)
@@ -23,7 +23,7 @@ final selectedTorrentProvider = AutoDisposeProvider<TorrentData?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SelectedTorrentRef = AutoDisposeProviderRef<TorrentData?>;
-String _$torrentsHash() => r'93b7f9320c00ced516ac941afdc1c8df5f092939';
+String _$torrentsHash() => r'4a01cab1ede7b0d4ea4c90335740520750b1a213';
 
 /// See also [Torrents].
 @ProviderFor(Torrents)

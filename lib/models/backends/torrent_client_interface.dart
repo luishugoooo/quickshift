@@ -17,6 +17,10 @@ abstract interface class TorrentClient {
   Future<TorrentData> addTorrentFromMagnet(String link);
   Future<void> removeTorrents(List<TorrentData> torrent,
       {required bool deleteLocalData});
+  Future<void> stopTorrents(List<TorrentData> torrent);
+  Future<void> verifyTorrents(List<TorrentData> torrent);
+  Future<void> forceStartTorrents(List<TorrentData> torrent);
+  Future<void> startTorrents(List<TorrentData> torrent);
 
   static TorrentClient fromConfig(ServerConfig? config) {
     switch (config?.clientType) {

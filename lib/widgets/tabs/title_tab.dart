@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
-import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/state/tabs.dart' as tabs;
 
 class TitleTab extends ConsumerStatefulWidget {
@@ -31,7 +30,6 @@ class _TitleTabState extends ConsumerState<TitleTab> {
   bool hovering = false;
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
     return Flexible(
       child: Container(
         height: double.infinity,
