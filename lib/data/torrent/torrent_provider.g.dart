@@ -23,7 +23,7 @@ final selectedTorrentProvider = AutoDisposeProvider<TorrentData?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SelectedTorrentRef = AutoDisposeProviderRef<TorrentData?>;
-String _$torrentsHash() => r'4a01cab1ede7b0d4ea4c90335740520750b1a213';
+String _$torrentsHash() => r'5a743a8af6a87aae463dff7cb716178df37ba5f5';
 
 /// See also [Torrents].
 @ProviderFor(Torrents)

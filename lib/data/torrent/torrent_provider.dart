@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/drift/settings_notifier.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
+import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 import 'package:quickshift/widgets/util/logging.dart';
@@ -13,13 +14,20 @@ class Torrents extends _$Torrents {
   @override
   Stream<List<TorrentData>> build() async* {
     final client = ref.watch(currentClientProvider);
-    print("BUILDING TORRENT PROVIDER");
     while (client.clientStatus is TorrentClientStatusInitialized) {
       ref.read(loggingProvider.notifier).log("Refresh");
       final updateInterval = ref.read(settingsProvider.select(
         (data) => data.fetchInterval,
       ));
-      yield await client.getTorrents();
+
+      yield await client.getTorrents().catchError((error) async {
+        if (error is InvalidTransmissionSessionId) {
+          await ref.watch(currentClientProvider.notifier).init();
+          return <TorrentData>[];
+        }
+        throw error;
+      });
+
       await Future.delayed(Duration(milliseconds: updateInterval));
     }
   }
@@ -30,7 +38,7 @@ class Torrents extends _$Torrents {
     ref.invalidateSelf();
   }
 
-  void removeTorrents(List<TorrentData> torrent,
+  Future<void> removeTorrents(List<TorrentData> torrent,
       {bool deleteLocalData = false}) async {
     final client = ref.read(currentClientProvider);
     await client.removeTorrents(torrent, deleteLocalData: deleteLocalData);

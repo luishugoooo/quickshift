@@ -55,7 +55,6 @@ class _SettingsDialogState extends ConsumerState<SettingsDialog> {
     setState(() {
       settings = newSettings;
     });
-    print("Setting settings to $newSettings");
   }
 
   void applySettings() {

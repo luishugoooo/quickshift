@@ -74,8 +74,6 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
                       },
                       onScrollEvent: (torrentColumn, controller) {
                         for (final key in scrollControllers.keys) {
-                          print("Received scroll event for $torrentColumn");
-
                           if (key != torrentColumn) {
                             scrollControllers[key]!.jumpTo(controller.offset);
                           }

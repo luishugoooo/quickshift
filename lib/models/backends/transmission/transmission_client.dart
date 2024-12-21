@@ -73,10 +73,9 @@ class TransmissionClient implements TorrentClient {
           method: _ClientMethods.sessionGet,
           overwrittenSessionId: newSessionId);
       if (res2.statusCode == 200) {
-        Logger().d("Session Established with ID: $sessionId");
+        Logger().d("Session Established with ID: $newSessionId");
         return newSessionId!;
       } else {
-        print(res2.body.toString());
         throw Exception(
             "Failed to establish session, Session Token: ${res2.headers["x-transmission-session-id"]}");
       }
