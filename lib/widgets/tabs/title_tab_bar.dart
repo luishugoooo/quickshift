@@ -26,7 +26,7 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: constraints.maxHeight * 0.75,
+            height: constraints.maxHeight * 0.80,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
@@ -70,10 +70,9 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                       //splashColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      iconSize: 16,
+                      iconSize: 14,
                       icon: const FaIcon(
                         FontAwesomeIcons.plus,
-                        size: 16,
                       ),
                     )
                   ]),

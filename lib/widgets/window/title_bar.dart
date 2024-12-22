@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:quickshift/const/color.dart';
@@ -16,11 +18,15 @@ class TitleBar extends StatelessWidget {
       decoration: const BoxDecoration(color: titleBarColorDark),
       child: Row(
         children: [
-          Expanded(
+          if (Platform.isMacOS)
+            const SizedBox(
+              width: 60,
+            ),
+          const Expanded(
               child: Stack(
             children: [
               MoveWindow(),
-              const TitleTabBar(),
+              TitleTabBar(),
             ],
           )),
           const WindowButtons(),

@@ -40,7 +40,7 @@ class _TitleTabState extends ConsumerState<TitleTab> {
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8),
                 topRight: Radius.circular(8),
-                bottomRight: Radius.circular(-10)),
+                bottomRight: Radius.circular(0)),
             color: widget.isSelected
                 ? tabColorDark
                 : hovering

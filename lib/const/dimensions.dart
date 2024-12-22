@@ -1,1 +1,1 @@
-const double titleBarHeight = 45;
+const double titleBarHeight = 40;
