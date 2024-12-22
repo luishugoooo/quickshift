@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quickshift/data/drift/settings_notifier.dart';
+import 'package:quickshift/data/drift/settings/settings_notifier.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent_status.dart' as tf;
 import 'package:quickshift/state/tabs.dart';

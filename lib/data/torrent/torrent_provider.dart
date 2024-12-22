@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/data/drift/settings_notifier.dart';
+import 'package:quickshift/const/consts.dart';
+import 'package:quickshift/data/drift/settings/settings_notifier.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
@@ -68,6 +69,11 @@ class Torrents extends _$Torrents {
     await client.startTorrents(torrent);
     ref.invalidateSelf();
   }
+}
+
+@riverpod
+Stream<List<TorrentData>> filteredTorrents (Ref ref) async*{
+  yield MOCK_TORRENTS;
 }
 
 @riverpod

@@ -48,7 +48,7 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
       TorrentClientStatusError() => Text(client.clientStatus.toString()),
       TorrentClientStatusLoading() ||
       TorrentClientStatusInitialized() =>
-        ref.watch(torrentsProvider).when(data: (data) {
+        ref.watch(filteredTorrentsProvider).when(data: (data) {
           return ResizableContainer(
             divider: ResizableDivider(color: Colors.grey[900]),
             direction: Axis.horizontal,
