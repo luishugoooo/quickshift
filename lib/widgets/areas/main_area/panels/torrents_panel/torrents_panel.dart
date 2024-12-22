@@ -25,6 +25,8 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
     super.initState();
   }
 
+  bool isScrolling = false;
+
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(currentClientProvider);
@@ -74,8 +76,13 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
                       },
                       onScrollEvent: (torrentColumn, controller) {
                         for (final key in scrollControllers.keys) {
-                          if (key != torrentColumn) {
+                          if (key != torrentColumn &&
+                              !isScrolling &&
+                              controller.offset !=
+                                  scrollControllers[key]!.offset) {
+                            isScrolling = true;
                             scrollControllers[key]!.jumpTo(controller.offset);
+                            isScrolling = false;
                           }
                         }
                       },
