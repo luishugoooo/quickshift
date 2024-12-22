@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hold_down_button/hold_down_button.dart';
 import 'package:quickshift/data/drift/settings.dart';
@@ -25,7 +26,7 @@ class _SettingsDialogState extends ConsumerState<SettingsDialog> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: SizedBox(
-        height: 50,
+        height: 30,
         child: Row(
           children: [
             Expanded(
@@ -80,10 +81,12 @@ class _SettingsDialogState extends ConsumerState<SettingsDialog> {
           buildSettingsRow(
               context: context,
               title: "Synchronize torrent filters across tabs",
-              action: Switch.adaptive(
-                value: settings.synchronizeFiltersAcrossTabs,
-                onChanged: (value) => setSettings(
-                    settings.copyWith(synchronizeFiltersAcrossTabs: value)),
+              action: FittedBox(
+                child: Switch.adaptive(
+                  value: settings.synchronizeFiltersAcrossTabs,
+                  onChanged: (value) => setSettings(
+                      settings.copyWith(synchronizeFiltersAcrossTabs: value)),
+                ),
               ))
         ],
       ),
@@ -165,7 +168,7 @@ class _NumberSettingBoxState extends State<NumberSettingBox> {
                 ? context.theme.colorScheme.onSurfaceVariant
                 : Colors.grey[800],
             icon,
-            size: 18,
+            size: 16,
           ),
         ),
       ),
@@ -182,34 +185,42 @@ class _NumberSettingBoxState extends State<NumberSettingBox> {
               Text("(${widget.label})",
                   style: TextStyle(
                       color: context.theme.colorScheme.onSurfaceVariant)),
+            const Gap(5),
             Expanded(
               child: TextField(
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: context.theme.colorScheme.onSurfaceVariant),
                 controller: controller,
+                textAlignVertical: const TextAlignVertical(y: -0.61),
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none)),
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.all(20)),
                 onChanged: (v) =>
                     setValue(widget.onChanged, int.tryParse(v) ?? value),
               ),
             ),
+            const Gap(5),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildArrowButton(
-                  context: context,
-                  active: value < (widget.max ?? value + 1),
-                  icon: FontAwesomeIcons.caretUp,
-                  onPressed: () => setValue(widget.onChanged, value + 100,
-                      updateController: true),
-                ),
-                _buildArrowButton(
+                Expanded(
+                  child: _buildArrowButton(
                     context: context,
-                    active: value > widget.min,
-                    icon: FontAwesomeIcons.caretDown,
-                    onPressed: () => setValue(widget.onChanged, value - 100,
-                        updateController: true))
+                    active: value < (widget.max ?? value + 1),
+                    icon: FontAwesomeIcons.caretUp,
+                    onPressed: () => setValue(widget.onChanged, value + 100,
+                        updateController: true),
+                  ),
+                ),
+                Expanded(
+                  child: _buildArrowButton(
+                      context: context,
+                      active: value > widget.min,
+                      icon: FontAwesomeIcons.caretDown,
+                      onPressed: () => setValue(widget.onChanged, value - 100,
+                          updateController: true)),
+                )
               ],
             )
           ],

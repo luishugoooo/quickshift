@@ -35,11 +35,11 @@ class TorrentProgressField extends StatelessWidget
             ),
             Center(
               child: Text(
-                '${(value! * 100).toStringAsFixed(2)}%',
+                '${(value! * 100).toStringAsFixed((value!.round() == value) ? 0 : 1)}%',
                 style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                    overflow: TextOverflow.ellipsis),
               ),
             ),
           ],

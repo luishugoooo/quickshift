@@ -20,7 +20,7 @@ class TitleBar extends StatelessWidget {
         children: [
           if (Platform.isMacOS)
             const SizedBox(
-              width: 60,
+              width: 65,
             ),
           const Expanded(
               child: Stack(

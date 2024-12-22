@@ -1,8 +1,7 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:macos_window_utils/macos_window_utils.dart';
-import 'package:macos_window_utils/window_manipulator.dart';
+import 'package:macos_window_utils/macos_window_utils.dart' as mac;
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/router.dart';
 
@@ -15,7 +14,11 @@ void main(List<String> args) async {
     appWindow.show();
   });
 
-  await WindowManipulator.initialize();
+  //TODO: Make a proper macos window frame
+  await mac.WindowManipulator.initialize();
+  mac.WindowManipulator.addToolbar();
+  mac.WindowManipulator.setToolbarStyle(
+      toolbarStyle: mac.NSWindowToolbarStyle.unifiedCompact);
 }
 
 class MyApp extends StatelessWidget {
