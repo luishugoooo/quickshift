@@ -7,11 +7,24 @@ ContextMenu buildTorrentContextMenu(TorrentData torrent,
     {required VoidCallback onStop,
     required VoidCallback onRemove,
     required VoidCallback onRemoveWithLocalData,
+    required VoidCallback onVerify,
+    required VoidCallback onForceStart,
+    required VoidCallback onStart,
     Offset? positon,
     required ColorScheme colorScheme}) {
   return ContextMenu(
       entries: [
         const MenuHeader(text: "Torrent"),
+        MenuItem(
+          icon: FontAwesomeIcons.play,
+          label: 'Start',
+          onSelected: onStart,
+        ),
+        MenuItem(
+          icon: FontAwesomeIcons.play,
+          label: 'Force Start',
+          onSelected: onForceStart,
+        ),
         MenuItem(
           icon: FontAwesomeIcons.stop,
           label: 'Stop',
@@ -26,6 +39,11 @@ ContextMenu buildTorrentContextMenu(TorrentData torrent,
           icon: FontAwesomeIcons.trash,
           label: 'Remove (with local data)',
           onSelected: onRemoveWithLocalData,
+        ),
+        MenuItem(
+          icon: FontAwesomeIcons.check,
+          label: 'Verify',
+          onSelected: onVerify,
         )
       ],
       position: positon,

@@ -25,8 +25,6 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
     super.initState();
   }
 
-  int? selectedRow;
-
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(currentClientProvider);
@@ -67,9 +65,12 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
                       e: e,
                       scrollController: scrollControllers[e]!,
                       torrents: data,
-                      selectedRow: selectedRow,
+                      selectedTorrentId:
+                          ref.watch(selectedTorrentIdProvider) ?? -1,
                       onSelected: (torrentIndex) {
-                        setState(() => selectedRow = torrentIndex);
+                        setState(() => ref
+                            .read(selectedTorrentIdProvider.notifier)
+                            .select(torrentIndex));
                       },
                       onScrollEvent: (torrentColumn, controller) {
                         for (final key in scrollControllers.keys) {

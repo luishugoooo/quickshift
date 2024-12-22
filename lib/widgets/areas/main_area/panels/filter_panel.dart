@@ -34,13 +34,14 @@ class FilterPanel extends ConsumerWidget {
           onTap: () => filterNotifier.setFilter(filter),
           selectedTileColor: context.theme.colorScheme.primaryContainer,
           selected: selected,
+          dense: true,
           trailing: FaIcon(
             filter.icon,
-            size: 22,
+            size: 20,
           ),
           title: Text(
             filter.label,
-            style: const TextStyle(fontSize: 15),
+            style: const TextStyle(fontSize: 14),
           ),
         );
       },
