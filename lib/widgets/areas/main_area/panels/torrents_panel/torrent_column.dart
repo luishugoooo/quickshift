@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_context_menu/flutter_context_menu.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/data/torrent/torrent_provider.dart';
+import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';

@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:quickshift/data/drift/database.dart';
+import 'package:quickshift/data/database/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import "settings.dart";

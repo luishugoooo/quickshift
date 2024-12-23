@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hold_down_button/hold_down_button.dart';
-import 'package:quickshift/data/drift/settings/settings.dart';
-import 'package:quickshift/data/drift/settings/settings_notifier.dart';
+import 'package:quickshift/data/database/settings/settings.dart';
+import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/widgets/buttons/default_elevated_button.dart';
 import 'package:quickshift/widgets/dialog/default_dialog_frame.dart';
@@ -192,7 +192,7 @@ class _NumberSettingBoxState extends State<NumberSettingBox> {
                 style: TextStyle(
                     color: context.theme.colorScheme.onSurfaceVariant),
                 controller: controller,
-                textAlignVertical: const TextAlignVertical(y: -0.61),
+                textAlignVertical: const TextAlignVertical(y: -0.55),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.all(20)),

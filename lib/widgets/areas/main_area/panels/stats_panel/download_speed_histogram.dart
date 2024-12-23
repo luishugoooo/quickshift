@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/data/torrent/torrent_provider.dart';
+import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/widgets/util/iterable.dart';
 
 class DownloadSpeedHistogram extends ConsumerStatefulWidget {

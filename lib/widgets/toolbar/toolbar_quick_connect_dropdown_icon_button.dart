@@ -7,7 +7,7 @@ import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/server.dart';
-import 'package:quickshift/state/tabs.dart' as t;
+import 'package:quickshift/data/state/tabs.dart' as t;
 
 class ToolbarQuickConnectDropdownIconButton<T> extends ConsumerStatefulWidget {
   final IconData icon;

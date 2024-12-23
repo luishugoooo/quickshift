@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quickshift/extensions/theme.dart';
-import 'package:quickshift/state/tabs.dart';
+import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/widgets/tabs/title_tab.dart';
 
 class TitleTabBar extends ConsumerStatefulWidget {

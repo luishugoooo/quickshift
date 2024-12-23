@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
-import 'package:quickshift/data/torrent/torrent_provider.dart';
+import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/torrent/torrent_column.dart';
 import 'package:quickshift/widgets/areas/main_area/panels/torrents_panel/torrent_column.dart';
@@ -50,51 +50,56 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
       TorrentClientStatusError() => Text(client.clientStatus.toString()),
       TorrentClientStatusLoading() ||
       TorrentClientStatusInitialized() =>
-        ref.watch(filteredTorrentsProvider).when(data: (data) {
-          return ResizableContainer(
-            divider: ResizableDivider(color: Colors.grey[900]),
-            direction: Axis.horizontal,
-            children: TorrentColumn.values.map(
-              (e) {
-                return ResizableChild(
-                    minSize: 5,
-                    size: switch (e) {
-                      TorrentColumn.name => const ResizableSize.ratio(0.3),
-                      TorrentColumn.id => const ResizableSize.pixels(50),
-                      _ => const ResizableSize.expand()
-                    },
-                    child: TorrentColumnWidget(
-                      e: e,
-                      scrollController: scrollControllers[e]!,
-                      torrents: data,
-                      selectedTorrentId:
-                          ref.watch(selectedTorrentIdProvider) ?? -1,
-                      onSelected: (torrentIndex) {
-                        setState(() => ref
-                            .read(selectedTorrentIdProvider.notifier)
-                            .select(torrentIndex));
-                      },
-                      onScrollEvent: (torrentColumn, controller) {
-                        for (final key in scrollControllers.keys) {
-                          if (key != torrentColumn &&
-                              !isScrolling &&
-                              controller.offset !=
-                                  scrollControllers[key]!.offset) {
-                            isScrolling = true;
-                            scrollControllers[key]!.jumpTo(controller.offset);
-                            isScrolling = false;
-                          }
-                        }
-                      },
-                    ));
-              },
-            ).toList(),
-          );
-        }, error: (error, stackTrace) {
-          return Text("Error: $error");
-        }, loading: () {
-          return const CircularProgressIndicator();
-        }),
+        ref.watch(filteredTorrentsProvider).when(
+            skipLoadingOnReload: true,
+            data: (data) {
+              return ResizableContainer(
+                divider: ResizableDivider(color: Colors.grey[900]),
+                direction: Axis.horizontal,
+                children: TorrentColumn.values.map(
+                  (e) {
+                    return ResizableChild(
+                        minSize: 5,
+                        size: switch (e) {
+                          TorrentColumn.name => const ResizableSize.ratio(0.3),
+                          TorrentColumn.id => const ResizableSize.pixels(50),
+                          _ => const ResizableSize.expand()
+                        },
+                        child: TorrentColumnWidget(
+                          e: e,
+                          scrollController: scrollControllers[e]!,
+                          torrents: data,
+                          selectedTorrentId:
+                              ref.watch(selectedTorrentIdProvider) ?? -1,
+                          onSelected: (torrentIndex) {
+                            setState(() => ref
+                                .read(selectedTorrentIdProvider.notifier)
+                                .select(torrentIndex));
+                          },
+                          onScrollEvent: (torrentColumn, controller) {
+                            for (final key in scrollControllers.keys) {
+                              if (key != torrentColumn &&
+                                  !isScrolling &&
+                                  controller.offset !=
+                                      scrollControllers[key]!.offset) {
+                                isScrolling = true;
+                                scrollControllers[key]!
+                                    .jumpTo(controller.offset);
+                                isScrolling = false;
+                              }
+                            }
+                          },
+                        ));
+                  },
+                ).toList(),
+              );
+            },
+            error: (error, stackTrace) {
+              return Text("Error: $error");
+            },
+            loading: () {
+              return const CircularProgressIndicator();
+            }),
     });
   }
 }

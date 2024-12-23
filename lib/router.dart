@@ -1,10 +1,11 @@
 import 'package:go_router/go_router.dart';
-import 'package:quickshift/screens/fluent/main_screen.dart';
+import 'package:quickshift/screens/main_screen.dart';
+import 'package:quickshift/widgets/window/macos_menu_bar.dart';
 
 final router = GoRouter(routes: [
   GoRoute(
     path: "/",
     name: "Home",
-    builder: (context, state) => const MainScreen(),
+    builder: (context, state) => const OsMenuBar(child: MainScreen()),
   )
 ]);

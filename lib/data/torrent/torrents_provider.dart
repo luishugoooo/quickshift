@@ -1,14 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/const/consts.dart';
-import 'package:quickshift/data/drift/settings/settings_notifier.dart';
+import 'package:quickshift/data/database/settings/settings_notifier.dart';
+import 'package:quickshift/data/state/tabs.dart';
+import 'package:quickshift/data/state/torrent_status.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
+import 'package:quickshift/models/torrent_status.dart';
 import 'package:quickshift/widgets/util/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'torrent_provider.g.dart';
+part 'torrents_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class Torrents extends _$Torrents {
@@ -72,8 +74,27 @@ class Torrents extends _$Torrents {
 }
 
 @riverpod
-Stream<List<TorrentData>> filteredTorrents (Ref ref) async*{
-  yield MOCK_TORRENTS;
+Stream<List<TorrentData>> filteredTorrents(Ref ref) async* {
+  final currentTab = ref.watch(currentTabProvider);
+  final settings = ref.watch(settingsProvider);
+  final filter = ref.watch(torrentStatusFilterProvider(
+      settings.synchronizeFiltersAcrossTabs ? null : currentTab));
+  final search = ref.watch(torrentSearchProvider(currentTab));
+  final torrents = ref.watch(torrentsProvider).when(
+        data: (data) => data,
+        error: (error, stackTrace) => null,
+        loading: () => null,
+      );
+  if (torrents == null) return;
+  yield torrents
+      .where(
+        (element) => filter == TorrentStatus.all || element.status == filter,
+      )
+      .where(
+        (element) =>
+            element.name?.toLowerCase().contains(search.toLowerCase()) ?? true,
+      )
+      .toList();
 }
 
 @riverpod

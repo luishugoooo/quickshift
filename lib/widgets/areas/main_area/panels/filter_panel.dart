@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quickshift/data/drift/settings/settings_notifier.dart';
+import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/torrent_status.dart' as tf;
-import 'package:quickshift/state/tabs.dart';
-import 'package:quickshift/state/torrent_status.dart';
+import 'package:quickshift/data/state/tabs.dart';
+import 'package:quickshift/data/state/torrent_status.dart';
 
 class FilterPanel extends ConsumerWidget {
   const FilterPanel({super.key});

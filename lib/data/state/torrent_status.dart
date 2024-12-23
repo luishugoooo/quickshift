@@ -1,7 +1,7 @@
-import 'package:quickshift/state/tabs.dart';
+import 'package:quickshift/data/state/tabs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../models/torrent_status.dart' as tf;
+import '../../models/torrent_status.dart' as tf;
 
 part 'torrent_status.g.dart';
 
@@ -14,5 +14,17 @@ class TorrentStatusFilter extends _$TorrentStatusFilter {
 
   void setFilter(tf.TorrentStatus f) {
     state = f;
+  }
+}
+
+@Riverpod(keepAlive: true)
+class TorrentSearch extends _$TorrentSearch {
+  @override
+  String build(Tab t) {
+    return "";
+  }
+
+  void setSearch(String search) {
+    state = search;
   }
 }

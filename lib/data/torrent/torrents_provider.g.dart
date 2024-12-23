@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'torrent_provider.dart';
+part of 'torrents_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredTorrentsHash() => r'1a58332fdc4bb4dda364ccdb58b7abc8a9d74cf5';
+String _$filteredTorrentsHash() => r'9a25339db3e2609960fbad2830f5042964f1356a';
 
 /// See also [filteredTorrents].
 @ProviderFor(filteredTorrents)

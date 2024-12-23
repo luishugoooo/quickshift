@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:quickshift/const/color.dart';
-import 'package:quickshift/state/tabs.dart' as tabs;
+import 'package:quickshift/data/state/tabs.dart' as tabs;
 
 class TitleTab extends ConsumerStatefulWidget {
   final bool isSelected;
