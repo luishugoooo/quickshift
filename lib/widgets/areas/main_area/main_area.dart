@@ -13,42 +13,51 @@ class MainArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ResizableContainer(direction: Axis.vertical, children: [
-      const ResizableChild(
-        child: ResizableContainer(
-            divider:
-                ResizableDivider(thickness: 2, length: ResizableSize.expand()),
-            children: [
-              ResizableChild(
-                  child: FilterPanel(), size: ResizableSize.ratio(0.22)),
-              ResizableChild(
-                  child: TorrentsPanel(), size: ResizableSize.expand())
-            ],
-            direction: Axis.horizontal),
-      ),
-      ResizableChild(
-          size: const ResizableSize.ratio(0.3),
-          child: Row(
-            children: [
-              Expanded(
-                child: Builder(builder: (context) {
-                  final logs = ref.watch(loggingProvider);
-                  return AutoScroller(
-                    lengthIdentifier: logs.length,
-                    builder: (context, controller) => ListView.builder(
-                      itemCount: logs.length,
-                      controller: controller,
-                      itemBuilder: (context, index) {
-                        return Text(
-                            "${DateFormat("hh:mm:ss").format(logs[index].time)}: ${logs[index].log}");
-                      },
-                    ),
-                  );
-                }),
-              ),
-              const Expanded(child: DownloadSpeedHistogram())
-            ],
-          ))
-    ]);
+    final colorScheme = Theme.of(context).colorScheme;
+    return ResizableContainer(
+        direction: Axis.vertical,
+        divider: ResizableDivider(
+            thickness: 2,
+            length: const ResizableSize.expand(),
+            color: colorScheme.surfaceBright),
+        children: [
+          ResizableChild(
+            child: ResizableContainer(
+                divider: ResizableDivider(
+                    thickness: 2,
+                    length: const ResizableSize.expand(),
+                    color: colorScheme.surfaceBright),
+                children: const [
+                  ResizableChild(
+                      child: FilterPanel(), size: ResizableSize.ratio(0.22)),
+                  ResizableChild(
+                      child: TorrentsPanel(), size: ResizableSize.expand())
+                ],
+                direction: Axis.horizontal),
+          ),
+          ResizableChild(
+              size: const ResizableSize.ratio(0.3),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Builder(builder: (context) {
+                      final logs = ref.watch(loggingProvider);
+                      return AutoScroller(
+                        lengthIdentifier: logs.length,
+                        builder: (context, controller) => ListView.builder(
+                          itemCount: logs.length,
+                          controller: controller,
+                          itemBuilder: (context, index) {
+                            return Text(
+                                "${DateFormat("hh:mm:ss").format(logs[index].time)}: ${logs[index].log}");
+                          },
+                        ),
+                      );
+                    }),
+                  ),
+                  const Expanded(child: DownloadSpeedHistogram())
+                ],
+              ))
+        ]);
   }
 }
