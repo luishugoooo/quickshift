@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickshift/const/mock.dart';
 import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/data/state/torrent_status.dart';
@@ -71,6 +74,12 @@ class Torrents extends _$Torrents {
     await client.startTorrents(torrent);
     ref.invalidateSelf();
   }
+
+  void reannounceTorrents(List<TorrentData> torrent) async {
+    final client = ref.read(currentClientProvider);
+    await client.reannounceTorrents(torrent);
+    ref.invalidateSelf();
+  }
 }
 
 @riverpod
@@ -95,6 +104,34 @@ Stream<List<TorrentData>> filteredTorrents(Ref ref) async* {
             element.name?.toLowerCase().contains(search.toLowerCase()) ?? true,
       )
       .toList();
+}
+
+@riverpod
+Stream<List<TorrentData>> mockTorrents(Ref ref) async* {
+  final currentTab = ref.watch(currentTabProvider);
+  final settings = ref.watch(settingsProvider);
+  final filter = ref.watch(torrentStatusFilterProvider(
+      settings.synchronizeFiltersAcrossTabs ? null : currentTab));
+  final search = ref.watch(torrentSearchProvider(currentTab));
+  yield List.generate(
+    10000,
+    (index) {
+      return TorrentData(
+          id: index,
+          name: randomMockString(5),
+          size: pow(2, 16).toInt(),
+          status: TorrentStatus.values[index % TorrentStatus.values.length],
+          eta: DateTime.now(),
+          downloadSpeed: pow(2, 16).toInt(),
+          uploadSpeed: pow(2, 16).toInt(),
+          progress: 0.5);
+    },
+  ).where(
+    (element) => filter == TorrentStatus.all || element.status == filter,
+  ).where(
+    (element) =>
+        element.name?.toLowerCase().contains(search.toLowerCase()) ?? true,
+  ).toList();
 }
 
 @riverpod

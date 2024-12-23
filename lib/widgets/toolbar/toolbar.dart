@@ -9,9 +9,9 @@ import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/data/state/torrent_status.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
-import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/widgets/areas/settings/settings_dialog.dart';
+import 'package:quickshift/widgets/dialog/add_torrent_dialog.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_quick_connect_dropdown_icon_button.dart';
 
@@ -110,11 +110,13 @@ class _ToolbarState extends ConsumerState<Toolbar> {
                       : null),
           ToolbarIconButton(
               icon: FontAwesomeIcons.plus,
-              onPressed: currentClient.clientStatus
-                      is! TorrentClientStatusInitialized
+              onPressed: currentClient.clientStatus !=
+                      const TorrentClientStatusInitialized()
                   ? null
-                  : () => ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
-                      "magnet:?xt=urn:btih:265863cbbb5ed9ef39e7c891ebebdf1623b09d5e&dn=archlinux-2024.12.01-x86_64.iso ")),
+                  : () => showDialog(
+                        context: context,
+                        builder: (context) => const AddTorrentDialog(),
+                      )),
           const Spacer(),
           SizedBox(
             width: 250,

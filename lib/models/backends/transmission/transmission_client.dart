@@ -184,6 +184,18 @@ class TransmissionClient implements TorrentClient {
   }
 
   @override
+  Future<void> reannounceTorrents(List<TorrentData> torrents) async {
+    await _requestBuilder(method: _ClientMethods.torrentReannounce, arguments: {
+      "ids": [
+        ...torrents.map(
+          (e) => e.id,
+        )
+      ]
+    });
+    return;
+  }
+
+  @override
   String get name => config.name;
 
   @override
@@ -199,7 +211,8 @@ enum _ClientMethods {
   torrentGet("torrent-get"),
   torrentVerify("torrent-verify"),
   torrentStartNow("torrent-start-now"),
-  torrentStart("torrent-start");
+  torrentStart("torrent-start"),
+  torrentReannounce("torrent-reannounce");
 
   final String value;
 

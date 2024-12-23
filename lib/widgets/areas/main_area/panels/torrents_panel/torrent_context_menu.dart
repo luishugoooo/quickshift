@@ -10,6 +10,7 @@ ContextMenu buildTorrentContextMenu(TorrentData torrent,
     required VoidCallback onVerify,
     required VoidCallback onForceStart,
     required VoidCallback onStart,
+    required VoidCallback onReannounce, // Add this parameter
     Offset? positon,
     required ColorScheme colorScheme}) {
   return ContextMenu(
@@ -44,6 +45,11 @@ ContextMenu buildTorrentContextMenu(TorrentData torrent,
           icon: FontAwesomeIcons.check,
           label: 'Verify',
           onSelected: onVerify,
+        ),
+        MenuItem(
+          icon: FontAwesomeIcons.arrowsRotate,
+          label: 'Reannounce', // Add this item
+          onSelected: onReannounce,
         )
       ],
       position: positon,

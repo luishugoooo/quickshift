@@ -6,7 +6,7 @@ part of 'torrents_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredTorrentsHash() => r'9a25339db3e2609960fbad2830f5042964f1356a';
+String _$filteredTorrentsHash() => r'08b13df338189e7ebee3fe65fd7fed11976020ff';
 
 /// See also [filteredTorrents].
 @ProviderFor(filteredTorrents)
@@ -24,6 +24,23 @@ final filteredTorrentsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef FilteredTorrentsRef = AutoDisposeStreamProviderRef<List<TorrentData>>;
+String _$mockTorrentsHash() => r'28c55ea7229a027141caf2240ccee6bd46b7cec5';
+
+/// See also [mockTorrents].
+@ProviderFor(mockTorrents)
+final mockTorrentsProvider =
+    AutoDisposeStreamProvider<List<TorrentData>>.internal(
+  mockTorrents,
+  name: r'mockTorrentsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$mockTorrentsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef MockTorrentsRef = AutoDisposeStreamProviderRef<List<TorrentData>>;
 String _$selectedTorrentHash() => r'a5c1e09514e5047e336642e089a7d0d1fe219716';
 
 /// See also [selectedTorrent].
@@ -41,7 +58,7 @@ final selectedTorrentProvider = AutoDisposeProvider<TorrentData?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SelectedTorrentRef = AutoDisposeProviderRef<TorrentData?>;
-String _$torrentsHash() => r'5a743a8af6a87aae463dff7cb716178df37ba5f5';
+String _$torrentsHash() => r'e7d1b38a79d85679416de3451ecb45c450d0c054';
 
 /// See also [Torrents].
 @ProviderFor(Torrents)

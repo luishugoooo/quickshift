@@ -1,5 +1,6 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:macos_window_utils/macos_window_utils.dart' as mac;
 import 'package:quickshift/const/color.dart';
@@ -19,6 +20,21 @@ void main(List<String> args) async {
   mac.WindowManipulator.addToolbar();
   mac.WindowManipulator.setToolbarStyle(
       toolbarStyle: mac.NSWindowToolbarStyle.unifiedCompact);
+
+  //Desktop Notification Initialization
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  const DarwinInitializationSettings initializationSettingsDarwin =
+      DarwinInitializationSettings();
+  const LinuxInitializationSettings initializationSettingsLinux =
+      LinuxInitializationSettings(defaultActionName: 'Open notification');
+  const InitializationSettings initializationSettings = InitializationSettings(
+      macOS: initializationSettingsDarwin, linux: initializationSettingsLinux);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse: (details) {},
+  );
 }
 
 class MyApp extends StatelessWidget {

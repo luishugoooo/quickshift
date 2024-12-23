@@ -64,6 +64,7 @@ dependencies:
   flutter_spinbox: ^0.13.1
   hold_down_button: ^1.1.0
   macos_window_utils: ^1.6.1
+  flutter_local_notifications: ^18.0.1
 
 #dependency_overrides:
   #dio: ^5.0.6

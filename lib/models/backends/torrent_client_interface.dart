@@ -21,6 +21,7 @@ abstract interface class TorrentClient {
   Future<void> verifyTorrents(List<TorrentData> torrent);
   Future<void> forceStartTorrents(List<TorrentData> torrent);
   Future<void> startTorrents(List<TorrentData> torrent);
+  Future<void> reannounceTorrents(List<TorrentData> torrent);
 
   static TorrentClient fromConfig(ServerConfig? config) {
     switch (config?.clientType) {

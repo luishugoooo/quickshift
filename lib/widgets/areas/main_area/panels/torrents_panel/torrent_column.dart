@@ -85,6 +85,8 @@ class TorrentColumnWidget extends ConsumerWidget {
                                 torrentNotifier.verifyTorrents([torrent]),
                             onStart: () =>
                                 torrentNotifier.startTorrents([torrent]),
+                            onReannounce: () =>
+                                torrentNotifier.reannounceTorrents([torrent]),
                             positon: mousePosition,
                             colorScheme: colorScheme),
                       );

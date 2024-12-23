@@ -30,7 +30,7 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
   @override
   Widget build(BuildContext context) {
     final client = ref.watch(currentClientProvider);
-
+    final torrents = ref.watch(filteredTorrentsProvider);
     return Center(
         child: switch (client.clientStatus) {
       TorrentClientStatusUnconfigured() => const Text("Select a server"),
@@ -50,7 +50,7 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
       TorrentClientStatusError() => Text(client.clientStatus.toString()),
       TorrentClientStatusLoading() ||
       TorrentClientStatusInitialized() =>
-        ref.watch(filteredTorrentsProvider).when(
+        torrents.when(
             skipLoadingOnReload: true,
             data: (data) {
               return ResizableContainer(
