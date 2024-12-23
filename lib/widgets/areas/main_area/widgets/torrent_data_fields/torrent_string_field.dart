@@ -9,13 +9,13 @@ class TorrentStringField extends StatelessWidget
   final TorrentColumn column;
   @override
   final String? value;
-  final MainAxisAlignment horizontalAlignment;
+  final CrossAxisAlignment horizontalAlignment;
 
   const TorrentStringField(
       {super.key,
       required this.column,
       required this.value,
-      this.horizontalAlignment = MainAxisAlignment.center});
+      this.horizontalAlignment = CrossAxisAlignment.start});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,8 @@ class TorrentStringField extends StatelessWidget
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: horizontalAlignment,
+        crossAxisAlignment: horizontalAlignment,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             value!,

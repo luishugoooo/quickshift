@@ -90,6 +90,7 @@ class TransmissionClient implements TorrentClient {
     final fields = [
       TransmissionTorrentField.id,
       TransmissionTorrentField.name,
+      TransmissionTorrentField.totalSize,
       TransmissionTorrentField.status,
       TransmissionTorrentField.percentDone,
       TransmissionTorrentField.rateDownload,

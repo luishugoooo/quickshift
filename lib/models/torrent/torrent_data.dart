@@ -4,6 +4,7 @@ import 'package:quickshift/models/torrent_status.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_data_field.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_eta_field.dart';
 import 'package:quickshift/widgets/areas/main_area/widgets/torrent_data_fields/torrent_speed_field.dart';
+import 'package:quickshift/widgets/areas/main_area/widgets/torrent_size_field.dart';
 
 import '../../widgets/areas/main_area/widgets/torrent_data_fields/torrent_progress_field.dart';
 import '../../widgets/areas/main_area/widgets/torrent_data_fields/torrent_string_field.dart';
@@ -38,7 +39,10 @@ class TorrentData {
   List<TorrentDataField> get fields => [
         TorrentStringField(column: TorrentColumn.id, value: id.toString()),
         TorrentStringField(column: TorrentColumn.name, value: name),
-        TorrentStringField(column: TorrentColumn.size, value: size.toString()),
+        TorrentSizeField(
+          column: TorrentColumn.size,
+          value: size,
+        ),
         TorrentProgressField(column: TorrentColumn.progress, value: progress),
         TorrentStringField(column: TorrentColumn.status, value: status.label),
         TorrentSpeedField(

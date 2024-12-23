@@ -61,7 +61,8 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
                     return ResizableChild(
                         minSize: 5,
                         size: switch (e) {
-                          TorrentColumn.name => const ResizableSize.ratio(0.3),
+                          TorrentColumn.name =>
+                            const ResizableSize.expand(flex: 3),
                           TorrentColumn.id => const ResizableSize.pixels(50),
                           _ => const ResizableSize.expand()
                         },
