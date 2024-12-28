@@ -107,34 +107,6 @@ Stream<List<TorrentData>> filteredTorrents(Ref ref) async* {
 }
 
 @riverpod
-Stream<List<TorrentData>> mockTorrents(Ref ref) async* {
-  final currentTab = ref.watch(currentTabProvider);
-  final settings = ref.watch(settingsProvider);
-  final filter = ref.watch(torrentStatusFilterProvider(
-      settings.synchronizeFiltersAcrossTabs ? null : currentTab));
-  final search = ref.watch(torrentSearchProvider(currentTab));
-  yield List.generate(
-    10000,
-    (index) {
-      return TorrentData(
-          id: index,
-          name: randomMockString(5),
-          size: pow(2, 16).toInt(),
-          status: TorrentStatus.values[index % TorrentStatus.values.length],
-          eta: DateTime.now(),
-          downloadSpeed: pow(2, 16).toInt(),
-          uploadSpeed: pow(2, 16).toInt(),
-          progress: 0.5);
-    },
-  ).where(
-    (element) => filter == TorrentStatus.all || element.status == filter,
-  ).where(
-    (element) =>
-        element.name?.toLowerCase().contains(search.toLowerCase()) ?? true,
-  ).toList();
-}
-
-@riverpod
 class SelectedTorrentId extends _$SelectedTorrentId {
   @override
   int? build() {

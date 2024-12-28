@@ -24,23 +24,6 @@ final filteredTorrentsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef FilteredTorrentsRef = AutoDisposeStreamProviderRef<List<TorrentData>>;
-String _$mockTorrentsHash() => r'28c55ea7229a027141caf2240ccee6bd46b7cec5';
-
-/// See also [mockTorrents].
-@ProviderFor(mockTorrents)
-final mockTorrentsProvider =
-    AutoDisposeStreamProvider<List<TorrentData>>.internal(
-  mockTorrents,
-  name: r'mockTorrentsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$mockTorrentsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef MockTorrentsRef = AutoDisposeStreamProviderRef<List<TorrentData>>;
 String _$selectedTorrentHash() => r'a5c1e09514e5047e336642e089a7d0d1fe219716';
 
 /// See also [selectedTorrent].

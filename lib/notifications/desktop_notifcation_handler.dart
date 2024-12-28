@@ -18,10 +18,10 @@ class DesktopNotifcationHandler extends ConsumerWidget {
         for (var pT in prev) {
           final cT = current.where((t) => t.id == pT.id).firstOrNull;
           if (cT == null) continue;
-          print(
-              "Checking ${cT.name}, previous: ${pT.progress}, current: ${cT.progress}");
+          // print(
+          //     "Checking ${cT.name}, previous: ${pT.progress}, current: ${cT.progress}");
           if (pT.progress != 1 && cT.progress == 1) {
-            print("Download finished");
+            // print("Download finished");
 
             FlutterLocalNotificationsPlugin().show(
                 cT.id,

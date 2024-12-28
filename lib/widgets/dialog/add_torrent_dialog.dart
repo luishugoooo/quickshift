@@ -36,7 +36,8 @@ class _AddTorrentDialogState extends ConsumerState<AddTorrentDialog> {
         DefaultElevatedButton(
           onPressed: () {
             ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
-                "magnet:?xt=urn:btih:265863cbbb5ed9ef39e7c891ebebdf1623b09d5e&dn=archlinux-2024.12.01-x86_64.iso");
+                  _urlController.text,
+                );
             Navigator.of(context).pop(_urlController.text);
           },
           text: 'Add',

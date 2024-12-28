@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_context_menu/flutter_context_menu.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
@@ -56,41 +55,21 @@ class TorrentColumnWidget extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final torrent = torrents[index];
                 final isSelected = torrent.id == selectedTorrentId;
-
-                Offset mousePosition = Offset.zero;
-                return Listener(
-                  onPointerDown: (event) {
-                    mousePosition = event.position;
-                  },
-                  child: GestureDetector(
-                    onTap: () => onSelected(torrent.id),
-                    onSecondaryTap: () {
-                      onSelected(torrent.id);
-                      showContextMenu(
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        opaque: false,
-                        context,
-                        contextMenu: buildTorrentContextMenu(torrent,
-                            onStop: () =>
-                                torrentNotifier.stopTorrents([torrent]),
-                            onRemove: () => torrentNotifier.removeTorrents(
-                                [torrent], deleteLocalData: false),
-                            onRemoveWithLocalData: () => torrentNotifier
-                                .removeTorrents([torrent],
-                                    deleteLocalData: true),
-                            onForceStart: () =>
-                                torrentNotifier.forceStartTorrents([torrent]),
-                            onVerify: () =>
-                                torrentNotifier.verifyTorrents([torrent]),
-                            onStart: () =>
-                                torrentNotifier.startTorrents([torrent]),
-                            onReannounce: () =>
-                                torrentNotifier.reannounceTorrents([torrent]),
-                            positon: mousePosition,
-                            colorScheme: colorScheme),
-                      );
-                    },
+                return GestureDetector(
+                  onTap: () => onSelected(torrent.id),
+                  onSecondaryTap: () => onSelected(torrent.id),
+                  child: TorrentContextMenu(
+                    onStop: () => torrentNotifier.stopTorrents([torrent]),
+                    onRemove: () => torrentNotifier
+                        .removeTorrents([torrent], deleteLocalData: false),
+                    onRemoveWithLocalData: () => torrentNotifier
+                        .removeTorrents([torrent], deleteLocalData: true),
+                    onForceStart: () =>
+                        torrentNotifier.forceStartTorrents([torrent]),
+                    onVerify: () => torrentNotifier.verifyTorrents([torrent]),
+                    onStart: () => torrentNotifier.startTorrents([torrent]),
+                    onReannounce: () =>
+                        torrentNotifier.reannounceTorrents([torrent]),
                     child: Container(
                         decoration: BoxDecoration(
                           color: isSelected
