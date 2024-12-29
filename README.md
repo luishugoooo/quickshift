@@ -1,4 +1,4 @@
-# quickshift
+# Quickshift
 
 ## Introduction
 Quickshift is a powerful and easy-to-use remote torrenting client that aims to support most major torrent software ([see integrations](#Integrations)). It is fast, easy to use and features a rich and modern user interface implemented in Flutter.
