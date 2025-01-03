@@ -13,6 +13,9 @@ Quickshift supports the following torrent software (🟢 = stable, 🔵 = in dev
 - 🟡 Deluge
 - 🟡 uTorrent
 
+## Roadmap
+- [] Use proper popout windows (waiting for [support in flutter](https://github.com/flutter/flutter/issues/142845#issuecomment-2087374780))
+
 ## Build yourself
 To build the project yourself, follow these steps:
 1. Obtain a [Flutter](https://docs.flutter.dev/get-started/install) installation (including platform specific dependencies).

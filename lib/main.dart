@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -16,10 +18,12 @@ void main(List<String> args) async {
   });
 
   //TODO: Make a proper macos window frame
-  await mac.WindowManipulator.initialize();
-  mac.WindowManipulator.addToolbar();
-  mac.WindowManipulator.setToolbarStyle(
-      toolbarStyle: mac.NSWindowToolbarStyle.unifiedCompact);
+  if (Platform.isMacOS) {
+    await mac.WindowManipulator.initialize();
+    mac.WindowManipulator.addToolbar();
+    mac.WindowManipulator.setToolbarStyle(
+        toolbarStyle: mac.NSWindowToolbarStyle.unifiedCompact);
+  }
 
   //Desktop Notification Initialization
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

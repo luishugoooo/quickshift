@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/const/mock.dart';
 import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/data/state/torrent_status.dart';
