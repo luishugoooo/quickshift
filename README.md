@@ -14,7 +14,7 @@ Quickshift supports the following torrent software (🟢 = stable, 🔵 = in dev
 - 🟡 uTorrent
 
 ## Roadmap
-- [] Use proper popout windows (waiting for [support in flutter](https://github.com/flutter/flutter/issues/142845#issuecomment-2087374780))
+- [ ] Use proper popout windows (waiting for [support in flutter](https://github.com/flutter/flutter/issues/142845#issuecomment-2087374780))
 
 ## Build yourself
 To build the project yourself, follow these steps:
