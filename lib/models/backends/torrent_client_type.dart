@@ -9,4 +9,15 @@ enum TorrentClientType {
   final Widget icon;
 
   const TorrentClientType(this.icon);
+
+  factory TorrentClientType.fromString(String type) {
+    switch (type) {
+      case 'qbittorrent':
+        return TorrentClientType.qbittorrent;
+      case 'transmission':
+        return TorrentClientType.transmission;
+      default:
+        throw ArgumentError('Unknown TorrentClientType: $type');
+    }
+  }
 }

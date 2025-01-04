@@ -2,7 +2,7 @@ import 'package:quickshift/data/torrent/current_server_config_provider.dart';
 import "package:quickshift/models/backends/torrent_client_interface.dart"
     as client;
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
-import 'package:quickshift/models/server.dart';
+import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/widgets/util/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

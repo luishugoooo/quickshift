@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:quickshift/models/server.dart';
+import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/data/state/tabs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

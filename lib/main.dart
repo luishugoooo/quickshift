@@ -4,6 +4,8 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_ce/hive.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:macos_window_utils/macos_window_utils.dart' as mac;
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/router.dart';
@@ -11,7 +13,6 @@ import 'package:quickshift/router.dart';
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   appWindow.title = "QuickShift";
-  runApp(const ProviderScope(child: MyApp()));
 
   doWhenWindowReady(() {
     appWindow.show();
@@ -39,6 +40,13 @@ void main(List<String> args) async {
     initializationSettings,
     onDidReceiveNotificationResponse: (details) {},
   );
+
+  //Hive Boxes
+  await Hive.initFlutter();
+  await Hive.openBox("settings");
+  await Hive.openBox("servers");
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

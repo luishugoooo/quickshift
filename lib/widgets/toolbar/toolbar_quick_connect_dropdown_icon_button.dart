@@ -6,7 +6,7 @@ import 'package:quickshift/const/color.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
-import 'package:quickshift/models/server.dart';
+import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/data/state/tabs.dart' as t;
 
 class ToolbarQuickConnectDropdownIconButton<T> extends ConsumerStatefulWidget {
@@ -52,81 +52,87 @@ class _ToolbarQuickConnectDropdownIconButtonState
             constraints: const BoxConstraints(maxHeight: 200, minHeight: 0),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ...widget.servers.map(
-                    (e) {
-                      return SizedBox(
-                        height: 30,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(2),
-                          onTap: () {
-                            widget.onServerSelected(e);
-                            _closeOverlay(context);
-                            setState(() {
-                              overlayIsVisible = false;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Row(
-                              children: [
-                                Flexible(
-                                    child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: e.clientType.icon,
-                                )),
-                                const Gap(10),
-                                Expanded(
-                                  flex: 6,
-                                  child: Text(
-                                    "${e.name} (${e.host})",
-                                    overflow: TextOverflow.ellipsis,
+              child: widget.servers.isEmpty
+                  ? const Center(child: Text("No servers added"))
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...widget.servers.map(
+                          (e) {
+                            return SizedBox(
+                              height: 30,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(2),
+                                onTap: () {
+                                  widget.onServerSelected(e);
+                                  _closeOverlay(context);
+                                  setState(() {
+                                    overlayIsVisible = false;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                          child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: e.clientType.icon,
+                                      )),
+                                      const Gap(10),
+                                      Expanded(
+                                        flex: 6,
+                                        child: Text(
+                                          "${e.name} (${e.host})",
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      if (widget.selectedConfig == e)
+                                        IconTheme(
+                                          data: IconThemeData(
+                                              size: 18,
+                                              color:
+                                                  theme.colorScheme.secondary),
+                                          child: switch (ref
+                                              .watch(currentClientProvider)
+                                              .clientStatus) {
+                                            TorrentClientStatusUnconfigured() =>
+                                              const SizedBox(),
+                                            TorrentClientStatusConfigured() =>
+                                              const FaIcon(
+                                                FontAwesomeIcons
+                                                    .plugCircleMinus,
+                                              ),
+                                            TorrentClientStatusInitialized() =>
+                                              const FaIcon(
+                                                FontAwesomeIcons
+                                                    .plugCircleCheck,
+                                              ),
+                                            TorrentClientStatusError() =>
+                                              const FaIcon(FontAwesomeIcons
+                                                  .plugCircleXmark),
+                                            TorrentClientStatusLoading() =>
+                                              const Center(
+                                                child: SizedBox(
+                                                    width: 20,
+                                                    height: 20,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                    )),
+                                              )
+                                          },
+                                        )
+                                    ],
                                   ),
                                 ),
-                                const Spacer(),
-                                if (widget.selectedConfig == e)
-                                  IconTheme(
-                                    data: IconThemeData(
-                                        size: 18,
-                                        color: theme.colorScheme.secondary),
-                                    child: switch (ref
-                                        .watch(currentClientProvider)
-                                        .clientStatus) {
-                                      TorrentClientStatusUnconfigured() =>
-                                        const SizedBox(),
-                                      TorrentClientStatusConfigured() =>
-                                        const FaIcon(
-                                          FontAwesomeIcons.plugCircleMinus,
-                                        ),
-                                      TorrentClientStatusInitialized() =>
-                                        const FaIcon(
-                                          FontAwesomeIcons.plugCircleCheck,
-                                        ),
-                                      TorrentClientStatusError() =>
-                                        const FaIcon(
-                                            FontAwesomeIcons.plugCircleXmark),
-                                      TorrentClientStatusLoading() =>
-                                        const Center(
-                                          child: SizedBox(
-                                              width: 20,
-                                              height: 20,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                              )),
-                                        )
-                                    },
-                                  )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    ),
             ),
           ),
         ),

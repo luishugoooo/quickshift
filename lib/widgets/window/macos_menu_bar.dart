@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/database/settings/settings_notifier.dart';
-import 'package:quickshift/widgets/areas/settings/settings_dialog.dart';
+import 'package:quickshift/widgets/dialog/settings_dialog.dart';
 
 class OsMenuBar extends ConsumerWidget {
   final Widget child;

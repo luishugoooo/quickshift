@@ -5,12 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quickshift/const/color.dart';
 import 'package:quickshift/const/consts.dart';
+import 'package:quickshift/data/database/servers/servers.dart';
 import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/data/state/torrent_status.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
-import 'package:quickshift/widgets/areas/settings/settings_dialog.dart';
+import 'package:quickshift/widgets/dialog/server_manager_dialog.dart';
+import 'package:quickshift/widgets/dialog/settings_dialog.dart';
 import 'package:quickshift/widgets/dialog/add_torrent_dialog.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_quick_connect_dropdown_icon_button.dart';
@@ -78,7 +80,10 @@ class _ToolbarState extends ConsumerState<Toolbar> {
           ToolbarIconButton(
             icon: FontAwesomeIcons.server,
             tooltip: "Server Manager",
-            onPressed: () {},
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const ServerManagerDialog(),
+            ),
           ),
           ToolbarQuickConnectDropdownIconButton(
               onServerSelected: (server) async {
@@ -89,7 +94,7 @@ class _ToolbarState extends ConsumerState<Toolbar> {
               icon: FontAwesomeIcons.plug,
               tooltip: "Quick connect",
               selectedConfig: currentTab.config,
-              servers: MOCK_SERVERS),
+              servers: ref.watch(storedServersProvider)),
           ToolbarIconButton(
             icon: FontAwesomeIcons.gear,
             onPressed: () => showDialog(
