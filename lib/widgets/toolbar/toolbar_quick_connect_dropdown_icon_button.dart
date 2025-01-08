@@ -77,7 +77,7 @@ class _ToolbarQuickConnectDropdownIconButtonState
                                       Flexible(
                                           child: Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: e.clientType.icon,
+                                        child: e.clientType?.icon,
                                       )),
                                       const Gap(10),
                                       Expanded(

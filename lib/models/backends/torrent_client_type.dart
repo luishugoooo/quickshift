@@ -20,4 +20,14 @@ enum TorrentClientType {
         throw ArgumentError('Unknown TorrentClientType: $type');
     }
   }
+
+  @override
+  String toString() {
+    switch (this) {
+      case TorrentClientType.qbittorrent:
+        return 'qbittorrent';
+      case TorrentClientType.transmission:
+        return 'transmission';
+    }
+  }
 }

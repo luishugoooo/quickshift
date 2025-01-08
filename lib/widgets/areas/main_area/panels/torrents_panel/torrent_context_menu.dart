@@ -38,7 +38,7 @@ class TorrentContextMenu extends StatelessWidget {
             MenuAction(
                 title: "Force Start",
                 callback: onForceStart,
-                image: MenuImage.icon(_DynamicMenuIcon.play_alt.getIcon())),
+                image: MenuImage.icon(_DynamicMenuIcon.playAlt.getIcon())),
             MenuAction(
                 title: "Stop",
                 callback: onStop,
@@ -69,7 +69,7 @@ class TorrentContextMenu extends StatelessWidget {
 
 enum _DynamicMenuIcon {
   play,
-  play_alt,
+  playAlt,
   stop,
   remove,
   removeWithLocalData,
@@ -87,7 +87,7 @@ enum _DynamicMenuIcon {
 
 const Map<_DynamicMenuIcon, IconData> _faIcons = {
   _DynamicMenuIcon.play: Icons.play_arrow,
-  _DynamicMenuIcon.play_alt: Icons.play_circle_fill,
+  _DynamicMenuIcon.playAlt: Icons.play_circle_fill,
   _DynamicMenuIcon.stop: Icons.stop,
   _DynamicMenuIcon.remove: Icons.delete,
   _DynamicMenuIcon.removeWithLocalData: Icons.delete_forever,
@@ -97,7 +97,7 @@ const Map<_DynamicMenuIcon, IconData> _faIcons = {
 
 const Map<_DynamicMenuIcon, IconData> _macosIcons = {
   _DynamicMenuIcon.play: CupertinoIcons.play,
-  _DynamicMenuIcon.play_alt: CupertinoIcons.play_fill,
+  _DynamicMenuIcon.playAlt: CupertinoIcons.play_fill,
   _DynamicMenuIcon.stop: CupertinoIcons.stop_fill,
   _DynamicMenuIcon.remove: CupertinoIcons.delete,
   _DynamicMenuIcon.removeWithLocalData: CupertinoIcons.delete_solid,

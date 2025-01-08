@@ -20,7 +20,8 @@ class CustomWindowButton extends StatelessWidget {
           onPressed: onPress,
           colors: WindowButtonColors(
               mouseOver: mouseOverColor ??
-                  context.theme.colorScheme.primary.withOpacity(0.3)),
+                  context.theme.colorScheme.primary
+                      .withAlpha((0.3 * 255).toInt())),
           iconBuilder: (buttonContext) => icon),
     );
   }

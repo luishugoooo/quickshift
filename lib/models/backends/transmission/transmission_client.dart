@@ -4,14 +4,14 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
+import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/backends/transmission/raw_transmission_torrent_data.dart';
-import 'package:quickshift/models/backends/transmission/transmission_server_config.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 
 class TransmissionClient implements TorrentClient {
   @override
-  final TransmissionServerConfig config;
+  final ServerConfig config;
   final String? sessionId;
   @override
   final TorrentClientStatus clientStatus;
@@ -33,7 +33,7 @@ class TransmissionClient implements TorrentClient {
         sessionId: sessionId, clientStatus: value ?? clientStatus);
   }
 
-  static Map _buildAuthHeader({required TransmissionServerConfig config}) {
+  static Map _buildAuthHeader({required ServerConfig config}) {
     return {
       "Authorization":
           "Basic ${base64.encode(utf8.encode("${config.username}:${config.password}"))}",

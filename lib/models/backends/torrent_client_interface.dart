@@ -1,6 +1,5 @@
 import 'package:quickshift/models/backends/torrent_client_type.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
-import 'package:quickshift/models/backends/transmission/transmission_server_config.dart';
 import 'package:quickshift/models/backends/unconnected_torrent_client.dart';
 import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
@@ -26,7 +25,7 @@ abstract interface class TorrentClient {
   static TorrentClient fromConfig(ServerConfig? config) {
     switch (config?.clientType) {
       case TorrentClientType.transmission:
-        return TransmissionClient(config as TransmissionServerConfig,
+        return TransmissionClient(config!,
             clientStatus: const TorrentClientStatusConfigured());
       case null:
         return UnconfiguredTorrentClient();

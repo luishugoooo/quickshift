@@ -55,7 +55,7 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                                   )
                                 : SizedBox(
                                     width: 25,
-                                    child: e.config!.clientType.icon),
+                                    child: e.config!.clientType?.icon),
                             isSelected: currentTab.id == e.id);
                       },
                     ),

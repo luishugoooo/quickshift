@@ -44,7 +44,7 @@ class _TitleTabState extends ConsumerState<TitleTab> {
             color: widget.isSelected
                 ? tabColorDark
                 : hovering
-                    ? tabColorDark.withOpacity(0.5)
+                    ? tabColorDark.withAlpha((0.5 * 255).toInt())
                     : null),
         child: InkWell(
           mouseCursor: SystemMouseCursors.basic,

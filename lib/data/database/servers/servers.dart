@@ -8,28 +8,38 @@ part 'servers.g.dart';
 class StoredServers extends _$StoredServers {
   @override
   List<ServerConfig> build() {
-    fetch();
-    return [];
+    return fetch();
   }
 
-  Future<void> fetch() async {
+  List<ServerConfig> fetch() {
     final box = Hive.box("servers");
     final servers = box.values.map((e) => ServerConfig.fromMap(e)).toList();
-    state = servers;
+    return servers;
   }
 
-  Future<void> add(ServerConfig config) async {
+  int _generateKey() {
     final box = Hive.box("servers");
-    if (box.containsKey(config.name)) {
-      throw "Server with name ${config.name} already exists";
+    final keys = box.keys.toList();
+    if (keys.isEmpty) {
+      return 0;
     }
-    await box.put(config.name, config.toMap());
-    await fetch();
+    return keys.reduce((value, element) => value > element ? value : element) +
+        1;
+  }
+
+  Future<void> set(ServerConfig config) async {
+    final box = Hive.box("servers");
+    final key = switch (config.id) {
+      int() => config.id,
+      null => _generateKey(),
+    };
+    await box.put(key, config.copyWith(id: key).toMap());
+    state = fetch();
   }
 
   Future<void> remove(ServerConfig config) async {
     final box = Hive.box("servers");
-    await box.delete(config.name);
-    await fetch();
+    await box.delete(config.id);
+    state = fetch();
   }
 }

@@ -73,11 +73,13 @@ class TorrentColumnWidget extends ConsumerWidget {
                     child: Container(
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? colorScheme.primary.withOpacity(0.2)
+                              ? colorScheme.primary
+                                  .withAlpha((0.2 * 255).toInt())
                               : index.isEven
-                                  ? colorScheme.primary.withOpacity(0.1)
+                                  ? colorScheme.primary
+                                      .withAlpha((0.1 * 255).toInt())
                                   : colorScheme.primaryContainer
-                                      .withOpacity(0.1),
+                                      .withAlpha((0.1 * 255).toInt()),
                         ),
                         child: torrent.fields.firstWhere(
                           (element) => element.column == e,
