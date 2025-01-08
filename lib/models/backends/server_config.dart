@@ -12,6 +12,15 @@ abstract interface class ServerConfig {
   abstract final bool https;
   abstract final TorrentClientType clientType;
   Map<String, dynamic> toMap();
+  ServerConfig copyWith({
+    String? name,
+    String? host,
+    int? port,
+    String? path,
+    String? username,
+    String? password,
+    bool? https,
+  });
 
   factory ServerConfig.fromMap(Map<String, dynamic> map) {
     switch (TorrentClientType.fromString(map['clientType'])) {

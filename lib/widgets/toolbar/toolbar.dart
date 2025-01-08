@@ -11,7 +11,7 @@ import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/data/state/torrent_status.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
-import 'package:quickshift/widgets/dialog/server_manager_dialog.dart';
+import 'package:quickshift/widgets/dialog/server_manager/server_manager_dialog.dart';
 import 'package:quickshift/widgets/dialog/settings_dialog.dart';
 import 'package:quickshift/widgets/dialog/add_torrent_dialog.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';

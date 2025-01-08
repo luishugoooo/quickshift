@@ -32,6 +32,7 @@ class TransmissionServerConfig implements ServerConfig {
     this.https = false,
   });
 
+  @override
   TransmissionServerConfig copyWith({
     String? name,
     String? host,
@@ -81,6 +82,7 @@ class TransmissionServerConfig implements ServerConfig {
     return 'TransmissionServerConfig(name: $name, host: $host, port: $port, path: $path, username: $username, password: $password, https: $https)';
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
