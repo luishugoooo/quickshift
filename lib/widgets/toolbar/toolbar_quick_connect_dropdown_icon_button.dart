@@ -49,7 +49,7 @@ class _ToolbarQuickConnectDropdownIconButtonState
           borderRadius: BorderRadius.circular(8),
           child: Container(
             width: 250,
-            constraints: const BoxConstraints(maxHeight: 200, minHeight: 0),
+            constraints: const BoxConstraints(maxHeight: 75, minHeight: 0),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: widget.servers.isEmpty
@@ -77,14 +77,26 @@ class _ToolbarQuickConnectDropdownIconButtonState
                                       Flexible(
                                           child: Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: e.clientType?.icon,
+                                        child: e.clientType.icon,
                                       )),
                                       const Gap(10),
                                       Expanded(
                                         flex: 6,
-                                        child: Text(
-                                          "${e.name} (${e.host})",
-                                          overflow: TextOverflow.ellipsis,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              e.name,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            const Gap(5),
+                                            Text(e.host,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: theme
+                                                    .textTheme.labelMedium
+                                                    ?.copyWith(
+                                                        color: theme.colorScheme
+                                                            .tertiary)),
+                                          ],
                                         ),
                                       ),
                                       const Spacer(),

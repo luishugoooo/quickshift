@@ -111,6 +111,12 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
               Expanded(
                   flex: 2,
                   child: ServerEditor(
+                    onDelete: (server) {
+                      if (selected == servers.indexOf(server)) {
+                        selected = null;
+                      }
+                      ref.read(storedServersProvider.notifier).remove(server);
+                    },
                     key: ValueKey(selected),
                     onSave: (server) {
                       ref.read(storedServersProvider.notifier).set(server);

@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/models/backends/torrent_client_type.dart';
+import 'package:quickshift/widgets/buttons/default_elevated_button.dart';
 
 class ServerEditor extends StatefulWidget {
   final ServerConfig? config;
   final void Function(ServerConfig server) onSave;
-  const ServerEditor({super.key, required this.config, required this.onSave});
+  final void Function(ServerConfig server)? onDelete;
+
+  const ServerEditor(
+      {super.key,
+      required this.config,
+      required this.onSave,
+      required this.onDelete});
 
   @override
   State<ServerEditor> createState() => _ServerEditorState();
@@ -225,15 +232,14 @@ class _ServerEditorState extends State<ServerEditor> {
             spacing: 8,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: context.theme.colorScheme.error,
-                  foregroundColor: context.theme.colorScheme.onError,
-                ),
+              TextButton(
                 onPressed: () {
-                  widget.onSave(config!);
+                  widget.onDelete?.call(config!);
                 },
-                child: const Text("Delete"),
+                child: Text("Delete",
+                    style: TextStyle(
+                        color: context.theme.colorScheme.error,
+                        fontWeight: FontWeight.w600)),
               ),
               const Spacer(),
               TextButton(
@@ -248,12 +254,12 @@ class _ServerEditorState extends State<ServerEditor> {
                 },
                 child: const Text("Save"),
               ),
-              ElevatedButton(
+              DefaultElevatedButton(
                 onPressed: () {
                   widget.onSave(config!);
                   Navigator.of(context).pop();
                 },
-                child: const Text("Okay"),
+                text: "Okay",
               )
             ],
           ),
