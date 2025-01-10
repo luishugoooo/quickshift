@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/models/backends/server_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -81,6 +83,25 @@ class Tabs extends _$Tabs {
         if (tab.id == t.id) t else tab
     ];
     return t;
+  }
+
+  void moveTab(Tab t, Tab to, bool after) {
+    final index = state.indexOf(t);
+    final toIndex = state.indexOf(to);
+    final newTabs = [...state];
+    newTabs.removeAt(index);
+    newTabs.insert(
+        max(
+            0,
+            after
+                ? (index > toIndex)
+                    ? toIndex + 1
+                    : toIndex
+                : (index < toIndex)
+                    ? toIndex - 1
+                    : toIndex),
+        t);
+    state = newTabs;
   }
 }
 

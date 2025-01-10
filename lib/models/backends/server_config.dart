@@ -12,7 +12,7 @@ class ServerConfig {
   final String? username;
   final String? password;
   final bool https;
-  final TorrentClientType? clientType;
+  final TorrentClientType clientType;
 
   ServerConfig({
     this.id,
@@ -23,7 +23,7 @@ class ServerConfig {
     this.username,
     this.password,
     required this.https,
-    this.clientType,
+    required this.clientType,
   });
 
   ServerConfig.empty()
@@ -35,19 +35,29 @@ class ServerConfig {
         username = '',
         password = '',
         https = false,
-        clientType = null;
+        clientType = TorrentClientType.transmission;
 
   ServerConfig.transmission(
-      {required this.name,
+      {this.id,
+      required this.name,
       required this.host,
       this.port = 9091,
       this.path = "/transmission/rpc",
       this.https = false,
+      this.username = "transmission",
+      this.password})
+      : clientType = TorrentClientType.transmission;
+  ServerConfig.qbittorrent(
+      {this.id,
+      required this.name,
+      required this.host,
+      this.port = 8080,
+      //TODO: Check if this is correct
+      this.path = "/api/v2/app/webapi",
+      this.https = false,
       this.username,
       this.password})
-      : clientType = TorrentClientType.transmission,
-        id = null;
-
+      : clientType = TorrentClientType.qbittorrent;
   ServerConfig copyWith({
     int? id,
     String? name,
@@ -82,7 +92,7 @@ class ServerConfig {
       'username': username,
       'password': password,
       'https': https,
-      'clientType': clientType?.toString(),
+      'clientType': clientType.toString(),
     };
   }
 
@@ -96,9 +106,7 @@ class ServerConfig {
         username: map['username'],
         password: map['password'],
         https: map['https'],
-        clientType: map['clientType'] != null
-            ? TorrentClientType.fromString(map['clientType'])
-            : null);
+        clientType: TorrentClientType.fromString(map['clientType']));
   }
 
   String toJson() => json.encode(toMap());

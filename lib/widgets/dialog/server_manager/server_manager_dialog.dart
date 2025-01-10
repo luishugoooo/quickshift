@@ -20,10 +20,11 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TextButton(
-        onPressed: () {
-          setState(() {
-            ref.read(storedServersProvider.notifier).set(ServerConfig.empty());
-          });
+        onPressed: () async {
+          int key = await ref
+              .read(storedServersProvider.notifier)
+              .set(ServerConfig.empty());
+          print("Added server with key $key");
         },
         child: const Text("Add a server"),
       ),
@@ -34,12 +35,11 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
   @override
   Widget build(BuildContext context) {
     final servers = ref.watch(storedServersProvider);
-
     return DefaultDialogFrame(
         padding: EdgeInsets.zero,
         title: "Servers",
         body: SizedBox(
-          height: 600,
+          height: 500,
           child: Row(
             children: [
               Expanded(
@@ -48,7 +48,11 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
                         itemCount: servers.length + 1,
                         itemBuilder: (context, index) {
                           if (index == servers.length) {
-                            return _buildAddServerButton();
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: _buildAddServerButton(),
+                            );
                           }
 
                           final server = servers[index];
@@ -80,6 +84,10 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
                                 color: context.theme.colorScheme.error,
                               ),
                               onPressed: () {
+                                if (selected == index) {
+                                  selected = null;
+                                }
+
                                 ref
                                     .read(storedServersProvider.notifier)
                                     .remove(server);

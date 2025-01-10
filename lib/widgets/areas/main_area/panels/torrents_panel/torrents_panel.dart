@@ -52,6 +52,7 @@ class _TorrentsPanelState extends ConsumerState<TorrentsPanel> {
       TorrentClientStatusInitialized() =>
         torrents.when(
             skipLoadingOnReload: true,
+            skipLoadingOnRefresh: false,
             data: (data) {
               return ResizableContainer(
                 divider: ResizableDivider(color: Colors.grey[900]),

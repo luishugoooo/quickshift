@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
+import 'package:quickshift/exceptions/torrent/client_connection.dart';
 import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
 import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
@@ -65,23 +66,57 @@ class TransmissionClient implements TorrentClient {
     return res;
   }
 
+  // Future<String> _getSessionId() async {
+  //   final res = await _requestBuilder(method: _ClientMethods.sessionGet);
+  //   final newSessionId = res.headers["x-transmission-session-id"];
+  //   if (res.statusCode == 409) {
+  //     final res2 = await _requestBuilder(
+  //         method: _ClientMethods.sessionGet,
+  //         overwrittenSessionId: newSessionId);
+  //     if (res2.statusCode == 200) {
+  //       Logger().d("Session Established with ID: $newSessionId");
+  //       return newSessionId!;
+  //     } else {
+  //       throw Exception(
+  //           "Failed to establish session, Session Token: ${res2.headers["x-transmission-session-id"]}");
+  //     }
+  //   } else {
+  //     throw Exception(
+  //         "Failed to establish session: ${res.statusCode}: ${res.reasonPhrase}");
+  //   }
+  // }
+
   Future<String> _getSessionId() async {
-    final res = await _requestBuilder(method: _ClientMethods.sessionGet);
+    final res = await _requestBuilder(method: _ClientMethods.sessionGet)
+        .catchError((error) {
+      throw ClientConnectionException(
+          "Failed to establish session. Check your hostname, port and path.");
+    });
     final newSessionId = res.headers["x-transmission-session-id"];
-    if (res.statusCode == 409) {
-      final res2 = await _requestBuilder(
-          method: _ClientMethods.sessionGet,
-          overwrittenSessionId: newSessionId);
-      if (res2.statusCode == 200) {
-        Logger().d("Session Established with ID: $newSessionId");
+
+    switch (res.statusCode) {
+      case 409:
+        {
+          final res2 = await _requestBuilder(
+              method: _ClientMethods.sessionGet,
+              overwrittenSessionId: newSessionId);
+          switch (res2.statusCode) {
+            case 200:
+              Logger().d("Session Established with ID: $newSessionId");
+              return newSessionId!;
+            default:
+              throw ClientConnectionException(
+                  "Failed to establish session: ${res2.statusCode}: ${res2.reasonPhrase}");
+          }
+        }
+
+      case 200:
         return newSessionId!;
-      } else {
-        throw Exception(
-            "Failed to establish session, Session Token: ${res2.headers["x-transmission-session-id"]}");
-      }
-    } else {
-      throw Exception(
-          "Failed to establish session: ${res.statusCode}: ${res.reasonPhrase}");
+      case 401:
+        throw ClientConnectionException("Unauthorized: Invalid credentials");
+      default:
+        throw ClientConnectionException(
+            "Failed to establish session: ${res.statusCode}: ${res.reasonPhrase}");
     }
   }
 

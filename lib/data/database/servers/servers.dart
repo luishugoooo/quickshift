@@ -27,14 +27,15 @@ class StoredServers extends _$StoredServers {
         1;
   }
 
-  Future<void> set(ServerConfig config) async {
+  Future<int> set(ServerConfig config) async {
     final box = Hive.box("servers");
     final key = switch (config.id) {
       int() => config.id,
-      null => _generateKey(),
+      _ => _generateKey(),
     };
     await box.put(key, config.copyWith(id: key).toMap());
     state = fetch();
+    return key!;
   }
 
   Future<void> remove(ServerConfig config) async {

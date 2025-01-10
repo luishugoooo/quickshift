@@ -22,7 +22,7 @@ final currentTabProvider = AutoDisposeProvider<Tab>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CurrentTabRef = AutoDisposeProviderRef<Tab>;
-String _$tabsHash() => r'11000300e84568326ba7daf12342f00f4b5e3238';
+String _$tabsHash() => r'b86001b7b0ae3a0b7d3119fbd9c9370fd4363ad2';
 
 /// See also [Tabs].
 @ProviderFor(Tabs)

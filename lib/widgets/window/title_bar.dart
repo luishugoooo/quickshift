@@ -29,7 +29,7 @@ class TitleBar extends StatelessWidget {
               TitleTabBar(),
             ],
           )),
-          const WindowButtons(),
+          if (Platform.isWindows) const WindowButtons(),
         ],
       ),
     );

@@ -11,7 +11,7 @@ enum TorrentClientType {
   const TorrentClientType(this.icon);
 
   factory TorrentClientType.fromString(String type) {
-    switch (type) {
+    switch (type.toLowerCase()) {
       case 'qbittorrent':
         return TorrentClientType.qbittorrent;
       case 'transmission':
@@ -25,9 +25,9 @@ enum TorrentClientType {
   String toString() {
     switch (this) {
       case TorrentClientType.qbittorrent:
-        return 'qbittorrent';
+        return 'qBittorrent';
       case TorrentClientType.transmission:
-        return 'transmission';
+        return 'Transmission';
     }
   }
 }

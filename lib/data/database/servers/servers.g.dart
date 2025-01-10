@@ -6,7 +6,7 @@ part of 'servers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$storedServersHash() => r'45813b316bf396d2830d2643c5f68bc3eee2f7fa';
+String _$storedServersHash() => r'd5fe57ef6020ab28bafa853a1052705e5106ca8f';
 
 /// See also [StoredServers].
 @ProviderFor(StoredServers)

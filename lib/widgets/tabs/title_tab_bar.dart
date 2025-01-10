@@ -15,7 +15,6 @@ class TitleTabBar extends ConsumerStatefulWidget {
 class _TitleTabBarState extends ConsumerState<TitleTabBar> {
   ScrollController scrollController = ScrollController();
 
-  //TODO: rework this, tabs are just not perfect yet
   @override
   Widget build(BuildContext context) {
     final tabs = ref.watch(tabsProvider);
@@ -55,7 +54,7 @@ class _TitleTabBarState extends ConsumerState<TitleTabBar> {
                                   )
                                 : SizedBox(
                                     width: 25,
-                                    child: e.config!.clientType?.icon),
+                                    child: e.config!.clientType.icon),
                             isSelected: currentTab.id == e.id);
                       },
                     ),
