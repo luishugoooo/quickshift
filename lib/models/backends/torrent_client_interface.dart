@@ -1,3 +1,4 @@
+import 'package:quickshift/models/backends/options/add_torrent_options.dart';
 import 'package:quickshift/models/backends/torrent_client_type.dart';
 import 'package:quickshift/models/backends/transmission/transmission_client.dart';
 import 'package:quickshift/models/backends/unconnected_torrent_client.dart';
@@ -13,7 +14,7 @@ abstract interface class TorrentClient {
   Future<TorrentClient> init();
 
   Future<List<TorrentData>> getTorrents();
-  Future<TorrentData> addTorrentFromMagnet(String link);
+  Future<TorrentData> addTorrent(AddTorrentOptions options);
   Future<void> removeTorrents(List<TorrentData> torrent,
       {required bool deleteLocalData});
   Future<void> stopTorrents(List<TorrentData> torrent);

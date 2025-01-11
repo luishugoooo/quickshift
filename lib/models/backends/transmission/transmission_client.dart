@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:quickshift/exceptions/torrent/client_connection.dart';
 import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
+import 'package:quickshift/models/backends/options/add_torrent_options.dart';
 import 'package:quickshift/models/backends/server_config.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/backends/transmission/raw_transmission_torrent_data.dart';
@@ -45,6 +46,7 @@ class TransmissionClient implements TorrentClient {
       {required _ClientMethods method,
       Map<String, dynamic>? arguments,
       String? overwrittenSessionId}) async {
+    print(arguments);
     final res = await post(
         Uri(
             scheme: config.https ? "https" : "http",
@@ -148,9 +150,12 @@ class TransmissionClient implements TorrentClient {
   }
 
   @override
-  Future<TorrentData> addTorrentFromMagnet(String link) async {
+  Future<TorrentData> addTorrent(AddTorrentOptions options) async {
+    options = options as AddTransmissionTorrentOptions;
+    final arguments = options.toArguments();
+
     final res = await _requestBuilder(
-        method: _ClientMethods.torrentAdd, arguments: {"filename": link});
+        method: _ClientMethods.torrentAdd, arguments: arguments);
     final decode = jsonDecode(res.body);
     final rawResponse = RawTransmissionTorrentData.fromMap(decode);
     return TorrentData.fromRawTransmissionData(rawResponse);

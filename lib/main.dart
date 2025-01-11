@@ -57,6 +57,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
       darkTheme: ThemeData(
+          inputDecorationTheme:
+              const InputDecorationTheme(border: OutlineInputBorder()),
           brightness: Brightness.dark,
           colorScheme: ColorScheme.fromSeed(
             seedColor: titleBarColorDark,

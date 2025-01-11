@@ -9,6 +9,7 @@ import 'package:quickshift/data/database/settings/settings_notifier.dart';
 import 'package:quickshift/extensions/theme.dart';
 import 'package:quickshift/widgets/buttons/default_elevated_button.dart';
 import 'package:quickshift/widgets/dialog/default_dialog_frame.dart';
+import 'package:quickshift/widgets/dialog/setting_row.dart';
 
 class SettingsDialog extends ConsumerStatefulWidget {
   final GlobalSettings settings;
@@ -19,31 +20,6 @@ class SettingsDialog extends ConsumerStatefulWidget {
 }
 
 class _SettingsDialogState extends ConsumerState<SettingsDialog> {
-  Widget buildSettingsRow(
-      {required BuildContext context,
-      required String title,
-      required Widget action}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: SizedBox(
-        height: 30,
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: context.theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-            action
-          ],
-        ),
-      ),
-    );
-  }
-
   late GlobalSettings settings;
 
   @override
@@ -68,8 +44,8 @@ class _SettingsDialogState extends ConsumerState<SettingsDialog> {
       title: "Application Settings",
       body: Column(
         children: [
-          buildSettingsRow(
-              context: context,
+          SettingRow(
+              fitted: false,
               title: "Fetch interval for torrent data",
               action: NumberSettingBox(
                   initalValue: settings.fetchInterval,
@@ -78,15 +54,13 @@ class _SettingsDialogState extends ConsumerState<SettingsDialog> {
                   min: 100,
                   onChanged: (value) =>
                       setSettings(settings.copyWith(fetchInterval: value)))),
-          buildSettingsRow(
-              context: context,
+          SettingRow(
+              fitted: true,
               title: "Synchronize torrent filters across tabs",
-              action: FittedBox(
-                child: Switch.adaptive(
-                  value: settings.synchronizeFiltersAcrossTabs,
-                  onChanged: (value) => setSettings(
-                      settings.copyWith(synchronizeFiltersAcrossTabs: value)),
-                ),
+              action: Switch.adaptive(
+                value: settings.synchronizeFiltersAcrossTabs,
+                onChanged: (value) => setSettings(
+                    settings.copyWith(synchronizeFiltersAcrossTabs: value)),
               ))
         ],
       ),

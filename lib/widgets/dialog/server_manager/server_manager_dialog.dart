@@ -21,7 +21,7 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TextButton(
         onPressed: () async {
-          int key = await ref
+          await ref
               .read(storedServersProvider.notifier)
               .set(ServerConfig.empty());
           setState(() {
@@ -59,6 +59,7 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
 
                           final server = servers[index];
                           return ListTile(
+                            splashColor: Colors.transparent,
                             contentPadding:
                                 const EdgeInsets.only(left: 16, right: 6),
                             title: server.name.isNotEmpty

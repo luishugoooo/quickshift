@@ -11,9 +11,11 @@ import 'package:quickshift/data/state/torrent_status.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
+import 'package:quickshift/models/backends/torrent_client_type.dart';
+import 'package:quickshift/widgets/dialog/add_torrent/qbittorrent.dart';
+import 'package:quickshift/widgets/dialog/add_torrent/transmission.dart';
 import 'package:quickshift/widgets/dialog/server_manager/server_manager_dialog.dart';
 import 'package:quickshift/widgets/dialog/settings_dialog.dart';
-import 'package:quickshift/widgets/dialog/add_torrent_dialog.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_icon_button.dart';
 import 'package:quickshift/widgets/toolbar/toolbar_quick_connect_dropdown_icon_button.dart';
 
@@ -87,6 +89,8 @@ class _ToolbarState extends ConsumerState<Toolbar> {
           ),
           ToolbarQuickConnectDropdownIconButton(
               onServerSelected: (server) async {
+                ref.invalidate(currentClientProvider);
+                ref.invalidate(torrentsProvider);
                 ref.read(tabsProvider.notifier).setConfig(currentTab, server);
                 ref.read(currentClientProvider.notifier).init();
               },
@@ -120,7 +124,13 @@ class _ToolbarState extends ConsumerState<Toolbar> {
                   ? null
                   : () => showDialog(
                         context: context,
-                        builder: (context) => const AddTorrentDialog(),
+                        builder: (context) =>
+                            switch (currentClient.config.clientType) {
+                          TorrentClientType.transmission =>
+                            const AddTransmissionTorrentDialog(),
+                          TorrentClientType.qbittorrent =>
+                            const AddQbittorrentTorrentDialog()
+                        },
                       )),
           const Spacer(),
           SizedBox(

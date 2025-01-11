@@ -5,6 +5,7 @@ class DefaultElevatedButton extends StatelessWidget {
   final String text;
   final TextStyle? textStyle;
   final ButtonStyle? style;
+
   const DefaultElevatedButton(
       {super.key,
       required this.onPressed,
@@ -29,9 +30,10 @@ class DefaultElevatedButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6))),
       child: Text(
         text,
-        style:
-            TextStyle(color: colorScheme.onPrimary, fontWeight: FontWeight.w500)
-                .merge(textStyle),
+        style: TextStyle(
+                color: (onPressed != null) ? colorScheme.onPrimary : null,
+                fontWeight: FontWeight.w500)
+            .merge(textStyle),
       ),
     );
   }

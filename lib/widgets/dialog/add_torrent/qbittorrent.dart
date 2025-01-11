@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quickshift/data/torrent/torrents_provider.dart';
 import 'package:quickshift/widgets/buttons/default_elevated_button.dart';
+import 'package:quickshift/widgets/dialog/default_dialog_frame.dart';
 
-import 'default_dialog_frame.dart';
-
-class AddTorrentDialog extends ConsumerStatefulWidget {
-  const AddTorrentDialog({super.key});
+class AddQbittorrentTorrentDialog extends ConsumerStatefulWidget {
+  const AddQbittorrentTorrentDialog({super.key});
 
   @override
-  ConsumerState<AddTorrentDialog> createState() => _AddTorrentDialogState();
+  ConsumerState<AddQbittorrentTorrentDialog> createState() =>
+      _AddQbittorrentTorrentDialogState();
 }
 
-class _AddTorrentDialogState extends ConsumerState<AddTorrentDialog> {
+class _AddQbittorrentTorrentDialogState
+    extends ConsumerState<AddQbittorrentTorrentDialog> {
   final TextEditingController _urlController = TextEditingController();
 
   @override
@@ -35,9 +36,7 @@ class _AddTorrentDialogState extends ConsumerState<AddTorrentDialog> {
         ),
         DefaultElevatedButton(
           onPressed: () {
-            ref.read(torrentsProvider.notifier).addTorrentFromMagnet(
-                  _urlController.text,
-                );
+            throw UnimplementedError();
             Navigator.of(context).pop(_urlController.text);
           },
           text: 'Add',

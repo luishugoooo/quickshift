@@ -4,6 +4,7 @@ import 'package:quickshift/data/state/tabs.dart';
 import 'package:quickshift/data/state/torrent_status.dart';
 import 'package:quickshift/data/torrent/torrent_client_provider.dart';
 import 'package:quickshift/exceptions/torrent/invalid_transmission_session_id.dart';
+import 'package:quickshift/models/backends/options/add_torrent_options.dart';
 import 'package:quickshift/models/backends/torrent_client_interface.dart';
 import 'package:quickshift/models/torrent/torrent_data.dart';
 import 'package:quickshift/models/torrent_status.dart';
@@ -35,9 +36,9 @@ class Torrents extends _$Torrents {
     }
   }
 
-  Future<void> addTorrentFromMagnet(String link) async {
+  Future<void> addTorrent(AddTorrentOptions options) async {
     final client = ref.read(currentClientProvider);
-    await client.addTorrentFromMagnet(link);
+    await client.addTorrent(options);
     ref.invalidateSelf();
   }
 
