@@ -16,7 +16,7 @@ class ServerManagerDialog extends ConsumerStatefulWidget {
 }
 
 class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
-  Widget _buildAddServerButton() {
+  Widget _buildAddServerButton(List<ServerConfig> servers) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TextButton(
@@ -24,7 +24,9 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
           int key = await ref
               .read(storedServersProvider.notifier)
               .set(ServerConfig.empty());
-          print("Added server with key $key");
+          setState(() {
+            selected = servers.length;
+          });
         },
         child: const Text("Add a server"),
       ),
@@ -51,7 +53,7 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
-                              child: _buildAddServerButton(),
+                              child: _buildAddServerButton(servers),
                             );
                           }
 
@@ -100,7 +102,7 @@ class _ServerManagerDialogState extends ConsumerState<ServerManagerDialog> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: _buildAddServerButton(),
+                            child: _buildAddServerButton(servers),
                           )
                         ],
                       ),

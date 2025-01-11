@@ -142,7 +142,7 @@ class _ServerEditorState extends State<ServerEditor> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        config = config!.copyWith(name: value);
+                        config = config!.copyWith(name: value.trim());
                       });
                     },
                   ),
@@ -154,7 +154,7 @@ class _ServerEditorState extends State<ServerEditor> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        config = config!.copyWith(host: value);
+                        config = config!.copyWith(host: value.trim());
                       });
                     },
                   ),
@@ -166,7 +166,8 @@ class _ServerEditorState extends State<ServerEditor> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        config = config!.copyWith(port: int.tryParse(value));
+                        config =
+                            config!.copyWith(port: int.tryParse(value.trim()));
                       });
                     },
                   ),
@@ -178,7 +179,7 @@ class _ServerEditorState extends State<ServerEditor> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        config = config!.copyWith(username: value);
+                        config = config!.copyWith(username: value.trim());
                       });
                     },
                   ),
@@ -190,7 +191,7 @@ class _ServerEditorState extends State<ServerEditor> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        config = config!.copyWith(password: value);
+                        config = config!.copyWith(password: value.trim());
                       });
                     },
                   ),
@@ -202,7 +203,7 @@ class _ServerEditorState extends State<ServerEditor> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        config = config!.copyWith(path: value);
+                        config = config!.copyWith(path: value.trim());
                       });
                     },
                   ),
