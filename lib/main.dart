@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
             seedColor: titleBarColorDark,
             brightness: Brightness.dark,
           )),
-      //themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       routerConfig: router,
     );
   }

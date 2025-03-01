@@ -22,11 +22,11 @@ class TitleBar extends StatelessWidget {
             const SizedBox(
               width: 65,
             ),
-          const Expanded(
+          Expanded(
               child: Stack(
             children: [
               MoveWindow(),
-              TitleTabBar(),
+              const TitleTabBar(),
             ],
           )),
           if (Platform.isWindows) const WindowButtons(),
