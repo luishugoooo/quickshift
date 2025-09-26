@@ -1,3 +1,7 @@
+
+> [!IMPORTANT]  
+> Due to limited freetime this project is dormant. Connecting and managing a remote Transmission instance works quite well, however I will not continue to work on this project at this time.
+
 # Quickshift
 
 ## Introduction
